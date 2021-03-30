@@ -33,34 +33,34 @@
                     <form action="" method="POST" class="row g-3 col-md-6 mx-auto">
                         <div class="col-md-6">
                             <label for="username" class="form-label">Username</label>
-                            <input name="username" type="text" class="form-control" id="username">
+                            <input name="username" type="text" class="form-control" id="username" required>
                         </div>
                         <div class="col-md-6">
                             <label for="password" class="form-label">Password</label>
-                            <input name="password" type="password" class="form-control" id="password">
+                            <input name="password" type="password" class="form-control" id="password" required>
                         </div>
                         <div class="col-md-6">
                             <label for="fname" class="form-label">ชื่อ</label>
-                            <input name="fname" type="text" class="form-control" id="fname">
+                            <input name="fname" type="text" class="form-control" id="fname" required>
                         </div>
                         <div class="col-md-6">
                             <label for="lname" class="form-label">นามสกุล</label>
-                            <input name="lname" type="password" class="form-control" id="lname">
+                            <input name="lname" type="text" class="form-control" id="lname" required>
                         </div>
                         <div class="col-12">
                             <label for="address" class="form-label">ที่อยู่</label>
-                            <textarea name="address" type="text" class="form-control" id="address"></textarea>
+                            <textarea name="address" type="text" class="form-control" id="address" required></textarea>
                         </div>
                         <div class="col-12">
                             <label for="inputAddress" class="form-label">เพศ</label>
                             <div class="form-check">
-                                <input name="sex" value="ชาย" class="form-check-input" type="radio" id="male">
+                                <input name="sex" value="ชาย" class="form-check-input" type="radio" id="male" required>
                                 <label class="form-check-label" for="male">
                                     ชาย
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input name="sex" value="หญิง" class="form-check-input" type="radio"  id="female">
+                                <input name="sex" value="หญิง" class="form-check-input" type="radio"  id="female" required>
                                 <label class="form-check-label" for="female">
                                     หญิง
                                 </label>
@@ -68,11 +68,11 @@
                         </div>
                         <div class="col-md-6">
                             <label for="email" class="form-label">Email</label>
-                            <input name="email" type="email" class="form-control" id="email">
+                            <input name="email" type="email" class="form-control" id="email" required>
                         </div>
                         <div class="col-md-6">
                             <label for="tel" class="form-label">เบอร์โทร</label>
-                            <input name="tel" type="text" class="form-control" id="tel">
+                            <input name="tel" type="text" class="form-control" id="tel" min="10" max="10" required>
                         </div>
 
                 </div>

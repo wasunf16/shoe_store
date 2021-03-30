@@ -2,7 +2,7 @@
 
 class ConnectDB
 {
-    protected $db;
+    public $db;
     function __construct()
     {
         $DB_HOST = "localhost";
@@ -25,9 +25,10 @@ class ConnectDB
             echo "Error to query.!!";
         }
     }
-    function queryByID($table,$nameID,$id)
+    function queryByID($table,$where,$id)
     {
-        $result = $this->db->query("SELECT * FROM '$table' WHERE '$nameID' = '$id' ");
+        $result = $this->db->query("SELECT * FROM '$table' WHERE '$where' = '$id' ");
+        return $result;
     }
 }
 
