@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Bai+Jamjuree&display=swap');
+
+*{
+    font-family: 'Bai Jamjuree', sans-serif;
+}
+
+nav.navbar{
+    background-color: #192a56 !important;
+}
+
+footer{
+    background-color: #192a56 !important;
+}
