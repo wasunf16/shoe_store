@@ -5,9 +5,19 @@
 }
 
 nav.navbar{
-    background-color: #192a56 !important;
+    background-color: #004741 !important;
 }
 
 footer{
     background-color: #192a56 !important;
+}
+.relativeSize {
+    color: #fff;
+    background: #333333c7;
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 5px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
 }

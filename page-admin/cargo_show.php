@@ -39,7 +39,7 @@ $row = $result->fetch_all(MYSQLI_ASSOC);
                                 foreach ($row as $key => $value) {
                                 ?>
                                     <tr>
-                                        <td><?= $value['cg_img']; ?></td>
+                                        <td><img src="../img_upload/<?= $value['cg_img']; ?>" style="height:75px;"></td>
                                         <td><?= $value['cg_code']; ?></td>
                                         <td><?= $value['cg_name'];?></td>
                                         <td><?= $value['cg_detail']; ?></td>

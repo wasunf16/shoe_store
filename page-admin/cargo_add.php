@@ -14,14 +14,24 @@ $row_type = $result_type->fetch_all(MYSQLI_ASSOC);
 
 if (isset($_POST['submit'])) {
 
-  $obj_add = new ConnectDB;
-  $result_add = $obj_add->query("INSERT INTO `tbl_cargo` (`cg_id`, `cg_code`, `cg_name`, `cg_detail`, `cg_img`, `cg_type_id`, `cg_unit`, `cg_price`, `cg_amount`, `cg_promotion_status`, `cg_promotion_value`) VALUES (NULL, 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'off', 'off');");
+  $obj_add = new Cargo();
+  $result_add = $obj_add->cargoAdd(
+      $_FILES['img'],
+      $_POST['name'],
+      $_POST['detail'],
+      $_POST['unit'],
+      $_POST['price'],
+      $_POST['amount'],
+      $_POST['type'],
+      $_POST['promotion'],
+      $_POST['promotion_value']
+  );
 
   if ($result_add) {
     echo "
     <script>
       alert('เพิ่มสำเร็จ');
-      location.href='user_show.php';  
+      location.href='cargo_show.php';  
     </script>";
   } else {
     echo "
@@ -74,7 +84,7 @@ if (isset($_POST['submit'])) {
                             </div>
                             <div class="col-md-12">
                                 <label for="password" class="form-label">ประเภท</label>
-                                <select name="" id="" class="form-select" required>
+                                <select name="type" id="" class="form-select" required>
                                     <option value="">-- เลือก --</option>
                                     <?php foreach ($row_type as $key => $value) { ?>
                                         <option value="<?= $value['tp_id'] ?>"><?= $value['tp_name'] ?></option>
@@ -94,7 +104,7 @@ if (isset($_POST['submit'])) {
                             </div>
                             <div class="col-md-3">
                                 <label for="promotion_value" class="form-label">ส่วนลด %</label>
-                                <input name="promotion_value" type="number" class="form-control" id="promotion_value" required>
+                                <input name="promotion_value" type="number" class="form-control" id="promotion_value">
                             </div>
                             <div class="col-md-12">
                                 <button type="submit" class="btn btn-primary w-25" name="submit">ยืนยัน</button>

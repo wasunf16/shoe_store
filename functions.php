@@ -84,22 +84,17 @@ class LoginRegister extends ConnectDB
 
 class Cargo extends ConnectDB
 {
-    function cargoAdd()
+    function cargoAdd($img,$name,$detail,$unit,$price,$amount,$type,$promotion,$promotion_value)
     {
-        $maxCode = $this->db->query("SELECT MAX(cg_code) as max FROM tbl_cargo");
-        $maxCode = $maxCode->fetch_array();
-        $fetchMaxCode = $maxCode['max'];
-        $fetchMaxCode += 1;
-
-        $result = $this->db->query("INSERT INTO `tbl_cargo` (`cg_id`, `cg_code`, `cg_name`, `cg_detail`, `cg_img`, `cg_type_id`, `cg_unit`, `cg_price`, `cg_amount`, `cg_promotion_status`, `cg_promotion_value`) 
-        VALUES (NULL, '$fetchMaxCode', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'off', 'off');");
+        $queryMaxCode = $this->db->query("SELECT MAX(cg_code) as max FROM tbl_cargo");
+        $maxCode = $queryMaxCode->fetch_array();
+        $fetchMaxCode = $maxCode['max']+1;
 
         if (isset($img)) {
-            $IMG_DIR = "../img_upload";
-            $IMG_NameOld = $_FILES["txt_img"]["name"];
-            $IMG_tmp =  $_FILES['txt_img']['tmp_name'];
-            $IMG_ArrayName =  explode('.', $IMG_NameOld);
-            $IMG_type = $IMG_ArrayName[1];
+            $IMG_DIR = "../img_upload/";
+            $IMG_NameOld = $img["name"];
+            $IMG_tmp =  $img['tmp_name'];
+            $IMG_type = strtolower(pathinfo($IMG_NameOld,PATHINFO_EXTENSION));
             $IMG_dateName = date("Ymdhis");
             $IMG_RandomNumberName = rand(1000, 9999);
             $IMG_NameFull = $IMG_dateName . '_' . $IMG_RandomNumberName . '.' . $IMG_type;
@@ -116,9 +111,8 @@ class Cargo extends ConnectDB
                 </script>";
             } else {
                 if (move_uploaded_file($IMG_tmp, $IMG_DIR . $IMG_NameFull)) {
-                    $real_pass = $this->conn->real_escape_string($pass);
-                    $hashed_password = password_hash($real_pass, PASSWORD_DEFAULT);
-                    $result = $this->conn->query("INSERT INTO tbl_user (u_user,u_pass,u_img,u_role) VALUES ('$user','$hashed_password','$IMG_NameFull','$role') ");
+                    $result = $this->db->query("INSERT INTO `tbl_cargo` (`cg_id`, `cg_code`, `cg_name`, `cg_detail`, `cg_img`, `cg_type_id`, `cg_unit`, `cg_price`, `cg_amount`, `cg_promotion_status`, `cg_promotion_value`) 
+                    VALUES (NULL, '$fetchMaxCode', '$name', '$detail', '$IMG_NameFull', '$type', '$unit', '$price', '$amount', '$promotion', '$promotion_value');");
                     return $result;
                 }
             }
