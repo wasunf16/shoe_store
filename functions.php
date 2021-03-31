@@ -75,7 +75,7 @@ class LoginRegister extends ConnectDB
                     header('Location: page-user/index.php');
                     break;
                 case 'member':
-                    header('Location: page-member/index.php');
+                    header('Location: index.php');
                     break;
             }
         }
@@ -84,17 +84,17 @@ class LoginRegister extends ConnectDB
 
 class Cargo extends ConnectDB
 {
-    function cargoAdd($img,$name,$detail,$unit,$price,$amount,$type,$promotion,$promotion_value)
+    function cargoAdd($img, $name, $detail, $unit, $price, $amount, $type, $promotion, $promotion_value)
     {
         $queryMaxCode = $this->db->query("SELECT MAX(cg_code) as max FROM tbl_cargo");
         $maxCode = $queryMaxCode->fetch_array();
-        $fetchMaxCode = $maxCode['max']+1;
+        $fetchMaxCode = $maxCode['max'] + 1;
 
         if (isset($img)) {
             $IMG_DIR = "../img_upload/";
             $IMG_NameOld = $img["name"];
             $IMG_tmp =  $img['tmp_name'];
-            $IMG_type = strtolower(pathinfo($IMG_NameOld,PATHINFO_EXTENSION));
+            $IMG_type = strtolower(pathinfo($IMG_NameOld, PATHINFO_EXTENSION));
             $IMG_dateName = date("Ymdhis");
             $IMG_RandomNumberName = rand(1000, 9999);
             $IMG_NameFull = $IMG_dateName . '_' . $IMG_RandomNumberName . '.' . $IMG_type;
@@ -117,6 +117,16 @@ class Cargo extends ConnectDB
                 }
             }
         }
+    }
+    function cargoDelete($id)
+    {
+        $result = $this->queryByID('tbl_cargo','cg_id',$id);
+        $getResult = $result->fetch_array();
+        if ($getResult['cg_img']) {
+            unlink('../img_upload/' . $getResult['cg_img']);
+        }
+        $result = $this->db->query("DELETE FROM tbl_cargo WHERE cg_id='$id' ");
+        return $result;
     }
 }
 

@@ -5,6 +5,29 @@
 $obj = new ConnectDB();
 $result = $obj->query("SELECT * FROM tbl_cargo as cg INNER JOIN tbl_type_product as tp ON cg.cg_type_id = tp.tp_id ");
 $row = $result->fetch_all(MYSQLI_ASSOC);
+
+if (isset($_GET['action'])) {
+    if ($_GET['action'] == 'delete') {
+        $objCargo = new Cargo();
+        $resultDelete = $objCargo->cargoDelete($_GET['id']);
+        if ($resultDelete == true) {
+            echo "
+            <script>
+                alert('ลบเสร็จแล้ว!!');
+                window.location.href='cargo_show.php';
+            </script>
+            ";
+        } else {
+            echo "
+            <script>
+                alert('ลบล้มเหลว');
+                window.location.href='cargo_show.php';
+            </script>
+            ";
+        }
+    }
+}
+
 ?>
 
 <body>
@@ -12,7 +35,7 @@ $row = $result->fetch_all(MYSQLI_ASSOC);
     <?php include('navbar.php'); ?>
 
     <div class="container-fluid">
-        <div class="row">
+        <div class="row mb-5">
             <?php include('sidebar.php'); ?>
 
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
@@ -41,14 +64,12 @@ $row = $result->fetch_all(MYSQLI_ASSOC);
                                     <tr>
                                         <td><img src="../img_upload/<?= $value['cg_img']; ?>" style="height:75px;"></td>
                                         <td><?= $value['cg_code']; ?></td>
-                                        <td><?= $value['cg_name'];?></td>
+                                        <td><?= $value['cg_name']; ?></td>
                                         <td><?= $value['cg_detail']; ?></td>
                                         <td><?= $value['tp_name']; ?></td>
-                                        <td>
-                                            <div class="btn-group" role="group" aria-label="Basic example">
-                                                <button type="button" class="btn btn-sm btn-warning">แก้ไข</button>
-                                                <button type="button" class="btn btn-sm btn-danger">ลบ</button>
-                                            </div>
+                                        <td width="10%">
+                                            <a href="?action=edit&id=<?= $value['cg_id']; ?>" class="btn btn-sm btn-warning m-1"><i class="fa fa-pencil" aria-hidden="true"></i> แก้ไข</a>
+                                            <a href="?action=delete&id=<?= $value['cg_id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('ยืนยันการลบ?');"><i class="fa fa-trash-o" aria-hidden="true"></i> ลบ</a>
                                         </td>
                                     </tr>
                                 <?php } ?>

@@ -14,6 +14,18 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link <?php echo (activeNav() == 'order_show.php' ? ' active' : ''); ?>" href="order_show.php">
+                    <i class="fa fa-money" aria-hidden="true"></i>
+                    ข้อมูลการสั่งซื้อ
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <?php echo (activeNav() == 'shipment_show.php' ? ' active' : ''); ?>" href="shipment_show.php">
+                    <i class="fa fa-car" aria-hidden="true"></i>
+                    ข้อมูลการจัดส่ง
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link <?php echo (activeNav() == 'member_show.php' ? ' active' : ''); ?>" href="member_show.php">
                     <i class="fa fa-user" aria-hidden="true"></i>
                     ข้อมูลลูกค้า

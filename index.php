@@ -6,7 +6,7 @@ $result = $obj->query("SELECT * FROM tbl_cargo");
 $row = $result->fetch_all(MYSQLI_ASSOC);
 ?>
 
-<body>
+<body style="background-color: #eee;">
     <?php include('navbar.php'); ?>
     <div class="container">
         <div class="row mt-5">
@@ -24,19 +24,20 @@ $row = $result->fetch_all(MYSQLI_ASSOC);
     <div class="container">
         <div class="row">
             <?php foreach ($row as $key => $value) { ?>
-                <div class="col-sm-6 col-md-2 my-3">
+                <div class="col-6 col-sm-6 col-md-2 my-3">
                     <div class="card h-100">
                         <div class="relative" style="position: relative;">
-                            <img src="img_upload/<?= $value['cg_img'] ?>" class="card-img-top" style="height:200px;">
+                            <a href="view_product.php?cg_id=<?= $value['cg_id'] ?>"><img src="img_upload/<?= $value['cg_img'] ?>" class="card-img-top" style="height:200px;"></a>
                             <div class="relativeSize">Size <?= $value['cg_unit'] ?></div>
                         </div>
 
                         <div class="card-body">
-                            <h5 class="card-title" style="font-weight: bold;"><?= $value['cg_name'] ?></h5>
-                            <p class="card-text">฿<?= $value['cg_price'] ?> บาท</p>
+                            <h6 class="card-title" style="font-weight: bold;"><a style="text-decoration: none; color:#333;" href="view_product.php?cg_id=<?= $value['cg_id'] ?>"><?= $value['cg_name'] ?></h6></a>
+                            <p class="card-text" >฿<?= $value['cg_price'] ?> บาท</p>
+                            <p class="card-text" style="font-size:13px;">คงเหลือ <?= $value['cg_amount'] ?> ชิ้น</p>
                         </div>
-                        <div class="card-footer">
-                            <a href="#" class="d-block btn btn-success btn-sm"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i> เพิ่มลงตะกร้า</a>
+                        <div class="card-footer p-0">
+                            <a href="login.php?cg_id=<?= $value['cg_id'];?></div></div></div>" class="d-block btn btn-success btn-sm"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i> เพิ่มลงตะกร้า</a>
                         </div>
                     </div>
                 </div>

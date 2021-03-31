@@ -34,7 +34,7 @@ if(isset($_GET['action'])){
     <?php include('navbar.php'); ?>
 
     <div class="container-fluid">
-        <div class="row">
+        <div class="row mb-5">
             <?php include('sidebar.php'); ?>
 
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
@@ -68,12 +68,11 @@ if(isset($_GET['action'])){
                                         <td><?= $value['u_email']; ?></td>
                                         <td><?= $value['u_tel']; ?></td>
                                         <td><?= $value['u_address']; ?></td>
-                                        <td>
-                                            <div class="btn-group" role="group" aria-label="Basic example">
-                                                <a href="" type="button" class="btn btn-sm btn-warning">แก้ไข</a>
-                                                <a href="?action=delete&id=<?=$value['u_id'];?>" type="button" class="btn btn-sm btn-danger" onclick="return confirm('ยืนยันการลบ?');">ลบ</a>
-                                            </div>
+                                        <td width="10%">
+                                            <a href="?action=edit&id=" class="btn btn-sm btn-warning m-1"><i class="fa fa-pencil" aria-hidden="true"></i> แก้ไข</a>
+                                            <a href="?action=delete&id=<?=$value['u_id'];?>" class="btn btn-sm btn-danger" onclick="return confirm('ยืนยันการลบ?');"><i class="fa fa-trash-o" aria-hidden="true"></i> ลบ</a>
                                         </td>
+                                        
                                     </tr>
                                 <?php } ?>
                             </tbody>
