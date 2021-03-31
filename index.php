@@ -1,6 +1,10 @@
 <?php include('header.php'); ?>
 </head>
-
+<?php
+    $obj = new ConnectDB();
+    $result = $obj->query("SELECT * FROM tbl_cargo");
+    $row = $result->fetch_all(MYSQLI_ASSOC);
+?>
 <body>
     <?php include('navbar.php'); ?>
     <div class="container">
@@ -18,11 +22,12 @@
     </div>
     <div class="container">
         <div class="row">
+            <?php foreach($row as $key=>$value){ ?>
             <div class="col-md-3 mt-2">
                 <div class="card h-100">
                     <img src="https://images.unsplash.com/photo-1593642702749-b7d2a804fbcf?ixid=MXwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="card-img-top" style="height:200px;">
                     <div class="card-body">
-                        <h5 class="card-title">ร้องเท้ากีฬา</h5>
+                        <h5 class="card-title"><?=$value['cg_name']?></h5>
                         <p class="card-text">฿200 บาท</p>
                     </div>
                     <div class="card-footer">
@@ -30,6 +35,7 @@
                     </div>
                 </div>
             </div>
+            <?php } ?>
         </div>
     </div>
     

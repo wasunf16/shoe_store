@@ -3,8 +3,30 @@
 </head>
 <?php
 $obj = new ConnectDB();
-$result = $obj->query("SELECT * FROM tbl_user WHERE role='member' ");
+$result = $obj->query("SELECT * FROM tbl_user WHERE u_role = 'member' ");
 $row = $result->fetch_all(MYSQLI_ASSOC);
+
+if(isset($_GET['action'])){
+    if($_GET['action'] == 'delete'){
+        $objDelete = new ConnectDB();
+        $resultDelete = $objDelete->deleteByID('tbl_user','u_id',$_GET['id']);
+        if($resultDelete == true){
+            echo "
+            <script>
+                alert('ลบเสร็จแล้ว!!');
+                window.location.href='member_show.php';
+            </script>
+            ";
+        }else{
+            echo "
+            <script>
+                alert('ลบล้มเหลว');
+                window.location.href='member_show.php';
+            </script>
+            ";
+        }
+    }
+}
 ?>
 
 <body>
@@ -40,16 +62,16 @@ $row = $result->fetch_all(MYSQLI_ASSOC);
                                 foreach ($row as $key => $value) {
                                 ?>
                                     <tr>
-                                        <td><?= $value['username']; ?></td>
-                                        <td><?= $value['fname'] . ' ' . $value['lname']; ?></td>
-                                        <td><?= $value['sex']; ?></td>
-                                        <td><?= $value['email']; ?></td>
-                                        <td><?= $value['tel']; ?></td>
-                                        <td><?= $value['address']; ?></td>
+                                        <td><?= $value['u_username']; ?></td>
+                                        <td><?= $value['u_fname'] . ' ' . $value['u_lname']; ?></td>
+                                        <td><?= $value['u_sex']; ?></td>
+                                        <td><?= $value['u_email']; ?></td>
+                                        <td><?= $value['u_tel']; ?></td>
+                                        <td><?= $value['u_address']; ?></td>
                                         <td>
                                             <div class="btn-group" role="group" aria-label="Basic example">
-                                                <button type="button" class="btn btn-sm btn-warning">แก้ไข</button>
-                                                <button type="button" class="btn btn-sm btn-danger">ลบ</button>
+                                                <a href="" type="button" class="btn btn-sm btn-warning">แก้ไข</a>
+                                                <a href="?action=delete&id=<?=$value['u_id'];?>" type="button" class="btn btn-sm btn-danger" onclick="return confirm('ยืนยันการลบ?');">ลบ</a>
                                             </div>
                                         </td>
                                     </tr>

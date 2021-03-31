@@ -72,7 +72,7 @@
                         </div>
                         <div class="col-md-6">
                             <label for="tel" class="form-label">เบอร์โทร</label>
-                            <input name="tel" type="text" class="form-control" id="tel" min="10" max="10" required>
+                            <input name="tel" type="text" class="form-control" id="tel" maxlength="10" required>
                         </div>
 
                 </div>

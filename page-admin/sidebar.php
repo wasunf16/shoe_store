@@ -2,39 +2,27 @@
     <div class="position-sticky pt-3">
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="index.php">
+                <a class="nav-link <?php echo (activeNav() == 'index.php' ? ' active' : ''); ?>" aria-current="page" href="index.php">
                     <i class="fa fa-home" aria-hidden="true"></i>
                     หน้าแรก
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="member_show.php">
+                <a class="nav-link <?php echo (activeNav() == 'cargo_show.php' ? ' active' : ''); ?>" href="cargo_show.php">
+                    <i class="fa fa-database" aria-hidden="true"></i>
+                    ข้อมูลสินค้า
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <?php echo (activeNav() == 'member_show.php' ? ' active' : ''); ?>" href="member_show.php">
                     <i class="fa fa-user" aria-hidden="true"></i>
                     ข้อมูลลูกค้า
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="user_show.php">
+                <a class="nav-link <?php echo (activeNav() == 'user_show.php' ? ' active' : ''); ?>" href="user_show.php">
                     <i class="fa fa-user" aria-hidden="true"></i>
                     ข้อมูลพนักงาน
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="users"></span>
-                    Customers
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="bar-chart-2"></span>
-                    Reports
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="layers"></span>
-                    Integrations
                 </a>
             </li>
         </ul>

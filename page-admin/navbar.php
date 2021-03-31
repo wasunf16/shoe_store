@@ -5,10 +5,10 @@
     </button>
     <ul class="navbar-nav px-3 w-100 d-flex p-2 bd-highlight flex-row-reverse">
         <li class="nav-item text-nowrap">
-            <a class="btn btn-danger" href="../logout.php">ออกจากระบบ</a>
+            <a class="btn btn-danger" href="../logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i> ออกจากระบบ</a>
         </li>
         <li class="nav-item text-nowrap">
-            <a class="nav-link me-2" href="#"><?= $_SESSION['user']['fname'] . ' ' . $_SESSION['user']['lname']; ?></a>
+            <a class="nav-link me-2" href="#"><i class="fa fa-user-o" aria-hidden="true"></i> <?= $_SESSION['user']['fname'] . ' ' . $_SESSION['user']['lname']; ?></a>
         </li>
     </ul>
 </header>

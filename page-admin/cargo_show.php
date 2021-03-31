@@ -3,7 +3,7 @@
 </head>
 <?php
 $obj = new ConnectDB();
-$result = $obj->query("SELECT * FROM tbl_user WHERE u_role = 'user' ");
+$result = $obj->query("SELECT * FROM tbl_cargo as cg INNER JOIN tbl_type_product as tp ON cg.cg_type_id = tp.tp_id ");
 $row = $result->fetch_all(MYSQLI_ASSOC);
 ?>
 
@@ -18,20 +18,19 @@ $row = $result->fetch_all(MYSQLI_ASSOC);
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <div class="row mt-3">
                     <div class="d-flex justify-content-between align-items-center my-3">
-                        <h2>ข้อมูลพนักงาน</h2>
-                        <a href="member_add.php" class="btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i> เพิ่มพนักงาน</a>
+                        <h2>ข้อมูลสินค้า</h2>
+                        <a href="cargo_add.php" class="btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i> เพิ่มสินค้า</a>
                     </div>
                     <hr>
                     <div class="table-responsive">
                         <table id="dtable" class="table table-striped">
                             <thead>
-                                <tr class="table-info">
-                                    <th>ชื่อผู้ใช้</th>
-                                    <th>ชื่อ-สกุล</th>
-                                    <th>เพศ</th>
-                                    <th>Email</th>
-                                    <th>เบอร์โทร</th>
-                                    <th>ที่อยู่</th>
+                                <tr class="table-danger">
+                                    <th>IMG</th>
+                                    <th>รหัสสินค้า</th>
+                                    <th>ชื่อสินค้า</th>
+                                    <th>รายละเอียด</th>
+                                    <th>ประเภทสินค้า</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -40,12 +39,11 @@ $row = $result->fetch_all(MYSQLI_ASSOC);
                                 foreach ($row as $key => $value) {
                                 ?>
                                     <tr>
-                                        <td><?= $value['u_username']; ?></td>
-                                        <td><?= $value['u_fname'] . ' ' . $value['u_lname']; ?></td>
-                                        <td><?= $value['u_sex']; ?></td>
-                                        <td><?= $value['u_email']; ?></td>
-                                        <td><?= $value['u_tel']; ?></td>
-                                        <td><?= $value['u_address']; ?></td>
+                                        <td><?= $value['cg_img']; ?></td>
+                                        <td><?= $value['cg_code']; ?></td>
+                                        <td><?= $value['cg_name'];?></td>
+                                        <td><?= $value['cg_detail']; ?></td>
+                                        <td><?= $value['tp_name']; ?></td>
                                         <td>
                                             <div class="btn-group" role="group" aria-label="Basic example">
                                                 <button type="button" class="btn btn-sm btn-warning">แก้ไข</button>
