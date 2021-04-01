@@ -84,6 +84,12 @@ class LoginRegister extends ConnectDB
 
 class Cargo extends ConnectDB
 {
+    function cargofetchByID($id)
+    {
+        $result = $this->db->query("SELECT * FROM tbl_cargo as cg INNER JOIN tbl_type_product as tp ON cg.cg_type_id = tp.tp_id WHERE cg.cg_id = '$id' ");
+        $row = $result->fetch_all(MYSQLI_ASSOC);
+        return $row;
+    }
     function cargoAdd($img, $name, $detail, $unit, $price, $amount, $type, $promotion, $promotion_value)
     {
         $queryMaxCode = $this->db->query("SELECT MAX(cg_code) as max FROM tbl_cargo");

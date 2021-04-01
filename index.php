@@ -33,11 +33,17 @@ $row = $result->fetch_all(MYSQLI_ASSOC);
 
                         <div class="card-body">
                             <h6 class="card-title" style="font-weight: bold;"><a style="text-decoration: none; color:#333;" href="view_product.php?cg_id=<?= $value['cg_id'] ?>"><?= $value['cg_name'] ?></h6></a>
-                            <p class="card-text" >฿<?= $value['cg_price'] ?> บาท</p>
+                            <p class="card-text">฿<?= $value['cg_price'] ?> บาท</p>
                             <p class="card-text" style="font-size:13px;">คงเหลือ <?= $value['cg_amount'] ?> ชิ้น</p>
                         </div>
                         <div class="card-footer p-0">
-                            <a href="login.php?cg_id=<?= $value['cg_id'];?></div></div></div>" class="d-block btn btn-success btn-sm"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i> เพิ่มลงตะกร้า</a>
+                            <?php
+                            if (isset($_SESSION['user']['role'])) {
+                            ?>
+                                <a href="member_cart.php?cg_id=<?= $value['cg_id']; ?>&action=add" class="d-block btn btn-success btn-sm"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i> เพิ่มลงตะกร้า</a>
+                            <?php } else { ?>
+                                <a href="login.php?cg_id=<?= $value['cg_id']; ?>" class="d-block btn btn-success btn-sm"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i> เพิ่มลงตะกร้า</a>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>

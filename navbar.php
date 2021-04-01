@@ -29,8 +29,8 @@
             <ul class="navbar-nav d-flex">
                 <?php
                 if (isset($_SESSION['user']['role']) && $_SESSION['user']['role'] =='member' ) { ?>
-                    <a href="member_cart.php" class="btn btn-primary me-2"><i class="fa fa-cart-plus" aria-hidden="true"></i> ตะกร้า</a>
-                    <a href="member_profile.php" class="btn btn-warning me-2"><i class="fa fa-user" aria-hidden="true"></i> <?=$_SESSION['user']['fname'].' '.$_SESSION['user']['lname']?></a>
+                    <a href="member_cart.php" class="btn btn-primary me-2"><i class="fa fa-shopping-cart" aria-hidden="true"></i> ตะกร้า</a>
+                    <a href="member_profile.php" class="btn btn-light me-2"><i class="fa fa-user" aria-hidden="true"></i> <?=$_SESSION['user']['fname'].' '.$_SESSION['user']['lname']?></a>
                     <a href="logout.php" class="btn btn-danger"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
                 <?php }else{ ?>
                     <a href="login.php" class="btn btn-success me-2"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>

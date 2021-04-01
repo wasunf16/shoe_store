@@ -1,8 +1,10 @@
 <?php
 session_start();
+
 // echo "<pre>";
 // print_r($_SESSION);
 // echo "</pre>";
+// exit;
 require_once('functions.php');
 ?>
 <!DOCTYPE html>
