@@ -1,29 +1,28 @@
 <?php include('header.php'); ?>
 </head>
 <?php
-
 $cg_id = isset($_GET['cg_id']) ? $_GET['cg_id'] : '';
 $action = isset($_GET['action']) ? $_GET['action'] : '';
 
 if ($action == 'add' && !empty($cg_id)) {
-    if (isset($_SESSION['cart'][$cg_id])) {
-        $_SESSION['cart'][$cg_id]++;
+    if (isset($_SESSION['cart'][$_SESSION['user']['id']][$cg_id])) {
+        $_SESSION['cart'][$_SESSION['user']['id']][$cg_id]++;
     } else {
-        $_SESSION['cart'][$cg_id] = 1;
+        $_SESSION['cart'][$_SESSION['user']['id']][$cg_id] = 1;
     }
     header('Location: member_cart.php');
 }
 
 if ($action == 'remove' && !empty($cg_id))  //ยกเลิกการสั่งซื้อ
 {
-    unset($_SESSION['cart'][$cg_id]);
+    unset($_SESSION['cart'][$_SESSION['user']['id']][$cg_id]);
     header('Location: member_cart.php');
 }
 
 if ($action == 'update') {
     $amount_array = $_POST['amount'];
     foreach ($amount_array as $cg_id => $amount) {
-        $_SESSION['cart'][$cg_id] = $amount;
+        $_SESSION['cart'][$_SESSION['user']['id']][$cg_id] = $amount;
     }
     header('Location: member_cart.php');
 }
@@ -45,7 +44,7 @@ $obj = new Cargo();
                         $total = 0;
                         $no = 1;
                         $canBuy = true;
-                        if (!empty($_SESSION['cart'])) {
+                        if (!empty($_SESSION['cart'][$_SESSION['user']['id']])) {
                         ?>
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover">
@@ -63,7 +62,7 @@ $obj = new Cargo();
                                     <tbody>
                                         <form action="?action=update" method="POST">
                                             <?php
-                                            foreach ($_SESSION['cart'] as $cg_id => $amount) {
+                                            foreach ($_SESSION['cart'][$_SESSION['user']['id']] as $cg_id => $amount) {
                                                 $result = $obj->query("SELECT * FROM tbl_cargo as cg INNER JOIN tbl_type_product as tp ON cg.cg_type_id = tp.tp_id WHERE cg.cg_id = '$cg_id' ");
                                                 $row = $result->fetch_array();
                                                 $sum = $row['cg_price'] * $amount;
@@ -88,7 +87,7 @@ $obj = new Cargo();
                                                     </td>
                                                     <td>฿<?= number_format($row['cg_price']); ?></td>
                                                     <td><input type="number" value="<?= $amount ?>" name="amount[<?= $cg_id ?>]" class="form-control" min="1" style="width:80px;"></td>
-                                                    <td><?= number_format($row['cg_price'] * $amount); ?></td>
+                                                    <td>฿<?= number_format($row['cg_price'] * $amount); ?></td>
                                                     <td class="text-center"><a href="?action=remove&cg_id=<?= $cg_id; ?>"><i class="fa fa-times" aria-hidden="true"></i></a></td>
                                                 </tr>
                                             <?php } ?>

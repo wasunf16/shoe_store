@@ -57,6 +57,7 @@ class LoginRegister extends ConnectDB
             return 'not found';
         } else {
             $row = $result->fetch_array();
+            $_SESSION['user']['id'] = $row['u_username'];
             $_SESSION['user']['username'] = $row['u_username'];
             $_SESSION['user']['password'] = $row['u_password'];
             $_SESSION['user']['fname'] = $row['u_fname'];
