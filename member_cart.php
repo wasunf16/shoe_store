@@ -67,6 +67,7 @@ $obj = new Cargo();
                                                 $row = $result->fetch_array();
                                                 $sum = $row['cg_price'] * $amount;
                                                 $total += $sum;
+                                                
                                             ?>
 
                                                 <tr>
@@ -106,11 +107,11 @@ $obj = new Cargo();
                             <div class="d-flex justify-content-end">
                                 <button class="btn btn-primary btn-sm" type="submit" name="update"><i class='fa fa-refresh'></i> คำนวณ</button>
                             </div>
+                            
                             </form>
-
                     </div>
                     <div class="card-footer">
-                        <a href="#" class="d-block btn btn-dark <?php if (!$canBuy) {
+                        <a href="member_payment.php?total=<?= $total; ?>" class="d-block btn btn-dark <?php if (!$canBuy) {
                                                                     echo 'disabled';
                                                                 } ?>"><i class="fa fa-check" aria-hidden="true"></i> ยืนยันคำสั่งซื้อ</a>
                     </div>

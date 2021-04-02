@@ -27,7 +27,7 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">โปรโมชั่น <sup><img src="img/new.gif" style="width:25px;"></sup></a>
+                            <a class="nav-link" href="#">ขายดี <sup><img src="img/new.gif" style="width:25px;"></sup></a>
                         </li>
                     </ul>
                     <ul class="navbar-nav d-flex">
