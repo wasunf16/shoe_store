@@ -6,10 +6,10 @@ $result = $obj->query("SELECT * FROM tbl_cargo");
 $row = $result->fetch_all(MYSQLI_ASSOC);
 ?>
 
-<body style="background-color: #eee;">
+<body >
     <?php include('navbar.php'); ?>
-    <div class="container">
-        <div class="row mt-5">
+    <div class="container p-4 pb-5 bgc-white shadow rounded min-height">
+        <div class="row">
             <div class="d-flex justify-content-between align-items-center bd-highlight">
                 <div class="d-flex">
                     <h5>สินค้าทั้งหมด</h5>
@@ -20,8 +20,6 @@ $row = $result->fetch_all(MYSQLI_ASSOC);
                 </div>
             </div>
         </div>
-    </div>
-    <div class="container">
         <div class="row">
             <?php foreach ($row as $key => $value) { ?>
                 <div class="col-6 col-sm-6 col-md-2 my-3">

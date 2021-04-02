@@ -57,7 +57,7 @@ class LoginRegister extends ConnectDB
             return 'not found';
         } else {
             $row = $result->fetch_array();
-            $_SESSION['user']['id'] = $row['u_username'];
+            $_SESSION['user']['id'] = $row['u_id'];
             $_SESSION['user']['username'] = $row['u_username'];
             $_SESSION['user']['password'] = $row['u_password'];
             $_SESSION['user']['fname'] = $row['u_fname'];
@@ -134,6 +134,48 @@ class Cargo extends ConnectDB
         }
         $result = $this->db->query("DELETE FROM tbl_cargo WHERE cg_id='$id' ");
         return $result;
+    }
+    function cargoGetTypeAll()
+    {
+        $result = $this->db->query("SELECT * FROM `tbl_type_product`");
+        $row = $result->fetch_all(MYSQLI_ASSOC);
+        return $row;
+    }
+}
+
+class Member extends ConnectDB{
+    function memberGetById($id){
+        $result = $this->db->query("SELECT * FROM tbl_user WHERE u_id = '$id' ");
+        $row = $result->fetch_all(MYSQLI_ASSOC);
+        return $row;
+    }
+    function memberEdit($id,$user,$pass,$fname,$lname,$sex,$address,$email,$tel){
+        $result = $this->db->query(
+            "UPDATE `tbl_user` SET 
+            `u_username` = '$user', 
+            `u_password` = '$pass', 
+            `u_fname` = '$fname', 
+            `u_lname` = '$lname', 
+            `u_sex` = '$sex', 
+            `u_address` = '$address', 
+            `u_email` = '$email', 
+            `u_tel` = '$tel' 
+            WHERE `tbl_user`.`u_id` = '$id';");
+        if($result == true){
+            echo "
+            <script>
+                alert('แก้ไขสำเร็จ');
+                window.location.href='member_profile.php';
+            </script>
+            ";
+        }else{
+            echo "
+            <script>
+                alert('แก้ไขล้มเหลว');
+                window.history.back();
+            </script>
+            ";
+        }
     }
 }
 

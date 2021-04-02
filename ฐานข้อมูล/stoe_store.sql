@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 31, 2021 at 05:36 PM
+-- Generation Time: Apr 02, 2021 at 12:54 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.1
 
@@ -47,10 +47,11 @@ CREATE TABLE `tbl_cargo` (
 
 INSERT INTO `tbl_cargo` (`cg_id`, `cg_code`, `cg_name`, `cg_detail`, `cg_img`, `cg_type_id`, `cg_unit`, `cg_price`, `cg_amount`, `cg_promotion_status`, `cg_promotion_value`) VALUES
 (12, 1001, 'รองเท้าช้างดาว', 'ราคาประหยัด', '20210331045445_7828.png', '1', '40', '65', '20', 'off', ''),
-(13, 2, 'ADIDAS Adilette Aqua', 'รองเท้าแตะผู้ใหญ่', '20210331045938_3709.jpg', '1', '42', '240', '10', 'off', ''),
-(14, 3, 'TERREX SUMRAAAAAAAAAAAAAAAAAAAAaaaaaaa', '..', '20210331050130_6272.jpg', '1', '41', '2200', '5', 'off', ''),
-(15, 4, 'รองเท้ารูปปลา', '..', '20210331050428_8826.jpg', '1', '42', '130', '50', 'off', ''),
-(16, 5, 'MEN UNIQLO U', 'รองเท้าแตะ มีสายรัด (Unisex)', '20210331050633_1998.jpg', '1', '44', '250', '20', 'off', '');
+(13, 1002, 'ADIDAS Adilette Aqua', 'รองเท้าแตะผู้ใหญ่', '20210331045938_3709.jpg', '1', '42', '240', '10', 'off', ''),
+(14, 1003, 'TERREX SUMRA', '..', '20210331050130_6272.jpg', '1', '41', '2200', '5', 'off', ''),
+(15, 1004, 'รองเท้ารูปปลา', '..', '20210331050428_8826.jpg', '1', '42', '130', '50', 'off', ''),
+(16, 1005, 'MEN UNIQLO U', 'รองเท้าแตะ มีสายรัด (Unisex)', '20210331050633_1998.jpg', '1', '44', '250', '20', 'off', ''),
+(21, 1006, 'qweqwe', 'qweqwe', '20210331091812_1948.jpg', '1', '23', '123', '123', 'off', '');
 
 -- --------------------------------------------------------
 
@@ -96,8 +97,8 @@ CREATE TABLE `tbl_user` (
 INSERT INTO `tbl_user` (`u_id`, `u_username`, `u_password`, `u_fname`, `u_lname`, `u_sex`, `u_address`, `u_email`, `u_tel`, `u_role`) VALUES
 (1, 'admin', 'admin', 'admin', 'admin', 'ชาย', 'admin', 'admin@admin.com', '0869678973', 'admin'),
 (2, 'user', 'user', 'user', 'user', 'ชาย', 'user', 'user@user.com', '0888888888', 'user'),
-(3, 'test', 'test', 'เทส', 'อยู่สบาย', 'ชาย', '1150 หาดใหญ่ สงขลา', 'test@test.com', '0888888888', 'member'),
-(7, '12312', '312', '23123', '1', 'ชาย', '123123', 'wasun.f35@gmail.com', '2312312312', 'member');
+(3, 'test', 'test', 'ทดสอบ', 'เทสเทส', 'ชาย', 'เลขที่ 1150 ต.ควนลัง อ.หาดใหญ่ จ.สงขลา 90220', 'test@test.com', '0888888889', 'member'),
+(7, '1', '1', '1', '1', 'ชาย', '1', '1@gmail.com', '123', 'member');
 
 --
 -- Indexes for dumped tables
@@ -129,7 +130,7 @@ ALTER TABLE `tbl_user`
 -- AUTO_INCREMENT for table `tbl_cargo`
 --
 ALTER TABLE `tbl_cargo`
-  MODIFY `cg_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `cg_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `tbl_type_product`

@@ -5,7 +5,7 @@
 }
 
 nav.navbar{
-    background-color: #004741 !important;
+    background-color: #222831 !important;
 }
 
 footer{
@@ -20,4 +20,16 @@ footer{
     position: absolute;
     top: 10px;
     left: 10px;
+}
+
+.bgc-gray{
+    background-color: #393e46;
+}
+.bgc-white{
+    background-color: #fff;
+}
+
+.min-height{
+    min-height: 700px;
+    height: auto;
 }

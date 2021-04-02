@@ -32,10 +32,10 @@ $obj = new Cargo();
 
 ?>
 
-<body style="background-color: #eee;">
+<body>
     <?php include('navbar.php'); ?>
-    <div class="container">
-        <div class="row my-5">
+    <div class="container p-4 pb-5 bgc-white shadow rounded min-height">
+        <div class="row">
             <div class="col-md-8 mx-auto">
                 <div class="card">
                     <h3 class="card-header text-center"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i> ตะกร้าสินค้า</h3>
@@ -78,7 +78,7 @@ $obj = new Cargo();
                                                     <td>
                                                         <?php
                                                         if ($amount > $row['cg_amount']) {
-                                                            echo $row['cg_name']."<p style='color:red'>(สินค้าไม่เพียงพอ)</p>";
+                                                            echo $row['cg_name'] . "<p style='color:red'>(สินค้าไม่เพียงพอ)</p>";
                                                             $canBuy = false;
                                                         } else {
                                                             echo $row['cg_name'];
@@ -110,7 +110,9 @@ $obj = new Cargo();
 
                     </div>
                     <div class="card-footer">
-                        <a href="#" class="d-block btn btn-dark <?php if(!$canBuy){echo 'disabled';} ?>"><i class="fa fa-check" aria-hidden="true"></i> ยืนยันคำสั่งซื้อ</a>
+                        <a href="#" class="d-block btn btn-dark <?php if (!$canBuy) {
+                                                                    echo 'disabled';
+                                                                } ?>"><i class="fa fa-check" aria-hidden="true"></i> ยืนยันคำสั่งซื้อ</a>
                     </div>
                 </div>
                 <div class="d-flex justify-content-center align-items-center mt-2"><a href="index.php">ไปเลือกซื้อสินค้าต่อ</a></ก>
@@ -124,4 +126,5 @@ $obj = new Cargo();
                 </div>
             </div>
         </div>
-        <?php include('footer.php'); ?>
+    </div>
+    <?php include('footer.php'); ?>
