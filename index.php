@@ -1,9 +1,34 @@
 <?php include('header.php'); ?>
 </head>
 <?php
+
 $obj = new ConnectDB();
-$result = $obj->query("SELECT * FROM tbl_cargo");
+
+//pagination
+$row_page = 3;
+if (empty($_GET['p'])) {
+    $page = 1;
+}
+if (isset($_GET['p'])) {
+    $page = $_GET['p'];
+}
+
+if (isset($_GET['p']) && $_GET['p'] <= '0') {
+    $page = 1;
+}
+
+$total_date = mysqli_num_rows($obj->query("SELECT * FROM tbl_cargo"));
+$total_page = ceil($total_date / $row_page);
+if (isset($_GET['p']) && $_GET['p'] >= $total_page) {
+    $page = $total_page;
+}
+$start = ($page - '1') * $row_page;
+// end pagination
+
+
+$result = $obj->query("SELECT * FROM tbl_cargo Limit {$start},{$row_page}");
 $row = $result->fetch_all(MYSQLI_ASSOC);
+
 ?>
 
 <body class="bgc-gray">
@@ -52,6 +77,47 @@ $row = $result->fetch_all(MYSQLI_ASSOC);
                     </div>
                 </div>
             <?php } ?>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-12 d-flex justify-content-center mt-5">
+                <nav aria-label="...">
+                    <ul class="pagination">
+                        <!-- <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">ก่อนหน้า</a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item active" aria-current="page">
+                            <a class="page-link" href="#">2</a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">ต่อไป</a>
+                        </li> -->
+                        <li <?php if ($page == 1) {
+                                echo "class='page-item disabled'";
+                            } ?>><a class="page-link" href="index.php?p=<?php echo $page - '1'; ?>">
+                                ก่อนหน้า</a>
+                        </li>
+                        <?php for ($i = 1; $i <= $total_page; $i++) {
+                            if ($page - 2 >= 2 and ($i > 2 and $i < $page - 2)) {
+                                echo "<li><a class='page-link' href=>...</a></li>";
+                                $i = $page - 2;
+                            }
+                            if ($page + 5 <= $total_page and ($i >= $page + 3 and $i <= $total_page - 2)) {
+                                echo "<li><a class='page-link' href=>...</a></li>";
+                                $i = $total_page - 1;
+                            }
+                        ?>
+                            <li <?php if ($page == $i) {
+                                    echo "class='page-item active' ";
+                                } ?>><a class="page-link" href="index.php?p=<?php echo $i; ?>"><?php echo $i; ?></a></li>
+                        <?php } ?>
+                        <li <?php if ($page == ($total_page)) {
+                                echo "class='page-item disabled'";
+                            } ?>><a class="page-link" href="index.php?p=<?php echo $page + '1'; ?>">ต่อไป</a></li>
+                    </ul>
+                </nav>
+            </div>
         </div>
     </div>
 

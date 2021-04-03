@@ -11,9 +11,13 @@
     //     $Epayment = explode('-',$row['pm_code']);
     //     $pm_code = $Epayment[0].'-'.$Epayment[1] + 1;
     // }
-    echo "<pre>";
-    print_r($_SESSION);
-    echo "</pre>";
+    // echo "<pre>";
+    // print_r($_SESSION);
+    // echo "</pre>";
 
+    $isset = isset($_GET['test']) ? $_GET['test'] : '';
+    // $isset = $_GET['test'] ?? '';
+
+    echo $isset;
 
 ?>
