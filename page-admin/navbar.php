@@ -8,7 +8,8 @@
             <a class="btn btn-danger" href="../logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i> ออกจากระบบ</a>
         </li>
         <li class="nav-item text-nowrap">
-            <a class="nav-link me-2" href="#"><i class="fa fa-user-o" aria-hidden="true"></i> <?= $_SESSION['user']['fname'] . ' ' . $_SESSION['user']['lname']; ?></a>
+            <a class="me-2 btn btn-outline-secondary" href="#"><i class="fa fa-user-o" aria-hidden="true"></i> <?= $_SESSION['user']['fname'] . ' ' . $_SESSION['user']['lname']; ?></a>
+            <!-- <a class="nav-link me-2" href="#"><i class="fa fa-user-o" aria-hidden="true"></i> <?= $_SESSION['user']['fname'] . ' ' . $_SESSION['user']['lname']; ?></a> -->
         </li>
     </ul>
 </header>

@@ -32,9 +32,9 @@ $obj = new Cargo();
 
 ?>
 
-<body>
+<body class="bgc-gray">
     <?php include('navbar.php'); ?>
-    <div class="container p-4 pb-5 bgc-white shadow rounded min-height">
+    <div class="container p-4 pb-5 bgc-white shadow-sm rounded min-height">
         <div class="row">
             <div class="col-md-8 mx-auto">
                 <div class="card">

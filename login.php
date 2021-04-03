@@ -7,9 +7,9 @@
     }
 
 ?>
-<body>
+<body class="bgc-gray">
     <?php include('navbar.php'); ?>
-    <div class="container p-4 pb-5 bgc-white shadow rounded min-height">
+    <div class="container p-4 pb-5 bgc-white shadow-sm rounded min-height">
         <div class="row mt-5">
             <main class="form-signin mx-auto">
                 <form action="" method="POST">

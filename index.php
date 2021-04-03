@@ -6,9 +6,9 @@ $result = $obj->query("SELECT * FROM tbl_cargo");
 $row = $result->fetch_all(MYSQLI_ASSOC);
 ?>
 
-<body >
+<body class="bgc-gray">
     <?php include('navbar.php'); ?>
-    <div class="container p-4 pb-5 bgc-white shadow rounded min-height">
+    <div class="container p-4 pb-5 bgc-white shadow-sm rounded min-height">
         <div class="row">
             <div class="d-flex justify-content-between align-items-center bd-highlight">
                 <div class="d-flex">
@@ -35,12 +35,18 @@ $row = $result->fetch_all(MYSQLI_ASSOC);
                             <p class="card-text" style="font-size:13px;">คงเหลือ <?= $value['cg_amount'] ?> ชิ้น</p>
                         </div>
                         <div class="card-footer p-0">
-                            <?php
-                            if (isset($_SESSION['user']['role'])) {
-                            ?>
-                                <a href="member_cart.php?cg_id=<?= $value['cg_id']; ?>&action=add" class="d-block btn btn-success btn-sm"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i> เพิ่มลงตะกร้า</a>
+                            <?php if (isset($_SESSION['user']['role'])) { ?>
+                                <?php if ($value['cg_amount'] <= 0) { ?>
+                                    <a href="member_cart.php?cg_id=<?= $value['cg_id']; ?>&action=add" class="d-block btn btn-danger btn-sm disabled"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i> สินค้าหมด</a>
+                                <?php } else { ?>
+                                    <a href="member_cart.php?cg_id=<?= $value['cg_id']; ?>&action=add" class="d-block btn btn-success btn-sm"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i> เพิ่มลงตะกร้า</a>
+                                <?php } ?>
                             <?php } else { ?>
-                                <a href="login.php?cg_id=<?= $value['cg_id']; ?>" class="d-block btn btn-success btn-sm"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i> เพิ่มลงตะกร้า</a>
+                                <?php if ($value['cg_amount'] <= 0) { ?>
+                                    <a href="login.php?cg_id=<?= $value['cg_id']; ?>" class="d-block btn btn-danger btn-sm disabled"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i> สินค้าหมด</a>
+                                <?php } else { ?>
+                                    <a href="login.php?cg_id=<?= $value['cg_id']; ?>" class="d-block btn btn-success btn-sm"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i> เพิ่มลงตะกร้า</a>
+                                <?php } ?>
                             <?php } ?>
                         </div>
                     </div>

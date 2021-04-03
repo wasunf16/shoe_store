@@ -35,6 +35,7 @@ class ConnectDB
         $result = $this->db->query("SELECT * FROM $table WHERE $where = $id ");
         return $result;
     }
+
     function deleteByID($table, $where, $id)
     {
         $result = $this->db->query("DELETE FROM $table WHERE $where = $id ");
@@ -127,7 +128,7 @@ class Cargo extends ConnectDB
     }
     function cargoDelete($id)
     {
-        $result = $this->queryByID('tbl_cargo','cg_id',$id);
+        $result = $this->queryByID('tbl_cargo', 'cg_id', $id);
         $getResult = $result->fetch_array();
         if ($getResult['cg_img']) {
             unlink('../img_upload/' . $getResult['cg_img']);
@@ -141,15 +142,63 @@ class Cargo extends ConnectDB
         $row = $result->fetch_all(MYSQLI_ASSOC);
         return $row;
     }
+    public function cargoPayment($channel, $total, $date, $address, $img)
+    {
+        $resultCode = $this->db->query("SELECT * FROM tbl_payment ORDER BY pm_code DESC LIMIT 1");
+        if ($resultCode->num_rows <= 0) {
+            $pm_code = "P-10001";
+        } else {
+            $row = $resultCode->fetch_array();
+            $Epayment = explode('-', $row['pm_code']);
+            $pm_code = $Epayment[0] . '-' . $Epayment[1] + 1;
+        }
+
+        $nameUploadimg = uploadIMG($img,"img_payment/");
+        if($nameUploadimg == false){exit;}
+
+        $resultPayment = $this->db->query("INSERT INTO `tbl_payment` (`pm_id`, `pm_code`, `pm_img`, `pm_total`, `pm_channel`, `pm_date`, `pm_address`, `pm_status`) 
+                                                VALUES (NULL, '$pm_code', '$nameUploadimg', '$total', '$channel', '$date', '$address', 'รอตรวจสอบ');");
+
+        foreach ($_SESSION['cart'][$_SESSION['user']['id']] as $key => $value) {
+            $resultPaymentList = $this->db->query("INSERT INTO `tbl_payment_list` (`pl_id`, `pl_pm_code`, `pl_cg_id` , `pl_amount`) 
+                                                VALUES (NULL, '$pm_code', '$key' , '$value');");
+            $QueryCargo = $this->db->query("SELECT * FROM tbl_cargo WHERE cg_id = '$key' ");
+            $fetchCargo = $QueryCargo->fetch_array();
+            $amountUpdate = $fetchCargo['cg_amount'] - $value;
+            $resultUpdateCargo = $this->db->query("UPDATE `tbl_cargo` SET `cg_amount` = '$amountUpdate' WHERE `tbl_cargo`.`cg_id` = '$key';");
+        }
+
+        if ($resultPayment == true) {
+
+
+            unset($_SESSION['cart']);
+            echo "
+            <script>
+                alert('ชำระเงินแล้ว รอการตรวจสอบ');
+                window.location.href='member_payment_list.php';
+            </script>
+            ";
+        } else {
+            echo "
+            <script>
+                alert('จ่ายเงินล้มเหลว');
+                window.history.back();
+            </script>
+            ";
+        }
+    }
 }
 
-class Member extends ConnectDB{
-    function memberGetById($id){
-        $result = $this->db->query("SELECT * FROM tbl_user WHERE u_id = '$id' ");
+class Member extends ConnectDB
+{
+    function memberGetById($id)
+    {
+        $result = $this->db->query("SELECT * FROM tbl_user WHERE u_id = '$id' AND u_role = 'member' ");
         $row = $result->fetch_all(MYSQLI_ASSOC);
         return $row;
     }
-    function memberEdit($id,$user,$pass,$fname,$lname,$sex,$address,$email,$tel){
+    function memberEdit($id, $user, $pass, $fname, $lname, $sex, $address, $email, $tel)
+    {
         $result = $this->db->query(
             "UPDATE `tbl_user` SET 
             `u_username` = '$user', 
@@ -160,15 +209,16 @@ class Member extends ConnectDB{
             `u_address` = '$address', 
             `u_email` = '$email', 
             `u_tel` = '$tel' 
-            WHERE `tbl_user`.`u_id` = '$id';");
-        if($result == true){
+            WHERE `tbl_user`.`u_id` = '$id';"
+        );
+        if ($result == true) {
             echo "
             <script>
                 alert('แก้ไขสำเร็จ');
                 window.location.href='member_profile.php';
             </script>
             ";
-        }else{
+        } else {
             echo "
             <script>
                 alert('แก้ไขล้มเหลว');
@@ -186,4 +236,30 @@ function activeNav()
     $explode_self = explode('/', $php_self);
     array_splice($explode_self, 1, 2);
     return $explode_self[1];
+}
+
+
+function uploadIMG($img, $dir)
+{
+    $IMG_DIR = $dir;
+    $IMG_NameOld = $img["name"];
+    $IMG_tmp =  $img['tmp_name'];
+    $IMG_type = strtolower(pathinfo($IMG_NameOld, PATHINFO_EXTENSION));
+    $IMG_dateName = date("Ymdhis");
+    $IMG_RandomNumberName = rand(1000, 9999);
+    $IMG_NameFull = $IMG_dateName . '_' . $IMG_RandomNumberName . '.' . $IMG_type;
+    $IMG_UploadStatus = 1;
+
+    if ($IMG_type != "jpg" && $IMG_type != "png" && $IMG_type != "jpeg" && $IMG_type != "gif") {
+        echo "
+            <script>
+                alert('กรุณาเลือกไฟล์ภาพ JPG , PNG และ GIF เท่านั้น');
+                window.history.back();
+            </script>";
+        return false;
+    }else if(move_uploaded_file($IMG_tmp, $IMG_DIR . $IMG_NameFull)){
+        return $IMG_NameFull;
+    }else{
+        return false;
+    }
 }

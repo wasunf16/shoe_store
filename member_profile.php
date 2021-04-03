@@ -12,9 +12,9 @@ if (isset($_POST['submit'])) {
 
 ?>
 
-<body>
+<body class="bgc-gray">
     <?php include('navbar.php'); ?>
-    <div class="container p-4 pb-5 bgc-white shadow rounded min-height">
+    <div class="container p-4 pb-5 bgc-white shadow-sm rounded min-height">
         <div class="card">
             <div class="card-header">
                 <h2><i class="fa fa-user" aria-hidden="true"></i> ข้อมูลผู้ใช้งาน</h2>
@@ -40,7 +40,7 @@ if (isset($_POST['submit'])) {
                             <input name="lname" type="text" class="form-control" id="lname" value="<?= $row_member[0]['u_lname'] ?>">
                         </div>
                         <div class="col-12">
-                            <label for="address" class="form-label">ที่อยู่</label>
+                            <label for="address" class="form-label">ที่อยู่ <span style="color:red">(จะใช้ในการจัดส่งสินค้า)</span></label>
                             <textarea name="address" type="text" class="form-control" id="address"><?= $row_member[0]['u_address'] ?></textarea>
                         </div>
                         <div class="col-12">

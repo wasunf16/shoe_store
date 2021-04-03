@@ -8,9 +8,6 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link activee" aria-current="page" href="index.php">หน้าแรก</a>
-                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 ประเภท
@@ -28,6 +25,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">ขายดี <sup><img src="img/new.gif" style="width:25px;"></sup></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link activee" aria-current="page" href="member_payment_list.php">รายการสั่งซื้อ</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav d-flex">
