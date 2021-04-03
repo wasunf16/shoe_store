@@ -6,18 +6,18 @@ $obj = new ConnectDB();
 $result = $obj->query("SELECT * FROM tbl_user WHERE u_role = 'member' ");
 $row = $result->fetch_all(MYSQLI_ASSOC);
 
-if(isset($_GET['action'])){
-    if($_GET['action'] == 'delete'){
+if (isset($_GET['action'])) {
+    if ($_GET['action'] == 'delete') {
         $objDelete = new ConnectDB();
-        $resultDelete = $objDelete->deleteByID('tbl_user','u_id',$_GET['id']);
-        if($resultDelete == true){
+        $resultDelete = $objDelete->deleteByID('tbl_user', 'u_id', $_GET['id']);
+        if ($resultDelete == true) {
             echo "
             <script>
                 alert('ลบเสร็จแล้ว!!');
                 window.location.href='member_show.php';
             </script>
             ";
-        }else{
+        } else {
             echo "
             <script>
                 alert('ลบล้มเหลว');
@@ -45,7 +45,7 @@ if(isset($_GET['action'])){
                     </div>
                     <hr>
                     <div class="table-responsive">
-                        <table id="dtable" class="table table-striped">
+                        <table id="dtb" class="table table-striped">
                             <thead>
                                 <tr class="table-info">
                                     <th>ชื่อผู้ใช้</th>
@@ -70,9 +70,9 @@ if(isset($_GET['action'])){
                                         <td><?= $value['u_address']; ?></td>
                                         <td width="10%">
                                             <a href="?action=edit&id=" class="btn btn-sm btn-warning m-1"><i class="fa fa-pencil" aria-hidden="true"></i> แก้ไข</a>
-                                            <a href="?action=delete&id=<?=$value['u_id'];?>" class="btn btn-sm btn-danger" onclick="return confirm('ยืนยันการลบ?');"><i class="fa fa-trash-o" aria-hidden="true"></i> ลบ</a>
+                                            <a href="?action=delete&id=<?= $value['u_id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('ยืนยันการลบ?');"><i class="fa fa-trash-o" aria-hidden="true"></i> ลบ</a>
                                         </td>
-                                        
+
                                     </tr>
                                 <?php } ?>
                             </tbody>
@@ -83,6 +83,15 @@ if(isset($_GET['action'])){
         </div>
     </div>
     <?php include('call_datatable.php'); ?>
+    <script>
+        $(document).ready(function() {
+            $('#dtb').DataTable({
+                "order": [
+                    [1, 'desc']
+                ]
+            });
+        });
+    </script>
     <script src="../bootstrap5/bootstrap.bundle.min.js"></script>
 </body>
 

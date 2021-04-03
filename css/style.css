@@ -33,3 +33,13 @@ footer{
     min-height: 700px;
     height: auto;
 }
+
+
+@media print {
+	.no-print  {
+		display: none;
+	}
+	.printme  {
+		display: block;
+	}
+}

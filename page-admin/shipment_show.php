@@ -14,7 +14,7 @@
                 <div class="row mt-2">
                     <h2>Home</h2>
                     <hr>
-                    <table id="dtable" class="table table-striped" style="width:100%">
+                    <table id="dtb" class="table table-striped" style="width:100%">
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -41,6 +41,15 @@
         </div>
     </div>
     <?php include('call_datatable.php'); ?>
+    <script>
+        $(document).ready(function() {
+            $('#dtb').DataTable({
+                "order": [
+                    [1, 'desc']
+                ]
+            });
+        });
+    </script>
     <script src="../bootstrap5/bootstrap.bundle.min.js"></script>
 </body>
 

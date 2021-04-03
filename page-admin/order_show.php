@@ -5,7 +5,25 @@
 
 $obj = new ConnectDB();
 $objModal = new ConnectDB();
-$result = $obj->query("SELECT * FROM `tbl_payment`");
+
+if (isset($_GET['display'])) {
+    switch ($_GET['display']) {
+        case 'success':
+            $result = $obj->query("SELECT * FROM `tbl_payment` WHERE pm_status = 'ยืนยันแล้ว' ");
+            break;
+        case 'delete':
+            $result = $obj->query("SELECT * FROM `tbl_payment` WHERE pm_status = 'ไม่อนุมัติ' ");
+            break;
+    }
+} else {
+    $result = $obj->query("SELECT * FROM `tbl_payment`");
+}
+
+if(isset($_GET['action'])){
+    if($_GET['action'] == 'allow'){
+
+    }
+}
 
 ?>
 
@@ -21,7 +39,14 @@ $result = $obj->query("SELECT * FROM `tbl_payment`");
                 <div class="row mt-2">
                     <h2>ข้อมูลการสั่งซื้อ</h2>
                     <hr>
-                    <table id="dtable" class="table table-striped" style="width:100%">
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <a href="order_show.php" class="btn btn-sm btn-outline-info"><i class="fa fa-clock-o" aria-hidden="true"></i> รอตรวจสอบ</a>
+                            <a href="?display=success" class="btn btn-sm btn-outline-success"><i class="fa fa-check" aria-hidden="true"></i> ยืนยันแล้ว</a>
+                            <a href="?display=delete" class="btn btn-sm btn-outline-danger"><i class="fa fa-times" aria-hidden="true"></i> ไม่อนุมัติ</a>
+                        </div>
+                    </div>
+                    <table id="dtb" class="table table-striped table-hover" style="width:100%">
                         <thead>
                             <tr class="table-success">
                                 <!-- <th>IMG</th> -->
@@ -44,8 +69,8 @@ $result = $obj->query("SELECT * FROM `tbl_payment`");
                                     <td><?= $row['pm_status']; ?></td>
                                     <td width="20%">
                                         <button class="btn btn-sm btn-info m-0" type="button" data-bs-toggle="modal" data-bs-target="#Modal<?= $row['pm_id'] ?>"><i class="fa fa-eye" aria-hidden="true"></i> รายละเอียด</button>
-                                        <a href="?action=edit&id=" class="btn btn-sm btn-success m-0"><i class="fa fa-check" aria-hidden="true"></i> ยืนยัน</a>
-                                        <a href="?action=delete&id=<?= $value['u_id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('ยืนยันการลบ?');"><i class="fa fa-times" aria-hidden="true"></i> ยกเลิก</a>
+                                        <a href="?action=allow&code=<?= $row['pm_code']; ?>" class="btn btn-sm btn-success m-0"><i class="fa fa-check" aria-hidden="true"></i> ยืนยัน</a>
+                                        <a href="?action=delete&code=<?= $row['pm_code']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('ยืนยันการลบ?');"><i class="fa fa-times" aria-hidden="true"></i> ไม่อนุมัติ</a>
                                     </td>
                                 </tr>
 
@@ -78,7 +103,7 @@ $result = $obj->query("SELECT * FROM `tbl_payment`");
                                                             <hr>
                                                             <h4>รายการสินค้า</h4>
                                                             <?php
-                                                            $resultModal = $objModal->query("SELECT * FROM tbl_payment_list as pl INNER JOIN tbl_cargo as cg ON pl.pl_cg_id=cg.cg_id WHERE  pl.pl_pm_code = '".$row['pm_code']."' ");
+                                                            $resultModal = $objModal->query("SELECT * FROM tbl_payment_list as pl INNER JOIN tbl_cargo as cg ON pl.pl_cg_id=cg.cg_id WHERE  pl.pl_pm_code = '" . $row['pm_code'] . "' ");
                                                             while ($rowModal = $resultModal->fetch_array()) {
                                                             ?>
                                                                 <h6><b>รหัสสินค้า: </b><?= $rowModal['cg_code']; ?> <b>ไซต์: </b><?= $rowModal['cg_unit']; ?><b> จำนวน:</b> <?= $rowModal['pl_amount']; ?> คู่</h6>
@@ -107,6 +132,15 @@ $result = $obj->query("SELECT * FROM `tbl_payment`");
 
 
     <?php include('call_datatable.php'); ?>
+    <script>
+        $(document).ready(function() {
+            $('#dtb').DataTable({
+                "order": [
+                    [0, 'desc']
+                ]
+            });
+        });
+    </script>
     <script src="../bootstrap5/bootstrap.bundle.min.js"></script>
 </body>
 

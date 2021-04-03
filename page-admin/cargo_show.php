@@ -46,7 +46,7 @@ if (isset($_GET['action'])) {
                     </div>
                     <hr>
                     <div class="table-responsive">
-                        <table id="dtable" class="table table-striped">
+                        <table id="dtb" class="table table-striped">
                             <thead>
                                 <tr class="table-danger">
                                     <th>IMG</th>
@@ -81,6 +81,15 @@ if (isset($_GET['action'])) {
         </div>
     </div>
     <?php include('call_datatable.php'); ?>
+    <script>
+        $(document).ready(function() {
+            $('#dtb').DataTable({
+                "order": [
+                    [1, 'desc']
+                ]
+            });
+        });
+    </script>
     <script src="../bootstrap5/bootstrap.bundle.min.js"></script>
 </body>
 

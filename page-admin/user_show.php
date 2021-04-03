@@ -23,7 +23,7 @@ $row = $result->fetch_all(MYSQLI_ASSOC);
                     </div>
                     <hr>
                     <div class="table-responsive">
-                        <table id="dtable" class="table table-striped">
+                        <table id="dtb" class="table table-striped">
                             <thead>
                                 <tr class="table-info">
                                     <th>ชื่อผู้ใช้</th>
@@ -60,6 +60,15 @@ $row = $result->fetch_all(MYSQLI_ASSOC);
         </div>
     </div>
     <?php include('call_datatable.php'); ?>
+    <script>
+        $(document).ready(function() {
+            $('#dtb').DataTable({
+                "order": [
+                    [0, 'desc']
+                ]
+            });
+        });
+    </script>
     <script src="../bootstrap5/bootstrap.bundle.min.js"></script>
 </body>
 
