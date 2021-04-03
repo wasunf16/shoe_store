@@ -4,6 +4,7 @@
 <?php
 
 $obj = new ConnectDB();
+$objModal = new ConnectDB();
 $result = $obj->query("SELECT * FROM `tbl_payment`");
 
 ?>
@@ -70,6 +71,19 @@ $result = $obj->query("SELECT * FROM `tbl_payment`");
                                                             <h6><b>ที่อยู่ : </b> <?= $row['pm_address']; ?></h6>
                                                             <h6><b>วันที่สั่งซื้อ : </b> <?= $row['pm_date']; ?></h6>
                                                             <h6><b>สถานะ : </b> <?= $row['pm_status']; ?></h6>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <hr>
+                                                            <h4>รายการสินค้า</h4>
+                                                            <?php
+                                                            $resultModal = $objModal->query("SELECT * FROM tbl_payment_list as pl INNER JOIN tbl_cargo as cg ON pl.pl_cg_id=cg.cg_id WHERE  pl.pl_pm_code = '".$row['pm_code']."' ");
+                                                            while ($rowModal = $resultModal->fetch_array()) {
+                                                            ?>
+                                                                <h6><b>รหัสสินค้า: </b><?= $rowModal['cg_code']; ?> <b>ไซต์: </b><?= $rowModal['cg_unit']; ?><b> จำนวน:</b> <?= $rowModal['pl_amount']; ?> คู่</h6>
+                                                            <?php } ?>
+
                                                         </div>
                                                     </div>
                                                 </div>
