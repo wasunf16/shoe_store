@@ -46,7 +46,7 @@ if (isset($_GET['action'])) {
                     </div>
                     <hr>
                     <div class="table-responsive">
-                        <table id="dtb" class="table table-striped">
+                        <table id="dtb" class="table table-hover">
                             <thead>
                                 <tr class="table-danger">
                                     <th>IMG</th>
@@ -62,7 +62,7 @@ if (isset($_GET['action'])) {
                                 foreach ($row as $key => $value) {
                                 ?>
                                     <tr>
-                                        <td><img src="../img_upload/<?= $value['cg_img']; ?>" style="height:75px;"></td>
+                                        <td><img src="../img_upload/<?= $value['cg_img']; ?>" style="height:75px;width:75px;"></td>
                                         <td><?= $value['cg_code']; ?></td>
                                         <td><?= $value['cg_name']; ?></td>
                                         <td><?= $value['cg_detail']; ?></td>

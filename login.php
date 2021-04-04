@@ -4,6 +4,9 @@
     if(isset($_POST['submit'])){
         $obj = new LoginRegister();
         $result = $obj->CheckLogin($_POST['username'],$_POST['password']);
+        if($result == false){
+            $status = "<span style='color:red;'>Username หรือ Password ไม่ถูกต้อง</span>";
+        }
     }
 
 ?>
@@ -25,6 +28,9 @@
                     <div class="form-floating mb-3 col-md-6 mx-auto">
                         <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
                         <label for="floatingPassword">Password</label>
+                    </div>
+                    <div class="form-floating mb-3 col-md-6 mx-auto">
+                        <?php if(!empty($status)){echo $status;} ?>
                     </div>
                     <div class="form-floating mb-3 col-md-6 mx-auto">
                         <button class="w-100 btn btn-lg btn-success " type="submit" name="submit"><i class="fa fa-key" aria-hidden="true"></i> Login</button>

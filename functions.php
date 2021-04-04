@@ -53,9 +53,11 @@ class LoginRegister extends ConnectDB
     }
     function CheckLogin($user, $pass)
     {
-        $result = $this->db->query("SELECT * FROM tbl_user WHERE `u_username`='$user' AND `u_password`='$pass' ");
+        $userReal = $this->db->real_escape_string($user);
+        $passReal = $this->db->real_escape_string($pass);
+        $result = $this->db->query("SELECT * FROM tbl_user WHERE `u_username`='$userReal' AND `u_password`='$passReal' ");
         if ($result->num_rows <= 0) {
-            return 'not found';
+            return false;
         } else {
             $row = $result->fetch_array();
             $_SESSION['user']['id'] = $row['u_id'];
@@ -94,9 +96,15 @@ class Cargo extends ConnectDB
     }
     function cargoAdd($img, $name, $detail, $unit, $price, $amount, $type, $promotion, $promotion_value)
     {
-        $queryMaxCode = $this->db->query("SELECT MAX(cg_code) as max FROM tbl_cargo");
-        $maxCode = $queryMaxCode->fetch_array();
-        $fetchMaxCode = $maxCode['max'] + 1;
+
+        $resultCode = $this->db->query("SELECT cg_code FROM tbl_cargo ORDER BY cg_code DESC");
+        if($resultCode->num_rows > 0){
+            $row = $resultCode->fetch_array();
+            $Epayment = explode('-', $row['cg_code']);
+            $cg_code = $Epayment[0] . '-' . $Epayment[1] + 1;
+        }else{
+            $cg_code = "CG-10001";
+        }
 
         if (isset($img)) {
             $IMG_DIR = "../img_upload/";
@@ -120,7 +128,7 @@ class Cargo extends ConnectDB
             } else {
                 if (move_uploaded_file($IMG_tmp, $IMG_DIR . $IMG_NameFull)) {
                     $result = $this->db->query("INSERT INTO `tbl_cargo` (`cg_id`, `cg_code`, `cg_name`, `cg_detail`, `cg_img`, `cg_type_id`, `cg_unit`, `cg_price`, `cg_amount`, `cg_promotion_status`, `cg_promotion_value`) 
-                    VALUES (NULL, '$fetchMaxCode', '$name', '$detail', '$IMG_NameFull', '$type', '$unit', '$price', '$amount', '$promotion', '$promotion_value');");
+                    VALUES (NULL, '$cg_code', '$name', '$detail', '$IMG_NameFull', '$type', '$unit', '$price', '$amount', '$promotion', '$promotion_value');");
                     return $result;
                 }
             }
@@ -153,8 +161,8 @@ class Cargo extends ConnectDB
             $pm_code = $Epayment[0] . '-' . $Epayment[1] + 1;
         }
 
-        $nameUploadimg = uploadIMG($img,"img_payment/");
-        if($nameUploadimg == false){exit;}
+        $nameUploadimg = uploadIMG($img, "img_payment/");
+        if ($nameUploadimg == false) { exit; }
 
         $resultPayment = $this->db->query("INSERT INTO `tbl_payment` (`pm_id`, `pm_code`, `pm_img`, `pm_total`, `pm_channel`, `pm_date`, `pm_address`, `pm_status`) 
                                                 VALUES (NULL, '$pm_code', '$nameUploadimg', '$total', '$channel', '$date', '$address', 'รอตรวจสอบ');");
@@ -182,6 +190,51 @@ class Cargo extends ConnectDB
             echo "
             <script>
                 alert('จ่ายเงินล้มเหลว');
+                window.history.back();
+            </script>
+            ";
+        }
+    }
+
+    function cargoPaymentAllow($id, $code)
+    {
+        $resultUpdate = $this->db->query("UPDATE `tbl_payment` SET `pm_status` = 'ยืนยันแล้ว' WHERE `tbl_payment`.`pm_id` = '$id';");
+        $resultInsert = $this->db->query("INSERT INTO `tbl_shipment` (`sm_id`, `sm_company`, `sm_code`, `sm_pm_code`, `sm_status`) VALUES (NULL, '', '', '$code', 'รอดำเนินการ');");
+        if ($resultUpdate && $resultInsert) {
+            echo "
+            <script>
+                alert('ยืนยันแล้วเรียบร้อย');
+                window.location.href='shipment_show.php';
+            </script>
+            ";
+        } else {
+            echo "
+            <script>
+                alert('ยืนยันล้มเหลว');
+                window.history.back();
+            </script>
+            ";
+        }
+    }
+    function cargoPaymentDeny($id,$code)
+    {
+        $result = $this->db->query("UPDATE `tbl_payment` SET `pm_status` = 'ไม่อนุมัติ' WHERE `tbl_payment`.`pm_id` = '$id';");
+        $queryData = $this->db->query("SELECT * FROM tbl_payment as pm INNER JOIN tbl_payment_list as pl ON pm.pm_code=pl.pl_pm_code INNER JOIN tbl_cargo as cg ON pl.pl_cg_id=cg.cg_id WHERE pm.pm_code = '$code' ");
+        while($fetchData = $queryData->fetch_array()){
+            $count = $fetchData['cg_amount']+$fetchData['pl_amount'];
+            $resultUpdate = $this->db->query("UPDATE `tbl_cargo` SET `cg_amount` = '$count' WHERE `tbl_cargo`.`cg_id` = '".$fetchData['cg_id']."';");
+        }
+        if ($result) {
+            echo "
+            <script>
+                alert('เรียบร้อย');
+                window.location.href='order_show.php';
+            </script>
+            ";
+        } else {
+            echo "
+            <script>
+                alert('ไม่อนุมัติล้มเหลว');
                 window.history.back();
             </script>
             ";
@@ -257,9 +310,9 @@ function uploadIMG($img, $dir)
                 window.history.back();
             </script>";
         return false;
-    }else if(move_uploaded_file($IMG_tmp, $IMG_DIR . $IMG_NameFull)){
+    } else if (move_uploaded_file($IMG_tmp, $IMG_DIR . $IMG_NameFull)) {
         return $IMG_NameFull;
-    }else{
+    } else {
         return false;
     }
 }

@@ -16,12 +16,18 @@ if (isset($_GET['display'])) {
             break;
     }
 } else {
-    $result = $obj->query("SELECT * FROM `tbl_payment`");
+    $result = $obj->query("SELECT * FROM `tbl_payment` WHERE pm_status = 'รอตรวจสอบ' ");
 }
 
-if(isset($_GET['action'])){
-    if($_GET['action'] == 'allow'){
-
+if (isset($_GET['action'])) {
+    $objAction = new Cargo();
+    switch ($_GET['action']) {
+        case 'allow':
+            $resultAllow = $objAction->cargoPaymentAllow($_GET['id'], $_GET['code']);
+            break;
+        case 'delete':
+            $resultDelete = $objAction->cargoPaymentDeny($_GET['id'],$_GET['code']);
+            break;
     }
 }
 
@@ -59,8 +65,6 @@ if(isset($_GET['action'])){
                         </thead>
                         <tbody>
                             <?php while ($row = $result->fetch_array()) { ?>
-
-
                                 <tr>
                                     <!-- <td><img src="../img_payment/<?= $row['pm_img'] ?>" style="width:75px; height:75px;"></td> -->
                                     <td><?= $row['pm_code']; ?></td>
@@ -68,9 +72,15 @@ if(isset($_GET['action'])){
                                     <td><?= $row['pm_date']; ?></td>
                                     <td><?= $row['pm_status']; ?></td>
                                     <td width="20%">
-                                        <button class="btn btn-sm btn-info m-0" type="button" data-bs-toggle="modal" data-bs-target="#Modal<?= $row['pm_id'] ?>"><i class="fa fa-eye" aria-hidden="true"></i> รายละเอียด</button>
-                                        <a href="?action=allow&code=<?= $row['pm_code']; ?>" class="btn btn-sm btn-success m-0"><i class="fa fa-check" aria-hidden="true"></i> ยืนยัน</a>
-                                        <a href="?action=delete&code=<?= $row['pm_code']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('ยืนยันการลบ?');"><i class="fa fa-times" aria-hidden="true"></i> ไม่อนุมัติ</a>
+                                        <?php if (isset($_GET['display']) && $_GET['display'] == 'success') { ?>
+                                            <button class="btn btn-sm btn-info m-0" type="button" data-bs-toggle="modal" data-bs-target="#Modal<?= $row['pm_id'] ?>"><i class="fa fa-eye" aria-hidden="true"></i> รายละเอียด</button>
+                                        <?php } else if (isset($_GET['display']) && $_GET['display'] == 'delete') { ?>
+                                            <button class="btn btn-sm btn-info m-0" type="button" data-bs-toggle="modal" data-bs-target="#Modal<?= $row['pm_id'] ?>"><i class="fa fa-eye" aria-hidden="true"></i> รายละเอียด</button>
+                                        <?php } else { ?>
+                                            <button class="btn btn-sm btn-info m-0" type="button" data-bs-toggle="modal" data-bs-target="#Modal<?= $row['pm_id'] ?>"><i class="fa fa-eye" aria-hidden="true"></i> รายละเอียด</button>
+                                            <a href="?action=allow&id=<?= $row['pm_id']; ?>&code=<?= $row['pm_code']; ?>" class="btn btn-sm btn-success m-0"><i class="fa fa-check" aria-hidden="true"></i> ยืนยัน</a>
+                                            <a href="?action=delete&id=<?= $row['pm_id']; ?>&code=<?= $row['pm_code']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('ยืนยัน?');"><i class="fa fa-times" aria-hidden="true"></i> ไม่อนุมัติ</a>
+                                        <?php } ?>
                                     </td>
                                 </tr>
 
