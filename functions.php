@@ -94,15 +94,20 @@ class Cargo extends ConnectDB
         $row = $result->fetch_all(MYSQLI_ASSOC);
         return $row;
     }
+    function cargoTypeAll()
+    {
+        $result = $this->db->query("SELECT * FROM tbl_type_product");
+        return $result;
+    }
     function cargoAdd($img, $name, $detail, $unit, $price, $amount, $type, $promotion, $promotion_value)
     {
 
         $resultCode = $this->db->query("SELECT cg_code FROM tbl_cargo ORDER BY cg_code DESC");
-        if($resultCode->num_rows > 0){
+        if ($resultCode->num_rows > 0) {
             $row = $resultCode->fetch_array();
             $Epayment = explode('-', $row['cg_code']);
             $cg_code = $Epayment[0] . '-' . $Epayment[1] + 1;
-        }else{
+        } else {
             $cg_code = "CG-10001";
         }
 
@@ -150,7 +155,7 @@ class Cargo extends ConnectDB
         $row = $result->fetch_all(MYSQLI_ASSOC);
         return $row;
     }
-    public function cargoPayment($channel, $total, $date, $address, $img)
+    public function cargoPayment($channel, $total, $date, $address, $img, $uid)
     {
         $resultCode = $this->db->query("SELECT * FROM tbl_payment ORDER BY pm_code DESC LIMIT 1");
         if ($resultCode->num_rows <= 0) {
@@ -162,10 +167,12 @@ class Cargo extends ConnectDB
         }
 
         $nameUploadimg = uploadIMG($img, "img_payment/");
-        if ($nameUploadimg == false) { exit; }
+        if ($nameUploadimg == false) {
+            exit;
+        }
 
-        $resultPayment = $this->db->query("INSERT INTO `tbl_payment` (`pm_id`, `pm_code`, `pm_img`, `pm_total`, `pm_channel`, `pm_date`, `pm_address`, `pm_status`) 
-                                                VALUES (NULL, '$pm_code', '$nameUploadimg', '$total', '$channel', '$date', '$address', 'รอตรวจสอบ');");
+        $resultPayment = $this->db->query("INSERT INTO `tbl_payment` (`pm_id`, `pm_code`, `pm_img`, `pm_total`, `pm_u_id` , `pm_channel`, `pm_date`, `pm_address`, `pm_status`) 
+                                                VALUES (NULL, '$pm_code', '$nameUploadimg', '$total' , '$uid' , '$channel', '$date', '$address', 'รอตรวจสอบ');");
 
         foreach ($_SESSION['cart'][$_SESSION['user']['id']] as $key => $value) {
             $resultPaymentList = $this->db->query("INSERT INTO `tbl_payment_list` (`pl_id`, `pl_pm_code`, `pl_cg_id` , `pl_amount`) 
@@ -177,8 +184,6 @@ class Cargo extends ConnectDB
         }
 
         if ($resultPayment == true) {
-
-
             unset($_SESSION['cart']);
             echo "
             <script>
@@ -216,13 +221,13 @@ class Cargo extends ConnectDB
             ";
         }
     }
-    function cargoPaymentDeny($id,$code)
+    function cargoPaymentDeny($id, $code)
     {
         $result = $this->db->query("UPDATE `tbl_payment` SET `pm_status` = 'ไม่อนุมัติ' WHERE `tbl_payment`.`pm_id` = '$id';");
         $queryData = $this->db->query("SELECT * FROM tbl_payment as pm INNER JOIN tbl_payment_list as pl ON pm.pm_code=pl.pl_pm_code INNER JOIN tbl_cargo as cg ON pl.pl_cg_id=cg.cg_id WHERE pm.pm_code = '$code' ");
-        while($fetchData = $queryData->fetch_array()){
-            $count = $fetchData['cg_amount']+$fetchData['pl_amount'];
-            $resultUpdate = $this->db->query("UPDATE `tbl_cargo` SET `cg_amount` = '$count' WHERE `tbl_cargo`.`cg_id` = '".$fetchData['cg_id']."';");
+        while ($fetchData = $queryData->fetch_array()) {
+            $count = $fetchData['cg_amount'] + $fetchData['pl_amount'];
+            $resultUpdate = $this->db->query("UPDATE `tbl_cargo` SET `cg_amount` = '$count' WHERE `tbl_cargo`.`cg_id` = '" . $fetchData['cg_id'] . "';");
         }
         if ($result) {
             echo "
@@ -234,7 +239,38 @@ class Cargo extends ConnectDB
         } else {
             echo "
             <script>
-                alert('ไม่อนุมัติล้มเหลว');
+                alert('ล้มเหลว');
+                window.history.back();
+            </script>
+            ";
+        }
+    }
+    function cargoPaymentRemove($id, $code)
+    {
+        $queryData = $this->db->query("SELECT * FROM tbl_payment as pm INNER JOIN tbl_payment_list as pl ON pm.pm_code=pl.pl_pm_code INNER JOIN tbl_cargo as cg ON pl.pl_cg_id=cg.cg_id WHERE pm.pm_code = '$code' ");
+        while ($fetchData = $queryData->fetch_array()) {
+            $resultRemove = $this->db->query("DELETE FROM tbl_payment_list WHERE pl_id = '".$fetchData['pl_id']."' ");
+        }
+
+        $resultDelIMG = $this->queryByID('tbl_cargo', 'cg_id', $id);
+        $fetchDelIMG = $resultDelIMG->fetch_array();
+        if ($fetchDelIMG['pm_img']) {
+            unlink('../img_upload/' . $fetchDelIMG['pm_img']);
+        }
+
+        $result = $this->db->query("DELETE FROM tbl_payment WHERE `pm_id` = '$id';");
+        if ($result) {
+
+            echo "
+            <script>
+                alert('เรียบร้อย');
+                window.location.href='order_show.php';
+            </script>
+            ";
+        } else {
+            echo "
+            <script>
+                alert('ลบล้มเหลว');
                 window.history.back();
             </script>
             ";

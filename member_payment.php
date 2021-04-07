@@ -12,12 +12,12 @@ $rowUser = $objUser->memberGetById($_SESSION['user']['id']);
 
 if(isset($_POST['submit'])){
     $objPayment = new Cargo();
-    $resultPayment = $objPayment->cargoPayment($_POST['channel'],$_POST['total'],$_POST['date'],$_POST['address'],$_FILES['img']);
+    $resultPayment = $objPayment->cargoPayment($_POST['channel'],$_POST['total'],$_POST['date'],$_POST['address'],$_FILES['img'],$_SESSION['user']['id']);
 }
 
 ?>
 
-<body class="bgc-gray">
+<body class="bgc-gray bgm-stoes">
     <?php include('navbar.php'); ?>
     <div class="container p-4 pb-5 bgc-white shadow-sm rounded min-height">
         <div class="row">

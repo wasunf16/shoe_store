@@ -33,7 +33,7 @@ if (isset($_GET['action'])) {
 
 ?>
 
-<body class="bgc-gray">
+<body class="bgc-gray bgm-stoes">
 
     <?php include('navbar.php'); ?>
 
@@ -43,9 +43,8 @@ if (isset($_GET['action'])) {
             <hr>
             <div class="row mb-3">
                 <div class="col-md-12">
-                    <a href="order_show.php" class="btn btn-sm btn-outline-info"><i class="fa fa-clock-o" aria-hidden="true"></i> รอตรวจสอบ</a>
-                    <a href="?display=success" class="btn btn-sm btn-outline-success"><i class="fa fa-check" aria-hidden="true"></i> ยืนยันแล้ว</a>
-                    <a href="?display=delete" class="btn btn-sm btn-outline-danger"><i class="fa fa-times" aria-hidden="true"></i> ไม่อนุมัติ</a>
+                    <a href="order_show.php" class="btn btn-sm btn-outline-info"><i class="fa fa-clock-o" aria-hidden="true"></i> รายการสั่งซื้อ</a>
+                    <a href="?display=success" class="btn btn-sm btn-outline-success"><i class="fa fa-check" aria-hidden="true"></i> รายการจัดส่ง</a>
                 </div>
             </div>
             <table id="dtb" class="table table-striped table-hover" style="width:100%">
@@ -146,7 +145,5 @@ if (isset($_GET['action'])) {
             });
         });
     </script>
-    <script src="../bootstrap5/bootstrap.bundle.min.js"></script>
-</body>
-
-</html>
+    
+    <?php include('footer.php'); ?>

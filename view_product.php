@@ -4,7 +4,7 @@
     $objCargo = new Cargo();
     $fetchCargo = $objCargo->cargofetchByID($_GET['cg_id']);
 ?>
-<body class="bgc-gray">
+<body class="bgc-gray bgm-stoes">
     <?php include('navbar.php'); ?>
     <div class="container p-4 pb-5 bgc-white shadow-sm rounded min-height">
         <div class="row mt-5">
@@ -16,7 +16,7 @@
                 <h5 style="background-color:#eee; padding: 10px; border-left: 4px solid red;" class="mt-4">ราคา ฿<?=$fetchCargo[0]['cg_price'];?> บาท</h5>
                 <p class="mt-5">Size <?=$fetchCargo[0]['cg_unit'];?></p>
                 <p>มีสินค้าทั้งหมด <?=$fetchCargo[0]['cg_amount'];?> คู่</p>
-                <a href="" class="btn btn-success"><i class="fa fa-shopping-cart" aria-hidden="true"></i> เพิ่มไปยังตะกร้าสินค้า</a>
+                <a href="member_cart.php?cg_id=<?= $_GET['cg_id']; ?>&action=add" class="btn btn-success"><i class="fa fa-shopping-cart" aria-hidden="true"></i> เพิ่มไปยังตะกร้าสินค้า</a>
                 <p class="mt-5"><?=$fetchCargo[0]['cg_detail'];?></p>
             </div>
         </div>

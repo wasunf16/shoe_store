@@ -26,12 +26,22 @@ $start = ($page - '1') * $row_page;
 // end pagination
 
 
-$result = $obj->query("SELECT * FROM tbl_cargo Limit {$start},{$row_page}");
+if (isset($_GET['type']) && $_GET['type'] != null) {
+    $type = $_GET['type'];
+    $result = $obj->query("SELECT * FROM tbl_cargo WHERE cg_type_id='{$type}' Limit {$start},{$row_page}");
+} else if (isset($_GET['search']) && $_GET['search'] != null) {
+    $search = $_GET['search'];
+    $result = $obj->query("SELECT * FROM tbl_cargo WHERE cg_name LIKE '%" . $search . "%' Limit {$start},{$row_page}");
+} else {
+    //get all
+    $result = $obj->query("SELECT * FROM tbl_cargo Limit {$start},{$row_page}");
+}
+
 $row = $result->fetch_all(MYSQLI_ASSOC);
 
 ?>
 
-<body class="bgc-gray">
+<body class="bgc-gray bgm-stoes">
     <?php include('navbar.php'); ?>
     <div class="container p-4 pb-5 bgc-white shadow-sm rounded min-height">
         <div class="row">
@@ -40,8 +50,14 @@ $row = $result->fetch_all(MYSQLI_ASSOC);
                     <h5>สินค้าทั้งหมด</h5>
                 </div>
                 <div class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="ค้นหา" aria-label="Search">
-                    <button class="btn btn-primary" type="submit"><i class="fa fa-search" aria-hidden="true"></i> </button>
+                    <form action="" method="GET" class="row row-cols-lg-auto g-3 align-items-center">
+                        <div class="col-md-6">
+                            <input name="search" class="form-control me-2" type="search" placeholder="ค้นหา" aria-label="Search">
+                        </div>
+                        <div class="col-md-6">
+                            <button class="btn btn-primary" type="submit"><i class="fa fa-search" aria-hidden="true"></i> </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

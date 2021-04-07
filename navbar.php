@@ -19,18 +19,13 @@
                                 $rowListType = $objListType->cargoGetTypeAll();
                                 foreach ($rowListType as $key => $value) {
                                 ?>
-                                    <li><a class="dropdown-item" href="type_product?tp_id=<?= $rowListType[$key]['tp_id']; ?>"><?= $rowListType[$key]['tp_name']; ?></a></li>
+                                    <li><a class="dropdown-item" href="index.php?type=<?= $rowListType[$key]['tp_id']; ?>"><?= $rowListType[$key]['tp_name']; ?></a></li>
                                 <?php } ?>
                             </ul>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">ขายดี <sup><img src="img/new.gif" style="width:25px;"></sup></a>
                         </li>
-                        <?php if(isset($_SESSION['user']['role']) && $_SESSION['user']['role'] == 'member'){ ?>
-                        <li class="nav-item">
-                            <a class="nav-link activee" aria-current="page" href="member_payment_list.php">รายการสั่งซื้อ</a>
-                        </li>
-                        <?php } ?>
                     </ul>
                     <ul class="navbar-nav d-flex">
                         <?php
@@ -40,7 +35,16 @@
                             $obj_fetchNameNav = new Member();
                             $row_fetchNameNav = $obj_fetchNameNav->memberGetById($_SESSION['user']['id']);
                             ?>
-                            <a href="member_profile.php" class="btn btn-outline-light me-2"><i class="fa fa-user" aria-hidden="true"></i> <?= $row_fetchNameNav[0]['u_fname'] . ' ' . $row_fetchNameNav[0]['u_lname'] ?></a>
+                            <div class="dropdown me-2">
+                                <button class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-user" aria-hidden="true"></i> <?= $row_fetchNameNav[0]['u_fname'] . ' ' . $row_fetchNameNav[0]['u_lname'] ?>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="member_profile.php">แก้ไขข้อมูล</a></li>
+                                    <li><a class="dropdown-item" href="member_payment_list.php">รายการสั่งซื้อ</a></li>
+                                    <li><a class="dropdown-item" href="member_shipment.php">รายการจัดส่ง</a></li>
+                                </ul>
+                            </div>
                             <a href="logout.php" class="btn btn-danger"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
                         <?php } else { ?>
                             <a href="login.php" class="btn btn-success me-2"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>

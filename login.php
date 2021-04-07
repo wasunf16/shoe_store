@@ -10,7 +10,7 @@
     }
 
 ?>
-<body class="bgc-gray">
+<body class="bgc-gray bgm-stoes">
     <?php include('navbar.php'); ?>
     <div class="container p-4 pb-5 bgc-white shadow-sm rounded min-height">
         <div class="row mt-5">
