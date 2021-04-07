@@ -40,7 +40,7 @@ if (isset($_POST['submit'])) {
                             <input name="lname" type="text" class="form-control" id="lname" value="<?= $row_member[0]['u_lname'] ?>">
                         </div>
                         <div class="col-12">
-                            <label for="address" class="form-label">ที่อยู่ <span style="color:red">(จะใช้ในการจัดส่งสินค้า)</span></label>
+                            <label for="address" class="form-label">ที่อยู่</label>
                             <textarea name="address" type="text" class="form-control" id="address"><?= $row_member[0]['u_address'] ?></textarea>
                         </div>
                         <div class="col-12">

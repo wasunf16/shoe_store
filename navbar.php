@@ -26,9 +26,11 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#">ขายดี <sup><img src="img/new.gif" style="width:25px;"></sup></a>
                         </li>
+                        <?php if(isset($_SESSION['user']['role']) && $_SESSION['user']['role'] == 'member'){ ?>
                         <li class="nav-item">
                             <a class="nav-link activee" aria-current="page" href="member_payment_list.php">รายการสั่งซื้อ</a>
                         </li>
+                        <?php } ?>
                     </ul>
                     <ul class="navbar-nav d-flex">
                         <?php

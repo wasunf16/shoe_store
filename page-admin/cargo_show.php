@@ -65,7 +65,7 @@ if (isset($_GET['action'])) {
                                         <td><img src="../img_upload/<?= $value['cg_img']; ?>" style="height:75px;width:75px;"></td>
                                         <td><?= $value['cg_code']; ?></td>
                                         <td><?= $value['cg_name']; ?></td>
-                                        <td><?= $value['cg_detail']; ?></td>
+                                        <td><?= substr($value['cg_detail'],0,100).'...'; ?></td>
                                         <td><?= $value['tp_name']; ?></td>
                                         <td width="10%">
                                             <a href="?action=edit&id=<?= $value['cg_id']; ?>" class="btn btn-sm btn-warning m-1"><i class="fa fa-pencil" aria-hidden="true"></i> แก้ไข</a>
