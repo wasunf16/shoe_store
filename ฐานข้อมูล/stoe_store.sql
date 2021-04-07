@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 03, 2021 at 02:33 PM
+-- Generation Time: Apr 07, 2021 at 12:42 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.1
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `tbl_cargo` (
   `cg_id` int(20) NOT NULL,
-  `cg_code` int(50) NOT NULL,
+  `cg_code` varchar(255) NOT NULL,
   `cg_name` varchar(255) NOT NULL,
   `cg_detail` text NOT NULL,
   `cg_img` varchar(255) NOT NULL,
@@ -46,11 +46,9 @@ CREATE TABLE `tbl_cargo` (
 --
 
 INSERT INTO `tbl_cargo` (`cg_id`, `cg_code`, `cg_name`, `cg_detail`, `cg_img`, `cg_type_id`, `cg_unit`, `cg_price`, `cg_amount`, `cg_promotion_status`, `cg_promotion_value`) VALUES
-(12, 1001, 'รองเท้าช้างดาว', 'ราคาประหยัด', '20210331045445_7828.png', '1', '39', '65', '12', 'off', ''),
-(13, 1002, 'ADIDAS Adilette Aqua', 'รองเท้าแตะผู้ใหญ่', '20210331045938_3709.jpg', '1', '42', '240', '9', 'off', ''),
-(14, 1003, 'TERREX SUMRA', '..', '20210331050130_6272.jpg', '1', '41', '2200', '0', 'off', ''),
-(15, 1004, 'รองเท้ารูปปลา', '..', '20210331050428_8826.jpg', '1', '42', '130', '44', 'off', ''),
-(16, 1005, 'MEN UNIQLO U', 'รองเท้าแตะ มีสายรัด (Unisex)', '20210331050633_1998.jpg', '1', '44', '250', '18', 'off', '');
+(49, 'CG-10001', 'SKECHERS', 'รองเท้าแตะ SKECHERS\r\nรองเท้าแตะแบบหูคีบ SKECHERS\r\nรองเท้าแตะแบบหูหนีบ SKECHERS สำหรับสวมใส่ได้ทุกวัน\r\nพื้นรองเท้าด้านในช่วยซัพพอร์ตเท้าและมอบความนุ่มสบายขณะสวมใส่', '20210404030937_9521.png', '1', '40', '690', '30', 'off', ''),
+(50, 'CG-10002', 'รองเท้าแตะ ADILETTE AQUA', 'รองเท้าแตะสำหรับใส่หลังว่ายน้ำ มาพร้อมความนุ่มที่มากขึ้น\r\nรองเท้าแตะที่จะให้คุณสัมผัสความแห้งสบายหลังว่ายน้ำ มาพร้อมความเรียบง่ายในสไตล์สลิปออน แต่งแถบ 3-Stripes ที่เป็นซิกเนเจอร์และดีเอ็นเอของอาดิดาส พื้นรองเท้าสุดนุ่ม สำหรับปรนนิบัติเท้าที่เมื่อยล้าของคุณ\r\n\r\n', '20210404031044_5527.png', '1', '39', '700', '45', 'off', ''),
+(51, 'CG-10003', 'S Sports', 'S SPORTS Cross 07 รองเท้าแตะผู้ชาย\r\nรองเท้าแตะ S SPORTS\r\nรองเท้าแตะรัดส้น S SPORTS สไตล์แฟชั่น\r\nอัปเปอร์ตัดเย็บจากวัสดุสังเคราะห์และผ้ามีความทนทานสูง\r\nสายรัดส้นปรับกระชับได้ ช่วยให้สวมใส่กระชับพอดีและถอดออกง่าย', '20210404031157_1981.png', '1', '41', '390', '100', 'off', '');
 
 -- --------------------------------------------------------
 
@@ -74,10 +72,9 @@ CREATE TABLE `tbl_payment` (
 --
 
 INSERT INTO `tbl_payment` (`pm_id`, `pm_code`, `pm_img`, `pm_total`, `pm_channel`, `pm_date`, `pm_address`, `pm_status`) VALUES
-(20, 'P-10008', '20210403125755_8022.jpg', '250', 'ไทยพาณิชย์', '2021-04-03 17:57:50', 'เลขที่ 1150 ต.ควนลัง อ.หาดใหญ่ จ.สงขลา 90000', 'รอตรวจสอบ'),
-(21, 'P-10009', '20210403010427_5618.jpg', '65', 'ทหารไทย', '2021-04-03 18:04:23', 'เลขที่ 1150 ต.ควนลัง อ.หาดใหญ่ จ.สงขลา 90000', 'รอตรวจสอบ'),
-(22, 'P-10010', '20210403010510_8974.jpg', '65', 'กรุงไทย', '2021-04-03 18:05:02', 'เลขที่ 1150 ต.ควนลัง อ.หาดใหญ่ จ.สงขลา 90000', 'รอตรวจสอบ'),
-(23, 'P-10011', '20210403021305_4394.jpg', '815', 'กรุงไทย', '2021-04-03 19:12:55', 'เลขที่ 1150 ต.ควนลัง อ.หาดใหญ่ จ.สงขลา 90000', 'รอตรวจสอบ');
+(24, 'P-10001', '20210404031232_9882.jpg', '1480', 'กสิกรไทย', '2021-04-04 20:12:22', 'เลขที่ 1150 ต.ควนลัง อ.หาดใหญ่ จ.สงขลา 90000', 'ไม่อนุมัติ'),
+(25, 'P-10002', '20210404033630_7803.jpg', '20700', 'ไทยพาณิชย์', '2021-04-04 20:36:19', 'เลขที่ 1150 ต.ควนลัง อ.หาดใหญ่ จ.สงขลา 90000', 'ไม่อนุมัติ'),
+(26, 'P-10003', '20210404065618_2285.jpg', '3500', 'กรุงไทย', '2021-04-04 23:56:06', 'เลขที่ 1150 ต.ควนลัง อ.หาดใหญ่ จ.สงขลา 90000', 'ยืนยันแล้ว');
 
 -- --------------------------------------------------------
 
@@ -97,21 +94,31 @@ CREATE TABLE `tbl_payment_list` (
 --
 
 INSERT INTO `tbl_payment_list` (`pl_id`, `pl_pm_code`, `pl_cg_id`, `pl_amount`) VALUES
-(6, 'P-10001', '21', '4'),
-(7, 'P-10001', '14', '3'),
-(8, 'P-10002', '12', '5'),
-(9, 'P-10003', '21', '4'),
-(10, 'P-10004', '15', '1'),
-(11, 'P-10005', '15', '1'),
-(12, 'P-10006', '15', '1'),
-(13, 'P-10007', '15', '1'),
-(14, 'P-10008', '16', '1'),
-(15, 'P-10009', '12', '1'),
-(16, 'P-10010', '12', '1'),
-(17, 'P-10011', '16', '1'),
-(18, 'P-10011', '12', '1'),
-(19, 'P-10011', '13', '1'),
-(20, 'P-10011', '15', '2');
+(21, 'P-10001', '51', '2'),
+(22, 'P-10001', '50', '1'),
+(23, 'P-10002', '49', '30'),
+(24, 'P-10003', '50', '5');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_shipment`
+--
+
+CREATE TABLE `tbl_shipment` (
+  `sm_id` int(50) NOT NULL,
+  `sm_company` varchar(255) NOT NULL,
+  `sm_code` varchar(255) NOT NULL,
+  `sm_pm_code` varchar(255) NOT NULL,
+  `sm_status` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_shipment`
+--
+
+INSERT INTO `tbl_shipment` (`sm_id`, `sm_company`, `sm_code`, `sm_pm_code`, `sm_status`) VALUES
+(3, '', '', 'P-10003', 'รอดำเนินการ');
 
 -- --------------------------------------------------------
 
@@ -183,6 +190,12 @@ ALTER TABLE `tbl_payment_list`
   ADD PRIMARY KEY (`pl_id`);
 
 --
+-- Indexes for table `tbl_shipment`
+--
+ALTER TABLE `tbl_shipment`
+  ADD PRIMARY KEY (`sm_id`);
+
+--
 -- Indexes for table `tbl_type_product`
 --
 ALTER TABLE `tbl_type_product`
@@ -202,19 +215,25 @@ ALTER TABLE `tbl_user`
 -- AUTO_INCREMENT for table `tbl_cargo`
 --
 ALTER TABLE `tbl_cargo`
-  MODIFY `cg_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `cg_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `tbl_payment`
 --
 ALTER TABLE `tbl_payment`
-  MODIFY `pm_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `pm_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `tbl_payment_list`
 --
 ALTER TABLE `tbl_payment_list`
-  MODIFY `pl_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `pl_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT for table `tbl_shipment`
+--
+ALTER TABLE `tbl_shipment`
+  MODIFY `sm_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tbl_type_product`
