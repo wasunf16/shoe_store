@@ -1,15 +1,21 @@
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <?php include('header.php'); ?>
+
+
 </head>
-<?php 
-    if(isset($_POST['submit'])){
-        $obj = new LoginRegister();
-        $result = $obj->CheckLogin($_POST['username'],$_POST['password']);
-        if($result == false){
-            $status = "<span style='color:red;'>Username หรือ Password ไม่ถูกต้อง</span>";
-        }
+
+<?php
+if (isset($_POST['submit'])) {
+    $obj = new LoginRegister();
+    $cg_id = isset($_GET['cg_id']) ? $_GET['cg_id'] : '';
+    $result = $obj->CheckLogin($_POST['username'], $_POST['password'],$cg_id);
+    if ($result == false) {
+        $status = "<span style='color:red;'>Username หรือ Password ไม่ถูกต้อง</span>";
     }
+}
 
 ?>
+
 <body class="bgc-gray bgm-stoes">
     <?php include('navbar.php'); ?>
     <div class="container p-4 pb-5 bgc-white shadow-sm rounded min-height">
@@ -30,7 +36,9 @@
                         <label for="floatingPassword">Password</label>
                     </div>
                     <div class="form-floating mb-3 col-md-6 mx-auto">
-                        <?php if(!empty($status)){echo $status;} ?>
+                        <?php if (!empty($status)) {
+                            echo $status;
+                        } ?>
                     </div>
                     <div class="form-floating mb-3 col-md-6 mx-auto">
                         <button class="w-100 btn btn-lg btn-success " type="submit" name="submit"><i class="fa fa-key" aria-hidden="true"></i> Login</button>

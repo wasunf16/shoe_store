@@ -46,14 +46,13 @@ if (isset($_GET['action'])) {
                     </div>
                     <hr>
                     <div class="table-responsive">
-                        <table id="dtb" class="table table-hover">
+                        <table id="dtb" class="table table-hover table-bordered">
                             <thead>
                                 <tr class="table-danger">
                                     <th>IMG</th>
                                     <th>รหัสสินค้า</th>
                                     <th>ชื่อสินค้า</th>
                                     <th>ไซต์</th>
-                                    <th>รายละเอียด</th>
                                     <th>ประเภทสินค้า</th>
                                     <th></th>
                                 </tr>
@@ -67,10 +66,9 @@ if (isset($_GET['action'])) {
                                         <td><?= $value['cg_code']; ?></td>
                                         <td><?= $value['cg_name']; ?></td>
                                         <td><?= $value['cg_unit']; ?></td>
-                                        <td><?= substr($value['cg_detail'],0,100).'...'; ?></td>
                                         <td><?= $value['tp_name']; ?></td>
                                         <td width="10%">
-                                            <a href="?action=edit&id=<?= $value['cg_id']; ?>" class="btn btn-sm btn-warning m-1"><i class="fa fa-pencil" aria-hidden="true"></i> แก้ไข</a>
+                                            <a href="cargo_edit.php?action=edit&id=<?= $value['cg_id']; ?>" class="btn btn-sm btn-warning m-1"><i class="fa fa-pencil" aria-hidden="true"></i> แก้ไข</a>
                                             <a href="?action=delete&id=<?= $value['cg_id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('ยืนยันการลบ?');"><i class="fa fa-trash-o" aria-hidden="true"></i> ลบ</a>
                                         </td>
                                     </tr>

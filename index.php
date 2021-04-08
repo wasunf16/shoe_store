@@ -5,7 +5,7 @@
 $obj = new ConnectDB();
 
 //pagination
-$row_page = 3;
+$row_page = 12;
 if (empty($_GET['p'])) {
     $page = 1;
 }
@@ -37,17 +37,21 @@ if (isset($_GET['type']) && $_GET['type'] != null) {
     $result = $obj->query("SELECT * FROM tbl_cargo Limit {$start},{$row_page}");
 }
 
+if(isset($_GET['popular'])){
+    $result = $obj->query("SELECT * FROM tbl_cargo ORDER BY cg_view DESC Limit {$start},{$row_page}");
+}
+
 $row = $result->fetch_all(MYSQLI_ASSOC);
 
 ?>
 
 <body class="bgc-gray bgm-stoes">
     <?php include('navbar.php'); ?>
-    <div class="container p-4 pb-5 bgc-white shadow-sm rounded min-height">
+    <div class="container p-4 bgc-white shadow-sm rounded min-height">
         <div class="row">
             <div class="d-flex justify-content-between align-items-center bd-highlight">
                 <div class="d-flex">
-                    <h5>สินค้าทั้งหมด</h5>
+                    <h5>รายการ</h5>
                 </div>
                 <div class="d-flex">
                     <form action="" method="GET" class="row row-cols-lg-auto g-3 align-items-center">
@@ -62,8 +66,13 @@ $row = $result->fetch_all(MYSQLI_ASSOC);
             </div>
         </div>
         <div class="row">
+            <?php 
+                if($result->num_rows <= 0){
+                    echo "<h4 class='text-center mt-5 bg-light rounded' style='padding:90px;'>ไม่มีสินค้า</h4>";
+                }
+            ?>
             <?php foreach ($row as $key => $value) { ?>
-                <div class="col-6 col-sm-6 col-md-2 my-3">
+                <div class="col-6 col-sm-6 col-md-3  my-3">
                     <div class="card h-100">
                         <div class="relative" style="position: relative;">
                             <a href="view_product.php?cg_id=<?= $value['cg_id'] ?>"><img src="img_upload/<?= $value['cg_img'] ?>" class="card-img-top" style="height:200px;"></a>
@@ -72,7 +81,7 @@ $row = $result->fetch_all(MYSQLI_ASSOC);
 
                         <div class="card-body">
                             <h6 class="card-title" style="font-weight: bold;"><a style="text-decoration: none; color:#333;" href="view_product.php?cg_id=<?= $value['cg_id'] ?>"><?= $value['cg_name'] ?></h6></a>
-                            <p class="card-text">฿<?= $value['cg_price'] ?> บาท</p>
+                            <p class="card-text">฿<?= number_format($value['cg_price']); ?> บาท</p>
                             <p class="card-text" style="font-size:13px;">คงเหลือ <?= $value['cg_amount'] ?> ชิ้น</p>
                         </div>
                         <div class="card-footer p-0">
@@ -94,21 +103,11 @@ $row = $result->fetch_all(MYSQLI_ASSOC);
                 </div>
             <?php } ?>
         </div>
+        <?php if($result->num_rows > 0){ ?>
         <div class="row mt-5">
             <div class="col-md-12 d-flex justify-content-center mt-5">
                 <nav aria-label="...">
                     <ul class="pagination">
-                        <!-- <li class="page-item disabled">
-                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">ก่อนหน้า</a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item active" aria-current="page">
-                            <a class="page-link" href="#">2</a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">ต่อไป</a>
-                        </li> -->
                         <li <?php if ($page == 1) {
                                 echo "class='page-item disabled'";
                             } ?>><a class="page-link" href="index.php?p=<?php echo $page - '1'; ?>">
@@ -135,6 +134,7 @@ $row = $result->fetch_all(MYSQLI_ASSOC);
                 </nav>
             </div>
         </div>
+        <?php } ?>
     </div>
 
     <?php include('footer.php'); ?>

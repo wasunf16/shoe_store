@@ -1,4 +1,7 @@
-<?php include('header.php'); ?>
+<?php 
+include('header.php');
+checkSessionMember()
+?>
 
 </head>
 <?php
@@ -16,7 +19,7 @@ if (isset($_GET['display'])) {
             break;
     }
 } else {
-    $result = $obj->query("SELECT * FROM `tbl_payment` WHERE pm_status = 'รอตรวจสอบ' ");
+    $result = $obj->query("SELECT * FROM `tbl_payment` WHERE pm_u_id = '".$_SESSION['user']['id']."' ");
 }
 
 if (isset($_GET['action'])) {
@@ -43,8 +46,8 @@ if (isset($_GET['action'])) {
             <hr>
             <div class="row mb-3">
                 <div class="col-md-12">
-                    <a href="order_show.php" class="btn btn-sm btn-outline-info"><i class="fa fa-clock-o" aria-hidden="true"></i> รายการสั่งซื้อ</a>
-                    <a href="?display=success" class="btn btn-sm btn-outline-success"><i class="fa fa-check" aria-hidden="true"></i> รายการจัดส่ง</a>
+                    <!-- <a href="order_show.php" class="btn btn-sm btn-outline-info"><i class="fa fa-clock-o" aria-hidden="true"></i> รายการสั่งซื้อ</a>
+                    <a href="?display=success" class="btn btn-sm btn-outline-success"><i class="fa fa-check" aria-hidden="true"></i> รายการจัดส่ง</a> -->
                 </div>
             </div>
             <table id="dtb" class="table table-striped table-hover" style="width:100%">
@@ -73,8 +76,8 @@ if (isset($_GET['action'])) {
                                     <button class="btn btn-sm btn-info m-0" type="button" data-bs-toggle="modal" data-bs-target="#Modal<?= $row['pm_id'] ?>"><i class="fa fa-eye" aria-hidden="true"></i> รายละเอียด</button>
                                 <?php } else { ?>
                                     <button class="btn btn-sm btn-info m-0" type="button" data-bs-toggle="modal" data-bs-target="#Modal<?= $row['pm_id'] ?>"><i class="fa fa-eye" aria-hidden="true"></i> รายละเอียด</button>
-                                    <a href="?action=allow&id=<?= $row['pm_id']; ?>&code=<?= $row['pm_code']; ?>" class="btn btn-sm btn-success m-0"><i class="fa fa-check" aria-hidden="true"></i> ยืนยัน</a>
-                                    <a href="?action=delete&id=<?= $row['pm_id']; ?>&code=<?= $row['pm_code']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('ยืนยัน?');"><i class="fa fa-times" aria-hidden="true"></i> ไม่อนุมัติ</a>
+                                    <!-- <a href="?action=allow&id=<?= $row['pm_id']; ?>&code=<?= $row['pm_code']; ?>" class="btn btn-sm btn-success m-0"><i class="fa fa-check" aria-hidden="true"></i> ยืนยัน</a>
+                                    <a href="?action=delete&id=<?= $row['pm_id']; ?>&code=<?= $row['pm_code']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('ยืนยัน?');"><i class="fa fa-times" aria-hidden="true"></i> ไม่อนุมัติ</a> -->
                                 <?php } ?>
                             </td>
                         </tr>
@@ -91,7 +94,7 @@ if (isset($_GET['action'])) {
                                         <div class="contaier">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <img src="../img_payment/<?= $row['pm_img']; ?>" style="height: 500px; max-width:100%;">
+                                                    <img src="img_payment/<?= $row['pm_img']; ?>" style="height: 500px; max-width:100%;">
                                                 </div>
                                             </div>
                                             <div class="row mt-3">

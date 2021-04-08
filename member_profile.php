@@ -1,14 +1,15 @@
-<?php include('header.php'); ?>
+<?php
+include('header.php');
+checkSessionMember()
+?>
 </head>
 <?php
-
 
 $obj_member = new Member();
 $row_member = $obj_member->memberGetById($_SESSION['user']['id']);
 if (isset($_POST['submit'])) {
-    $resultEditMember = $obj_member->memberEdit($_POST['id'],$_POST['username'],$_POST['password'],$_POST['fname'],$_POST['lname'],$_POST['sex'],$_POST['address'],$_POST['email'],$_POST['tel']);
+    $resultEditMember = $obj_member->memberEdit($_POST['id'], $_POST['username'], $_POST['password'], $_POST['fname'], $_POST['lname'], $_POST['sex'], $_POST['address'], $_POST['email'], $_POST['tel']);
 }
-
 
 ?>
 
@@ -17,7 +18,7 @@ if (isset($_POST['submit'])) {
     <div class="container p-4 pb-5 bgc-white shadow-sm rounded min-height">
         <div class="card">
             <div class="card-header">
-                <h2><i class="fa fa-user" aria-hidden="true"></i> ข้อมูลผู้ใช้งาน</h2>
+                <h2><i class="fa fa-user" aria-hidden="true"></i> ข้อมูลสมาชิก</h2>
             </div>
             <div class="card-body">
                 <div class="row">

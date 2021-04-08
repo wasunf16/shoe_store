@@ -8,7 +8,11 @@
             <a class="btn btn-danger" href="../logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i> ออกจากระบบ</a>
         </li>
         <li class="nav-item text-nowrap">
-            <a class="me-2 btn btn-outline-secondary" href="#"><i class="fa fa-user-o" aria-hidden="true"></i> <?= $_SESSION['user']['fname'] . ' ' . $_SESSION['user']['lname']; ?></a>
+            <?php
+                $objName = new User();
+                $rowName = $objName->userGetById($_SESSION['user']['id']);
+            ?>
+            <a class="me-2 btn btn-outline-secondary" href="profile.php"><i class="fa fa-user-o" aria-hidden="true"></i> <?= $rowName[0]['u_fname'] . ' ' . $rowName[0]['u_lname']; ?></a>
             <!-- <a class="nav-link me-2" href="#"><i class="fa fa-user-o" aria-hidden="true"></i> <?= $_SESSION['user']['fname'] . ' ' . $_SESSION['user']['lname']; ?></a> -->
         </li>
     </ul>

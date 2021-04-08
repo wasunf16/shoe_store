@@ -2,7 +2,7 @@
 
 class ConnectDB
 {
-    public $db;
+    protected $db;
     function __construct()
     {
         $DB_HOST = "localhost";
@@ -10,6 +10,7 @@ class ConnectDB
         $DB_PASS = "";
         $DB_NAME = "stoe_store";
         $con = new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
+        $con->set_charset("utf8");
         if ($con->connect_error) {
             echo "Fail to connect database: " . $con->connect_error;
         }
@@ -51,7 +52,7 @@ class LoginRegister extends ConnectDB
                             VALUES (NULL, '$user', '$pass', '$fname', '$lname', '$sex', '$address', '$email', '$tel', 'member');");
         return $result;
     }
-    function CheckLogin($user, $pass)
+    function CheckLogin($user, $pass, $cg_id)
     {
         $userReal = $this->db->real_escape_string($user);
         $passReal = $this->db->real_escape_string($pass);
@@ -79,7 +80,11 @@ class LoginRegister extends ConnectDB
                     header('Location: page-user/index.php');
                     break;
                 case 'member':
-                    header('Location: index.php');
+                    if (isset($cg_id) && !empty($cg_id)) {
+                        header("Location: member_cart.php?cg_id=$cg_id&action=add");
+                    } else {
+                        header('Location: index.php');
+                    }
                     break;
             }
         }
@@ -99,7 +104,7 @@ class Cargo extends ConnectDB
         $result = $this->db->query("SELECT * FROM tbl_type_product");
         return $result;
     }
-    function cargoAdd($img, $name, $detail, $unit, $price, $amount, $type, $promotion, $promotion_value)
+    function cargoAdd($img, $name, $detail, $unit, $price, $amount, $type)
     {
 
         $resultCode = $this->db->query("SELECT cg_code FROM tbl_cargo ORDER BY cg_code DESC");
@@ -132,8 +137,48 @@ class Cargo extends ConnectDB
                 </script>";
             } else {
                 if (move_uploaded_file($IMG_tmp, $IMG_DIR . $IMG_NameFull)) {
-                    $result = $this->db->query("INSERT INTO `tbl_cargo` (`cg_id`, `cg_code`, `cg_name`, `cg_detail`, `cg_img`, `cg_type_id`, `cg_unit`, `cg_price`, `cg_amount`, `cg_promotion_status`, `cg_promotion_value`) 
-                    VALUES (NULL, '$cg_code', '$name', '$detail', '$IMG_NameFull', '$type', '$unit', '$price', '$amount', '$promotion', '$promotion_value');");
+                    $result = $this->db->query("INSERT INTO `tbl_cargo` (`cg_id`, `cg_code`, `cg_name`, `cg_detail`, `cg_img`, `cg_type_id`, `cg_unit`, `cg_price`, `cg_amount`) 
+                    VALUES (NULL, '$cg_code', '$name', '$detail', '$IMG_NameFull', '$type', '$unit', '$price', '$amount');");
+                    return $result;
+                }
+            }
+        }
+    }
+    function cargoEdit($img, $name, $detail, $unit, $price, $amount, $type)
+    {
+
+        $resultCode = $this->db->query("SELECT cg_code FROM tbl_cargo ORDER BY cg_code DESC");
+        if ($resultCode->num_rows > 0) {
+            $row = $resultCode->fetch_array();
+            $Epayment = explode('-', $row['cg_code']);
+            $cg_code = $Epayment[0] . '-' . $Epayment[1] + 1;
+        } else {
+            $cg_code = "CG-10001";
+        }
+
+        if (isset($img)) {
+            $IMG_DIR = "../img_upload/";
+            $IMG_NameOld = $img["name"];
+            $IMG_tmp =  $img['tmp_name'];
+            $IMG_type = strtolower(pathinfo($IMG_NameOld, PATHINFO_EXTENSION));
+            $IMG_dateName = date("Ymdhis");
+            $IMG_RandomNumberName = rand(1000, 9999);
+            $IMG_NameFull = $IMG_dateName . '_' . $IMG_RandomNumberName . '.' . $IMG_type;
+            $IMG_UploadStatus = 1;
+            if ($IMG_type != "jpg" && $IMG_type != "png" && $IMG_type != "jpeg" && $IMG_type != "gif") {
+                $IMG_UploadStatus = 0;
+            }
+
+            if ($IMG_UploadStatus == 0) {
+                echo "
+                <script>
+                    alert('Upload รูปภาพล้มเหลว');
+                    location.href='cargo_add.php';
+                </script>";
+            } else {
+                if (move_uploaded_file($IMG_tmp, $IMG_DIR . $IMG_NameFull)) {
+                    $result = $this->db->query("INSERT INTO `tbl_cargo` (`cg_id`, `cg_code`, `cg_name`, `cg_detail`, `cg_img`, `cg_type_id`, `cg_unit`, `cg_price`, `cg_amount`) 
+                    VALUES (NULL, '$cg_code', '$name', '$detail', '$IMG_NameFull', '$type', '$unit', '$price', '$amount');");
                     return $result;
                 }
             }
@@ -155,7 +200,7 @@ class Cargo extends ConnectDB
         $row = $result->fetch_all(MYSQLI_ASSOC);
         return $row;
     }
-    public function cargoPayment($channel, $total, $date, $address, $img, $uid)
+    function cargoPayment($channel, $total, $date, $address, $img, $uid)
     {
         $resultCode = $this->db->query("SELECT * FROM tbl_payment ORDER BY pm_code DESC LIMIT 1");
         if ($resultCode->num_rows <= 0) {
@@ -249,14 +294,11 @@ class Cargo extends ConnectDB
     {
         $queryData = $this->db->query("SELECT * FROM tbl_payment as pm INNER JOIN tbl_payment_list as pl ON pm.pm_code=pl.pl_pm_code INNER JOIN tbl_cargo as cg ON pl.pl_cg_id=cg.cg_id WHERE pm.pm_code = '$code' ");
         while ($fetchData = $queryData->fetch_array()) {
-            $resultRemove = $this->db->query("DELETE FROM tbl_payment_list WHERE pl_id = '".$fetchData['pl_id']."' ");
+            $dirIMG = $fetchData['pm_img'];
+            $resultRemove = $this->db->query("DELETE FROM tbl_payment_list WHERE pl_id = '" . $fetchData['pl_id'] . "' ");
         }
 
-        $resultDelIMG = $this->queryByID('tbl_cargo', 'cg_id', $id);
-        $fetchDelIMG = $resultDelIMG->fetch_array();
-        if ($fetchDelIMG['pm_img']) {
-            unlink('../img_upload/' . $fetchDelIMG['pm_img']);
-        }
+        unlink('../img_payment/' . $dirIMG);
 
         $result = $this->db->query("DELETE FROM tbl_payment WHERE `pm_id` = '$id';");
         if ($result) {
@@ -274,6 +316,66 @@ class Cargo extends ConnectDB
                 window.history.back();
             </script>
             ";
+        }
+    }
+
+    function cargoTypeAdd($name)
+    {
+        $already = $this->db->query("SELECT * FROM tbl_type_product WHERE tp_name = '$name' ");
+        if ($already->num_rows > 0) {
+            echo alertErrorBack("ชื่อประเภทซ้ำ กรุณาลองใหม่อีกครั้ง");
+        } else {
+            $result = $this->db->query("INSERT INTO `tbl_type_product` (`tp_id`, `tp_name`) VALUES (NULL, '$name');");
+            if ($result == true) {
+                alertSuccessGo("สำเร็จ", "cargo_type.php");
+            } else {
+                alertErrorBack("ผิดพลาด");
+            }
+        }
+    }
+    function cargoTypeRemove($id)
+    {
+        $result = $this->db->query("DELETE FROM tbl_type_product WHERE tp_id = '$id' ");
+        if ($result == true) {
+            alertSuccessGo("ลบสำเร็จ", "cargo_type.php");
+        } else {
+            alertErrorBack("ผิดพลาด");
+        }
+    }
+    function cargoView($id,$view)
+    {
+        $view += 1;
+        $result = $this->db->query("UPDATE tbl_cargo SET cg_view = '$view' WHERE cg_id = '$id' ");
+    }
+}
+
+class User extends ConnectDB
+{
+    function userGetById($id)
+    {
+        $result = $this->db->query("SELECT * FROM tbl_user WHERE u_id = '$id' ");
+        $row = $result->fetch_all(MYSQLI_ASSOC);
+        return $row;
+    }
+
+    function userEdit($id, $user, $pass, $fname, $lname, $sex, $address, $email, $tel)
+    {
+        $result = $this->db->query(
+            "UPDATE `tbl_user` SET 
+            `u_username` = '$user', 
+            `u_password` = '$pass', 
+            `u_fname` = '$fname', 
+            `u_lname` = '$lname', 
+            `u_sex` = '$sex', 
+            `u_address` = '$address', 
+            `u_email` = '$email', 
+            `u_tel` = '$tel' 
+            WHERE `tbl_user`.`u_id` = '$id';"
+        );
+        if ($result == true) {
+            alertSuccessGo("แก้ไขสำเร็จ","profile.php");
+        } else {
+            alertErrorBack("แก้ไขล้มเหลว");
         }
     }
 }
@@ -352,3 +454,67 @@ function uploadIMG($img, $dir)
         return false;
     }
 }
+
+
+function alertErrorBack($title)
+{
+    echo "
+    <script>
+      alert('$title');
+      window.history.back();
+    </script>";
+}
+
+function alertSuccessGo($title, $location)
+{
+    echo "
+    <script>
+        alert('$title');
+        window.location.href='$location';
+    </script>
+    ";
+}
+
+
+
+
+// **************************** Check Login *******************************
+function checkSessionAdmin()
+{
+    if (!isset($_SESSION['user']['role'])) {
+        alertSuccessGo("กรุณา Login ก่อนใช้งาน", "../login.php");
+        exit;
+    }
+    if (isset($_SESSION['user']['role']) && $_SESSION['user']['role'] != "admin") {
+        alertSuccessGo("สำหรับ Admin เท่านั้น", "../login.php");
+        exit;
+    }
+}
+
+function checkSessionUser()
+{
+    if (!isset($_SESSION['user']['role'])) {
+        alertSuccessGo("กรุณา Login ก่อนใช้งาน", "../login.php");
+        exit;
+    }
+    if (isset($_SESSION['user']['role']) && $_SESSION['user']['role'] != "user") {
+        alertSuccessGo("สำหรับ User เท่านั้น", "../login.php");
+        exit;
+    }
+}
+
+function checkSessionMember()
+{
+    if (!isset($_SESSION['user']['role'])) {
+        alertSuccessGo("กรุณา Login ก่อนใช้งาน", "login.php");
+        exit;
+    }
+    if (isset($_SESSION['user']['role']) && $_SESSION['user']['role'] != "member") {
+        alertSuccessGo("สำหรับ member เท่านั้น", "login.php");
+        exit;
+    }
+}
+// **************************** End Check Login *******************************
+
+
+

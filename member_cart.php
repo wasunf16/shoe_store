@@ -1,4 +1,7 @@
-<?php include('header.php'); ?>
+<?php 
+include('header.php');
+checkSessionMember()
+?>
 </head>
 <?php
 $cg_id = isset($_GET['cg_id']) ? $_GET['cg_id'] : '';
@@ -67,7 +70,7 @@ $obj = new Cargo();
                                                 $row = $result->fetch_array();
                                                 $sum = $row['cg_price'] * $amount;
                                                 $total += $sum;
-                                                
+
                                             ?>
 
                                                 <tr>
@@ -107,13 +110,13 @@ $obj = new Cargo();
                             <div class="d-flex justify-content-end">
                                 <button class="btn btn-primary btn-sm" type="submit" name="update"><i class='fa fa-refresh'></i> คำนวณ</button>
                             </div>
-                            
+
                             </form>
                     </div>
                     <div class="card-footer">
                         <a href="member_payment.php?total=<?= $total; ?>" class="d-block btn btn-dark <?php if (!$canBuy) {
-                                                                    echo 'disabled';
-                                                                } ?>"><i class="fa fa-check" aria-hidden="true"></i> ยืนยันคำสั่งซื้อ</a>
+                                                                                                            echo 'disabled';
+                                                                                                        } ?>"><i class="fa fa-check" aria-hidden="true"></i> ยืนยันคำสั่งซื้อ</a>
                     </div>
                 </div>
                 <div class="d-flex justify-content-center align-items-center mt-2"><a href="index.php">ไปเลือกซื้อสินค้าต่อ</a></ก>

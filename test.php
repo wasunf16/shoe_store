@@ -2,28 +2,67 @@
 session_start();
 include('functions.php');
 
-$oop = new ConnectDB();
-// $result = $oop->query("SELECT * FROM tbl_cargo");
-// if(empty($result->num_rows)){
-//     echo $pm_code = 'empty: '."CG-10001";
-// }else{
-//     $row = $result->fetch_array();
-//     $Epayment = explode('-',$row['cg_code']);
-//     echo $pm_code = 'Have '.$Epayment[0].'-'.$Epayment[1] + 1;
-// }
-// echo "<pre>";
-// print_r($_SESSION);
-// echo "</pre>";
+$conn = new ConnectDB();
+$result = $conn->query("SELECT * FROM tbl_cargo");
 
-// $isset = isset($_GET['test']) ? $_GET['test'] : '';
-// $isset = $_GET['test'] ?? '';
+// print_r($result);
 
-// echo $isset;
-
-$queryData = $oop->query("SELECT * FROM tbl_payment as pm INNER JOIN tbl_payment_list as pl ON pm.pm_code=pl.pl_pm_code INNER JOIN tbl_cargo as cg ON pl.pl_cg_id=cg.cg_id WHERE pm.pm_code = 'P-10001' ");
-while ($fetchData = $queryData->fetch_array()) {
-    echo $count = $fetchData['cg_amount'] + $fetchData['pl_amount'].'<br>';
-    echo $fetchData['cg_id'].'<br>';
-}
+$label = array();
+$data = array();
+foreach ($result as $row) :
+    $label[] = $row['cg_name'];
+    $data[] = $row['cg_amount'];
+endforeach;
 
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bootstrap5/bootstrap.min.css">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.0.2/chart.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <canvas id="myChart" width="300" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: <?php echo json_encode($label); ?>,
+                datasets: [{
+                    label: 'จำนวนคงเหลือ',
+                    data: <?php echo json_encode($data); ?>,
+                    backgroundColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(54, 162, 235)',
+                        'rgb(255, 205, 86)'
+                    ],
+                    // borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1.
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

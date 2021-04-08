@@ -24,7 +24,7 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">ขายดี <sup><img src="img/new.gif" style="width:25px;"></sup></a>
+                            <a class="nav-link" href="index.php?popular">ยอดนิยม <sup><img src="img/new.gif" style="width:25px;"></sup></a>
                         </li>
                     </ul>
                     <ul class="navbar-nav d-flex">
@@ -46,6 +46,9 @@
                                 </ul>
                             </div>
                             <a href="logout.php" class="btn btn-danger"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+                            <?php
+                        }else if (isset($_SESSION['user']['role']) && $_SESSION['user']['role'] == 'admin') { ?>
+                        <a href="logout.php" class="btn btn-danger"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
                         <?php } else { ?>
                             <a href="login.php" class="btn btn-success me-2"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>
                             <a href="register.php" class="btn btn-primary"><i class="fa fa-plus-circle" aria-hidden="true"></i> สมัครสมาชิก</a>

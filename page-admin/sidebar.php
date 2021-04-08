@@ -14,6 +14,12 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link <?php echo (activeNav() == 'cargo_type.php' ? ' active' : ''); ?>" href="cargo_type.php">
+                    <i class="fa fa-database" aria-hidden="true"></i>
+                    ประเภทสินค้า
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link <?php echo (activeNav() == 'order_show.php' ? ' active' : ''); ?>" href="order_show.php">
                     <i class="fa fa-money" aria-hidden="true"></i>
                     ข้อมูลการสั่งซื้อ
