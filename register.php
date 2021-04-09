@@ -5,19 +5,9 @@
     if(isset($_POST['submit'])){
         $result = $obj->register($_POST['username'],$_POST['password'],$_POST['fname'],$_POST['lname'],$_POST['sex'],$_POST['address'],$_POST['email'],$_POST['tel']);
         if($result == true){
-            echo "
-            <script>
-                alert('สมัครสมาชิกสำเร็จ');
-                window.location.href='login.php';
-            </script>
-            ";
+            alertGo("สมัครสมาชิกสำเร็จ","login.php");
         }else{
-            echo "
-            <script>
-                alert('สมัครสมาชิกล้มเหลว');
-                window.history.back();
-            </script>
-            ";
+            alertBack("สมัครสมาชิกล้มเหลว");
         }
     }
 ?>

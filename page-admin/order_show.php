@@ -90,7 +90,7 @@ if (isset($_GET['action'])) {
                                             <a href="?action=remove&id=<?= $row['pm_id']; ?>&code=<?= $row['pm_code']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('ยืนยัน?');"><i class="fa fa-trash" aria-hidden="true"></i> ลบ</a>
                                         <?php } else if (isset($_GET['display']) && $_GET['display'] == 'wait') { ?>
                                             <button class="btn btn-sm btn-info m-0" type="button" data-bs-toggle="modal" data-bs-target="#Modal<?= $row['pm_id'] ?>"><i class="fa fa-eye" aria-hidden="true"></i> รายละเอียด</button>
-                                            <a href="?action=allow&id=<?= $row['pm_id']; ?>&code=<?= $row['pm_code']; ?>" class="btn btn-sm btn-success m-0"><i class="fa fa-check" aria-hidden="true"></i> ยืนยัน</a>
+                                            <a href="?action=allow&id=<?= $row['pm_id']; ?>&code=<?= $row['pm_code']; ?>" class="btn btn-sm btn-success m-0" onclick="return confirm('ยืนยัน?');"><i class="fa fa-check" aria-hidden="true"></i> ยืนยัน</a>
                                             <a href="?action=delete&id=<?= $row['pm_id']; ?>&code=<?= $row['pm_code']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('ยืนยัน?');"><i class="fa fa-times" aria-hidden="true"></i> ไม่อนุมัติ</a>
                                         <?php } else { ?>
 

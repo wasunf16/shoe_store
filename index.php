@@ -5,7 +5,7 @@
 $obj = new ConnectDB();
 
 //pagination
-$row_page = 12;
+$row_page = 8;
 if (empty($_GET['p'])) {
     $page = 1;
 }
@@ -28,13 +28,13 @@ $start = ($page - '1') * $row_page;
 
 if (isset($_GET['type']) && $_GET['type'] != null) {
     $type = $_GET['type'];
-    $result = $obj->query("SELECT * FROM tbl_cargo WHERE cg_type_id='{$type}' Limit {$start},{$row_page}");
+    $result = $obj->query("SELECT * FROM tbl_cargo WHERE cg_type_id='{$type}' ORDER BY cg_id DESC Limit {$start},{$row_page}");
 } else if (isset($_GET['search']) && $_GET['search'] != null) {
     $search = $_GET['search'];
-    $result = $obj->query("SELECT * FROM tbl_cargo WHERE cg_name LIKE '%" . $search . "%' Limit {$start},{$row_page}");
+    $result = $obj->query("SELECT * FROM tbl_cargo WHERE cg_name LIKE '%" . $search . "%' ORDER BY cg_id DESC Limit {$start},{$row_page}");
 } else {
     //get all
-    $result = $obj->query("SELECT * FROM tbl_cargo Limit {$start},{$row_page}");
+    $result = $obj->query("SELECT * FROM tbl_cargo ORDER BY cg_id DESC Limit {$start},{$row_page}");
 }
 
 if(isset($_GET['popular'])){

@@ -32,21 +32,20 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete') {
                         <table id="dtb" class="table table-hover table-bordered">
                             <thead>
                                 <tr class="table-dark">
-                                    <th width="5%">#</th>
+                                    <th width="5%">ID</th>
                                     <th>ชื่อประเภทสินค้า</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                $i = 1;
                                 foreach ($row as $key => $value) {
                                 ?>
                                     <tr>
-                                        <td><?=$i++;?></td>
+                                        <td><?= $value['tp_id'];?></td>
                                         <td><?= $value['tp_name']; ?></td>
                                         <td width="10%">
-                                            <a href="?action=edit&id=<?= $value['tp_id']; ?>" class="btn btn-sm btn-warning m-1"><i class="fa fa-pencil" aria-hidden="true"></i> แก้ไข</a>
+                                            <a href="cargo_type_edit .php?&id=<?= $value['tp_id']; ?>" class="btn btn-sm btn-warning m-1"><i class="fa fa-pencil" aria-hidden="true"></i> แก้ไข</a>
                                             <a href="?action=delete&id=<?= $value['tp_id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('ยืนยันการลบ?');"><i class="fa fa-trash-o" aria-hidden="true"></i> ลบ</a>
                                         </td>
                                     </tr>

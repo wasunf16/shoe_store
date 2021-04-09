@@ -48,6 +48,7 @@ if (isset($_GET['action'])) {
                         <table id="dtb" class="table table-striped">
                             <thead>
                                 <tr class="table-info">
+                                    <th>ID</th>
                                     <th>ชื่อผู้ใช้</th>
                                     <th>ชื่อ-สกุล</th>
                                     <th>เพศ</th>
@@ -62,6 +63,7 @@ if (isset($_GET['action'])) {
                                 foreach ($row as $key => $value) {
                                 ?>
                                     <tr>
+                                        <td><?= $value['u_id']; ?></td>
                                         <td><?= $value['u_username']; ?></td>
                                         <td><?= $value['u_fname'] . ' ' . $value['u_lname']; ?></td>
                                         <td><?= $value['u_sex']; ?></td>
@@ -69,7 +71,7 @@ if (isset($_GET['action'])) {
                                         <td><?= $value['u_tel']; ?></td>
                                         <td><?= $value['u_address']; ?></td>
                                         <td width="10%">
-                                            <a href="?action=edit&id=" class="btn btn-sm btn-warning m-1"><i class="fa fa-pencil" aria-hidden="true"></i> แก้ไข</a>
+                                            <a href="member_edit.php?id=<?= $value['u_id']; ?>" class="btn btn-sm btn-warning m-1"><i class="fa fa-pencil" aria-hidden="true"></i> แก้ไข</a>
                                             <a href="?action=delete&id=<?= $value['u_id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('ยืนยันการลบ?');"><i class="fa fa-trash-o" aria-hidden="true"></i> ลบ</a>
                                         </td>
 
@@ -87,7 +89,7 @@ if (isset($_GET['action'])) {
         $(document).ready(function() {
             $('#dtb').DataTable({
                 "order": [
-                    [1, 'desc']
+                    [0, 'desc']
                 ]
             });
         });

@@ -48,6 +48,11 @@ class LoginRegister extends ConnectDB
 {
     function register($user, $pass, $fname, $lname, $sex, $address, $email, $tel)
     {
+        $check = $this->db->query("SELECT u_username FROM tbl_user WHERE u_username = '$user' ");
+        if ($check->num_rows != 0) {
+            alertBack("Username ซ้ำกัน กรุณาลองใหม่อีกครั้ง");
+            exit;
+        }
         $result = $this->db->query("INSERT INTO `tbl_user` (`u_id`, `u_username`, `u_password`, `u_fname`, `u_lname`, `u_sex`, `u_address`, `u_email`, `u_tel`, `u_role`) 
                             VALUES (NULL, '$user', '$pass', '$fname', '$lname', '$sex', '$address', '$email', '$tel', 'member');");
         return $result;
@@ -144,44 +149,22 @@ class Cargo extends ConnectDB
             }
         }
     }
-    function cargoEdit($img, $name, $detail, $unit, $price, $amount, $type)
+    function cargoEdit($id, $img, $img_old, $name, $detail, $unit, $price, $amount, $type)
     {
+        $resultIMG = uploadIMGEdit($img, $img_old, "../img_upload/");
 
-        $resultCode = $this->db->query("SELECT cg_code FROM tbl_cargo ORDER BY cg_code DESC");
-        if ($resultCode->num_rows > 0) {
-            $row = $resultCode->fetch_array();
-            $Epayment = explode('-', $row['cg_code']);
-            $cg_code = $Epayment[0] . '-' . $Epayment[1] + 1;
+        $result = $this->db->query("UPDATE `tbl_cargo` 
+        SET `cg_name` = '$name', 
+        `cg_detail` = '$detail', 
+        `cg_img` = '$resultIMG', 
+        `cg_type_id` = '$type', 
+        `cg_unit` = '$unit', 
+        `cg_price` = '$price', 
+        `cg_amount` = '$amount' WHERE `tbl_cargo`.`cg_id` = '" . $id . "';");
+        if ($result == true) {
+            alertGo("แก้ไขสำเร็จ", "cargo_show.php");
         } else {
-            $cg_code = "CG-10001";
-        }
-
-        if (isset($img)) {
-            $IMG_DIR = "../img_upload/";
-            $IMG_NameOld = $img["name"];
-            $IMG_tmp =  $img['tmp_name'];
-            $IMG_type = strtolower(pathinfo($IMG_NameOld, PATHINFO_EXTENSION));
-            $IMG_dateName = date("Ymdhis");
-            $IMG_RandomNumberName = rand(1000, 9999);
-            $IMG_NameFull = $IMG_dateName . '_' . $IMG_RandomNumberName . '.' . $IMG_type;
-            $IMG_UploadStatus = 1;
-            if ($IMG_type != "jpg" && $IMG_type != "png" && $IMG_type != "jpeg" && $IMG_type != "gif") {
-                $IMG_UploadStatus = 0;
-            }
-
-            if ($IMG_UploadStatus == 0) {
-                echo "
-                <script>
-                    alert('Upload รูปภาพล้มเหลว');
-                    location.href='cargo_add.php';
-                </script>";
-            } else {
-                if (move_uploaded_file($IMG_tmp, $IMG_DIR . $IMG_NameFull)) {
-                    $result = $this->db->query("INSERT INTO `tbl_cargo` (`cg_id`, `cg_code`, `cg_name`, `cg_detail`, `cg_img`, `cg_type_id`, `cg_unit`, `cg_price`, `cg_amount`) 
-                    VALUES (NULL, '$cg_code', '$name', '$detail', '$IMG_NameFull', '$type', '$unit', '$price', '$amount');");
-                    return $result;
-                }
-            }
+            alertBack("แก้ไขผิดพลาด");
         }
     }
     function cargoDelete($id)
@@ -254,7 +237,7 @@ class Cargo extends ConnectDB
             echo "
             <script>
                 alert('ยืนยันแล้วเรียบร้อย');
-                window.location.href='shipment_show.php';
+                window.location.href='order_show.php';
             </script>
             ";
         } else {
@@ -323,26 +306,44 @@ class Cargo extends ConnectDB
     {
         $already = $this->db->query("SELECT * FROM tbl_type_product WHERE tp_name = '$name' ");
         if ($already->num_rows > 0) {
-            echo alertErrorBack("ชื่อประเภทซ้ำ กรุณาลองใหม่อีกครั้ง");
+            echo alertBack("ชื่อประเภทซ้ำ กรุณาลองใหม่อีกครั้ง");
         } else {
             $result = $this->db->query("INSERT INTO `tbl_type_product` (`tp_id`, `tp_name`) VALUES (NULL, '$name');");
             if ($result == true) {
-                alertSuccessGo("สำเร็จ", "cargo_type.php");
+                alertGo("สำเร็จ", "cargo_type.php");
             } else {
-                alertErrorBack("ผิดพลาด");
+                alertBack("ผิดพลาด");
             }
+        }
+    }
+    function cargoEditByID($id, $name)
+    {
+        $check = $this->db->query("SELECT tp_name FROM tbl_type_product WHERE tp_name = '$name' AND tp_id != '$id' ");
+        if ($check->num_rows != 0) {
+            alertBack("ชื่อประเภทซ้ำกัน กรุณาลองใหม่อีกครั้ง");
+            exit;
+        }
+        $result = $this->db->query(
+            "UPDATE `tbl_type_product` SET 
+            `tp_name` = '$name'
+            WHERE `tp_id` = '$id';"
+        );
+        if ($result == true) {
+            alertGo("แก้ไขสำเร็จ", "cargo_type.php");
+        } else {
+            alertBack("แก้ไขล้มเหลว");
         }
     }
     function cargoTypeRemove($id)
     {
         $result = $this->db->query("DELETE FROM tbl_type_product WHERE tp_id = '$id' ");
         if ($result == true) {
-            alertSuccessGo("ลบสำเร็จ", "cargo_type.php");
+            alertGo("ลบสำเร็จ", "cargo_type.php");
         } else {
-            alertErrorBack("ผิดพลาด");
+            alertBack("ผิดพลาด");
         }
     }
-    function cargoView($id,$view)
+    function cargoView($id, $view)
     {
         $view += 1;
         $result = $this->db->query("UPDATE tbl_cargo SET cg_view = '$view' WHERE cg_id = '$id' ");
@@ -373,9 +374,63 @@ class User extends ConnectDB
             WHERE `tbl_user`.`u_id` = '$id';"
         );
         if ($result == true) {
-            alertSuccessGo("แก้ไขสำเร็จ","profile.php");
+            alertGo("แก้ไขสำเร็จ", "profile.php");
         } else {
-            alertErrorBack("แก้ไขล้มเหลว");
+            alertBack("แก้ไขล้มเหลว");
+        }
+    }
+    function userEditByID($id, $user, $pass, $fname, $lname, $sex, $address, $email, $tel, $role)
+    {
+        $check = $this->db->query("SELECT u_username FROM tbl_user WHERE u_username = '$user' AND u_id != '$id' ");
+        if ($check->num_rows != 0) {
+            alertBack("Username ซ้ำกัน กรุณาลองใหม่อีกครั้ง");
+            exit;
+        }
+        $result = $this->db->query(
+            "UPDATE `tbl_user` SET 
+            `u_username` = '$user', 
+            `u_password` = '$pass', 
+            `u_fname` = '$fname', 
+            `u_lname` = '$lname', 
+            `u_sex` = '$sex', 
+            `u_address` = '$address', 
+            `u_email` = '$email', 
+            `u_tel` = '$tel',
+            `u_role` = '$role' 
+            WHERE `tbl_user`.`u_id` = '$id';"
+        );
+        if ($result == true) {
+            alertGo("แก้ไขสำเร็จ", "user_show.php");
+        } else {
+            alertBack("แก้ไขล้มเหลว");
+        }
+    }
+    function userAdd($user, $pass, $fname, $lname, $sex, $address, $email, $tel, $role)
+    {
+        $check = $this->db->query("SELECT u_username FROM tbl_user WHERE u_username = '$user' ");
+        if ($check->num_rows != 0) {
+            alertBack("Username ซ้ำกัน กรุณาลองใหม่อีกครั้ง");
+            exit;
+        }
+        $result = $this->db->query("INSERT INTO `tbl_user` (`u_id`, `u_username`, `u_password`, `u_fname`, `u_lname`, `u_sex`, `u_address`, `u_email`, `u_tel`, `u_role`) 
+                            VALUES (NULL, '$user', '$pass', '$fname', '$lname', '$sex', '$address', '$email', '$tel', '$role');");
+        return $result;
+    }
+}
+
+class Shipment extends ConnectDB
+{
+    function shipmentUpdate($id, $code, $name, $number, $date)
+    {
+        $result = $this->db->query("UPDATE `tbl_shipment` 
+            SET `sm_company` = '$name', 
+            `sm_code` = '$number', 
+            `sm_date` = '$date', 
+            `sm_status` = 'จัดส่งแล้ว' WHERE `tbl_shipment`.`sm_id` = '$id';");
+        if ($result == true) {
+            alertGo("บันทึกการจัดส่งแล้ว", "shipment_show.php");
+        } else {
+            alertBack("ผิดพลาด");
         }
     }
 }
@@ -418,6 +473,42 @@ class Member extends ConnectDB
             ";
         }
     }
+    function memberEditByID($id, $user, $pass, $fname, $lname, $sex, $address, $email, $tel)
+    {
+        $check = $this->db->query("SELECT u_username FROM tbl_user WHERE u_username = '$user' AND u_id != '$id' ");
+        if ($check->num_rows != 0) {
+            alertBack("Username ซ้ำกัน กรุณาลองใหม่อีกครั้ง");
+            exit;
+        }
+        $result = $this->db->query(
+            "UPDATE `tbl_user` SET 
+            `u_username` = '$user', 
+            `u_password` = '$pass', 
+            `u_fname` = '$fname', 
+            `u_lname` = '$lname', 
+            `u_sex` = '$sex', 
+            `u_address` = '$address', 
+            `u_email` = '$email', 
+            `u_tel` = '$tel'
+            WHERE `tbl_user`.`u_id` = '$id';"
+        );
+        if ($result == true) {
+            alertGo("แก้ไขสำเร็จ", "member_show.php");
+        } else {
+            alertBack("แก้ไขล้มเหลว");
+        }
+    }
+    function memberAdd($user, $pass, $fname, $lname, $sex, $address, $email, $tel)
+    {
+        $check = $this->db->query("SELECT u_username FROM tbl_user WHERE u_username = '$user' ");
+        if ($check->num_rows != 0) {
+            alertBack("Username ซ้ำกัน กรุณาลองใหม่อีกครั้ง");
+            exit;
+        }
+        $result = $this->db->query("INSERT INTO `tbl_user` (`u_id`, `u_username`, `u_password`, `u_fname`, `u_lname`, `u_sex`, `u_address`, `u_email`, `u_tel`, `u_role`) 
+                            VALUES (NULL, '$user', '$pass', '$fname', '$lname', '$sex', '$address', '$email', '$tel', 'member');");
+        return $result;
+    }
 }
 
 
@@ -439,7 +530,6 @@ function uploadIMG($img, $dir)
     $IMG_dateName = date("Ymdhis");
     $IMG_RandomNumberName = rand(1000, 9999);
     $IMG_NameFull = $IMG_dateName . '_' . $IMG_RandomNumberName . '.' . $IMG_type;
-    $IMG_UploadStatus = 1;
 
     if ($IMG_type != "jpg" && $IMG_type != "png" && $IMG_type != "jpeg" && $IMG_type != "gif") {
         echo "
@@ -455,8 +545,36 @@ function uploadIMG($img, $dir)
     }
 }
 
+function uploadIMGEdit($img, $img_old, $dir)
+{
+    if (isset($img['name']) && !empty($img['name'])) {
+        $IMG_DIR = $dir;
+        $IMG_NameOld = $img["name"];
+        $IMG_tmp =  $img['tmp_name'];
+        $IMG_ArrayName =  explode('.', $IMG_NameOld);
+        $IMG_type = $IMG_ArrayName[1];
+        $IMG_dateName = date("Ymdhis");
+        $IMG_RandomNumberName = rand(1000, 9999);
+        $IMG_NameFull = $IMG_dateName . '_' . $IMG_RandomNumberName . '.' . $IMG_type;
 
-function alertErrorBack($title)
+        if ($IMG_type != "jpg" && $IMG_type != "png" && $IMG_type != "jpeg" && $IMG_type != "gif") {
+            alertBack("กรุณาเลือกไฟล์ภาพ JPG , PNG และ GIF เท่านั้น");
+            return false;
+        } else {
+            if (move_uploaded_file($IMG_tmp, $IMG_DIR . $IMG_NameFull)) {
+                unlink($IMG_DIR . $img_old);
+                return $IMG_NameFull;
+            } else {
+                alertGo("Upload รูปภาพล้มเหลว", "cargo_show.php");
+            }
+        }
+    } else {
+        return $IMG_NameFull = $img_old;
+    }
+}
+
+
+function alertBack($title)
 {
     echo "
     <script>
@@ -465,7 +583,7 @@ function alertErrorBack($title)
     </script>";
 }
 
-function alertSuccessGo($title, $location)
+function alertGo($title, $location)
 {
     echo "
     <script>
@@ -482,11 +600,11 @@ function alertSuccessGo($title, $location)
 function checkSessionAdmin()
 {
     if (!isset($_SESSION['user']['role'])) {
-        alertSuccessGo("กรุณา Login ก่อนใช้งาน", "../login.php");
+        alertGo("กรุณา Login ก่อนใช้งาน", "../login.php");
         exit;
     }
     if (isset($_SESSION['user']['role']) && $_SESSION['user']['role'] != "admin") {
-        alertSuccessGo("สำหรับ Admin เท่านั้น", "../login.php");
+        alertGo("สำหรับ Admin เท่านั้น", "../login.php");
         exit;
     }
 }
@@ -494,11 +612,11 @@ function checkSessionAdmin()
 function checkSessionUser()
 {
     if (!isset($_SESSION['user']['role'])) {
-        alertSuccessGo("กรุณา Login ก่อนใช้งาน", "../login.php");
+        alertGo("กรุณา Login ก่อนใช้งาน", "../login.php");
         exit;
     }
     if (isset($_SESSION['user']['role']) && $_SESSION['user']['role'] != "user") {
-        alertSuccessGo("สำหรับ User เท่านั้น", "../login.php");
+        alertGo("สำหรับ User เท่านั้น", "../login.php");
         exit;
     }
 }
@@ -506,15 +624,12 @@ function checkSessionUser()
 function checkSessionMember()
 {
     if (!isset($_SESSION['user']['role'])) {
-        alertSuccessGo("กรุณา Login ก่อนใช้งาน", "login.php");
+        alertGo("กรุณา Login ก่อนใช้งาน", "login.php");
         exit;
     }
     if (isset($_SESSION['user']['role']) && $_SESSION['user']['role'] != "member") {
-        alertSuccessGo("สำหรับ member เท่านั้น", "login.php");
+        alertGo("สำหรับ member เท่านั้น", "login.php");
         exit;
     }
 }
 // **************************** End Check Login *******************************
-
-
-
