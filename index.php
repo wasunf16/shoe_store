@@ -17,7 +17,15 @@ if (isset($_GET['p']) && $_GET['p'] <= '0') {
     $page = 1;
 }
 
-$total_date = mysqli_num_rows($obj->query("SELECT * FROM tbl_cargo"));
+
+if(isset($_GET['type']) && $_GET['type'] != null){
+    $total_date = mysqli_num_rows($obj->query("SELECT * FROM tbl_cargo WHERE cg_type_id='".$_GET['type']."' "));
+}else if(isset($_GET['search']) && $_GET['search'] != null){
+    $total_date = mysqli_num_rows($obj->query("SELECT * FROM tbl_cargo WHERE cg_name LIKE '%" . $_GET['search'] . "%' ORDER BY cg_id DESC"));
+}else{
+    $total_date = mysqli_num_rows($obj->query("SELECT * FROM tbl_cargo"));
+}
+
 $total_page = ceil($total_date / $row_page);
 if (isset($_GET['p']) && $_GET['p'] >= $total_page) {
     $page = $total_page;
@@ -38,7 +46,7 @@ if (isset($_GET['type']) && $_GET['type'] != null) {
 }
 
 if(isset($_GET['popular'])){
-    $result = $obj->query("SELECT * FROM tbl_cargo ORDER BY cg_view DESC Limit {$start},{$row_page}");
+    $result = $obj->query("SELECT * FROM tbl_cargo ORDER BY cast(cg_view as int) DESC Limit {$start},{$row_page}");
 }
 
 $row = $result->fetch_all(MYSQLI_ASSOC);

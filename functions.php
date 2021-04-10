@@ -446,6 +446,25 @@ class Shipment extends ConnectDB
             alertBack("ผิดพลาด");
         }
     }
+    function shipmentDelete($sm_id, $pm_code)
+    {
+        $queryData = $this->db->query("SELECT * FROM tbl_payment as pm INNER JOIN tbl_payment_list as pl ON pm.pm_code=pl.pl_pm_code INNER JOIN tbl_cargo as cg ON pl.pl_cg_id=cg.cg_id WHERE pm.pm_code = '$pm_code' ");
+        while ($fetchData = $queryData->fetch_array()) {
+            $dirIMG = $fetchData['pm_img'];
+            $resultRemove = $this->db->query("DELETE FROM tbl_payment_list WHERE pl_id = '" . $fetchData['pl_id'] . "' ");
+        }
+
+        unlink('../img_payment/' . $dirIMG);
+
+        $deletePayment = $this->db->query("DELETE FROM tbl_payment WHERE pm_code = '$pm_code' ");
+        $deleteShipment = $this->db->query("DELETE FROM tbl_shipment WHERE sm_id = '$sm_id' ");
+
+        if ($deleteShipment == true) {
+            alertGo("ลบการจัดส่งเรียบร้อย", "shipment_show.php");
+        } else {
+            alertBack("ลบการจัดส่งผิดพลาด");
+        }
+    }
 }
 
 class Member extends ConnectDB

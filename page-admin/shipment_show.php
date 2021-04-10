@@ -30,13 +30,13 @@ if (isset($_GET['display'])) {
 
 
 if (isset($_GET['action'])) {
-    $objAction = new Cargo();
+    $objAction = new Shipment();
     switch ($_GET['action']) {
         case 'allow':
             // $resultAllow = $objAction->cargoPaymentAllow($_GET['id'], $_GET['code']);
             break;
         case 'delete':
-            // $resultDelete = $objAction->cargoPaymentDeny($_GET['id'],$_GET['code']);
+            $resultDelete = $objAction->shipmentDelete($_GET['sm_id'],$_GET['pm_code']);
             break;
         case 'remove':
             // $resultRemove = $objAction->cargoPaymentRemove($_GET['id'],$_GET['code']);
@@ -83,17 +83,18 @@ if (isset($_GET['action'])) {
                                     <td width="20%">
                                         <?php if (isset($_GET['display']) && $_GET['display'] == 'success') { ?>
                                             <button class="btn btn-sm btn-info m-0" type="button" data-bs-toggle="modal" data-bs-target="#Modal<?= $row['sm_id'] ?>"><i class="fa fa-eye" aria-hidden="true"></i> รายละเอียด</button>
+                                            <a href="?action=delete&sm_id=<?= $row['sm_id']; ?>&pm_code=<?= $row['sm_pm_code']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('ยืนยันการลบ?\n** การกระทำนี้จะลบรายการสั่งซื้อออกไปด้วย');"><i class="fa fa-trash" aria-hidden="true"></i> ลบ</a>
                                         <?php } else if (isset($_GET['display']) && $_GET['display'] == 'wait') { ?>
                                             <button class="btn btn-sm btn-info m-0" type="button" data-bs-toggle="modal" data-bs-target="#Modal<?= $row['sm_id'] ?>"><i class="fa fa-eye" aria-hidden="true"></i> รายละเอียด</button>
                                             <a href="shipment_add.php?id=<?= $row['sm_id']; ?>&code=<?= $row['sm_pm_code']; ?>" class="btn btn-sm btn-success m-0"><i class="fa fa-check" aria-hidden="true"></i> จัดส่ง</a>
-                                            <!-- <a href="?action=remove&id=<?= $row['sm_id']; ?>&code=<?= $row['sm_code']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('ยืนยัน?');"><i class="fa fa-trash" aria-hidden="true"></i> ลบ</a> -->
+                                            <a href="?action=delete&sm_id=<?= $row['sm_id']; ?>&pm_code=<?= $row['sm_pm_code']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('ยืนยันการลบ?\n** การกระทำนี้จะลบรายการสั่งซื้อออกไปด้วย');"><i class="fa fa-trash" aria-hidden="true"></i> ลบ</a>
                                         <?php } else if (isset($_GET['display']) && $_GET['display'] == 'receive') { ?>
                                             <button class="btn btn-sm btn-info m-0" type="button" data-bs-toggle="modal" data-bs-target="#Modal<?= $row['sm_id'] ?>"><i class="fa fa-eye" aria-hidden="true"></i> รายละเอียด</button>
-                                            <!-- <a href="?action=remove&id=<?= $row['sm_id']; ?>&code=<?= $row['sm_code']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('ยืนยัน?');"><i class="fa fa-trash" aria-hidden="true"></i> ลบ</a> -->
+                                            <a href="?action=delete&sm_id=<?= $row['sm_id']; ?>&pm_code=<?= $row['sm_pm_code']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('ยืนยันการลบ?\n** การกระทำนี้จะลบรายการสั่งซื้อออกไปด้วย');"><i class="fa fa-trash" aria-hidden="true"></i> ลบ</a>
                                         <?php } else { ?>
                                             <button class="btn btn-sm btn-info m-0" type="button" data-bs-toggle="modal" data-bs-target="#Modal<?= $row['sm_id'] ?>"><i class="fa fa-eye" aria-hidden="true"></i> รายละเอียด</button>
                                             <!-- <a href="shipment_add.php?id=<?= $row['sm_id']; ?>&code=<?= $row['sm_pm_code']; ?>" class="btn btn-sm btn-success m-0"><i class="fa fa-check" aria-hidden="true"></i> จัดส่ง</a> -->
-                                            <!-- <a href="?action=delete&id=<?= $row['sm_id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('ยืนยัน?');"><i class="fa fa-trash" aria-hidden="true"></i> ลบ</a> -->
+                                            <a href="?action=delete&sm_id=<?= $row['sm_id']; ?>&pm_code=<?= $row['sm_pm_code']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('ยืนยันการลบ?\n** การกระทำนี้จะลบรายการสั่งซื้อออกไปด้วย');"><i class="fa fa-trash" aria-hidden="true"></i> ลบ</a>
                                         <?php } ?>
                                     </td>
                                 </tr>
@@ -129,10 +130,10 @@ if (isset($_GET['action'])) {
                                                                                         echo $row['sm_code'];
                                                                                     }  ?></h6>
                                                             <h6><b>วันเวลาที่ลูกค้าได้รับสินค้า : </b> <?php if (empty($row['sm_date_receive'])) {
-                                                                                        echo "-";
-                                                                                    } else {
-                                                                                        echo ConvertDateToThai($row['sm_date_receive']);
-                                                                                    }  ?></h6>
+                                                                                                            echo "-";
+                                                                                                        } else {
+                                                                                                            echo ConvertDateToThai($row['sm_date_receive']);
+                                                                                                        }  ?></h6>
                                                         </div>
                                                     </div>
                                                     <div class="row">

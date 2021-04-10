@@ -66,7 +66,7 @@ if (isset($_POST['submit'])) {
                             </div>
                             <div class="col-md-12">
                                 <label for="detail" class="form-label">รายละเอียด</label>
-                                <textarea name="detail" type="text" class="form-control" id="detail" required></textarea>
+                                <textarea name="detail" type="text" class="form-control" id="detail" rows="8" required></textarea>
                             </div>
                             <div class="col-md-4">
                                 <label for="unit" class="form-label">ขนาดไซส์รองเท้า</label>

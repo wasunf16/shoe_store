@@ -49,10 +49,11 @@ if (isset($_GET['action'])) {
                             <thead>
                                 <tr class="table-danger">
                                     <th>IMG</th>
+                                    <th>ประเภทสินค้า</th>
                                     <th>รหัสสินค้า</th>
                                     <th>ชื่อสินค้า</th>
                                     <th>ไซต์</th>
-                                    <th>ประเภทสินค้า</th>
+                                    <th>จำนวนคงเหลือ</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -62,10 +63,11 @@ if (isset($_GET['action'])) {
                                 ?>
                                     <tr>
                                         <td><img src="../img_upload/<?= $value['cg_img']; ?>" style="height:75px;width:75px;"></td>
+                                        <td><?= $value['tp_name']; ?></td>
                                         <td><?= $value['cg_code']; ?></td>
                                         <td><?= $value['cg_name']; ?></td>
                                         <td><?= $value['cg_unit']; ?></td>
-                                        <td><?= $value['tp_name']; ?></td>
+                                        <td><?= $value['cg_amount']; ?></td>
                                         <td width="10%">
                                             <a href="cargo_edit.php?action=edit&id=<?= $value['cg_id']; ?>" class="btn btn-sm btn-warning m-1"><i class="fa fa-pencil" aria-hidden="true"></i> แก้ไข</a>
                                             <a href="?action=delete&id=<?= $value['cg_id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('ยืนยันการลบ?');"><i class="fa fa-trash-o" aria-hidden="true"></i> ลบ</a>
@@ -83,26 +85,9 @@ if (isset($_GET['action'])) {
     <script>
         $(document).ready(function() {
             $('#dtb').DataTable({
-                initComplete: function() {
-                    this.api().columns().every(function() {
-                        var column = this;
-                        var select = $('<select><option value=""></option></select>')
-                            .appendTo($(column.footer()).empty())
-                            .on('change', function() {
-                                var val = $.fn.dataTable.util.escapeRegex(
-                                    $(this).val()
-                                );
-
-                                column
-                                    .search(val ? '^' + val + '$' : '', true, false)
-                                    .draw();
-                            });
-
-                        column.data().unique().sort().each(function(d, j) {
-                            select.append('<option value="' + d + '">' + d + '</option>')
-                        });
-                    });
-                }
+                "order": [
+                    [2, 'desc']
+                ]
             });
         });
     </script>

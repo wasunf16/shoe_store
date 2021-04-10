@@ -22,7 +22,7 @@
                                 <table class="table table-hover">
                                     <thead>
                                         <tr class="table-info">
-                                            <th colspan="3" class="text-center">
+                                            <th colspan="3" class="text-center border-info">
                                                 <h3>รายงาน</h3>
                                             </th>
                                         </tr>
@@ -75,7 +75,7 @@
                                         </tr>
                                         <tr>
                                             <td class="table-danger">
-                                                <h5>สมาชิกทั้งหมด</h5>
+                                                <h5>ลูกค้าทั้งหมด</h5>
                                             </td>
                                             <td class="table-light">
                                                 <h5><?php echo $obj->reportMemberCountTotal(); ?> คน</h5>
@@ -90,7 +90,7 @@
                                     <canvas id="Chart1"></canvas>
                                     <?php
                                     $obj = new ConnectDB();
-                                    $result = $obj->query("SELECT * FROM tbl_cargo ORDER BY cg_view DESC");
+                                    $result = $obj->query("SELECT * FROM tbl_cargo ORDER BY cast(cg_view as int) DESC");
 
                                     $label = array();
                                     $data = array();
