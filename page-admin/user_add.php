@@ -76,7 +76,7 @@ if (isset($_POST['submit'])) {
                                         </div>
                                         <div class="col-md-6">
                                             <label for="tel" class="form-label">เบอร์โทร</label>
-                                            <input name="tel" type="text" class="form-control" id="tel" maxlength="10" required>
+                                            <input name="tel"  class="form-control" id="tel" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" maxlength="10" required>
                                         </div>
                                         <div class="col-12">
                                             <label for="inputAddress" class="form-label">ประเภท</label>

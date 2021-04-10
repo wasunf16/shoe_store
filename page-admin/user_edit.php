@@ -79,7 +79,7 @@ $row = $obj->userGetById($_GET['id']);
                                         </div>
                                         <div class="col-md-6">
                                             <label for="tel" class="form-label">เบอร์โทร</label>
-                                            <input name="tel" type="text" class="form-control" id="tel" maxlength="10" value="<?=$row[0]['u_tel'];?>">
+                                            <input name="tel" class="form-control" id="tel" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" maxlength="10" value="<?=$row[0]['u_tel'];?>">
                                         </div>
                                         <div class="col-12">
                                             <label for="inputAddress" class="form-label">ประเภท</label>

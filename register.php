@@ -1,16 +1,17 @@
 <?php include('header.php'); ?>
 </head>
 <?php
-    $obj = new LoginRegister();
-    if(isset($_POST['submit'])){
-        $result = $obj->register($_POST['username'],$_POST['password'],$_POST['fname'],$_POST['lname'],$_POST['sex'],$_POST['address'],$_POST['email'],$_POST['tel']);
-        if($result == true){
-            alertGo("สมัครสมาชิกสำเร็จ","login.php");
-        }else{
-            alertBack("สมัครสมาชิกล้มเหลว");
-        }
+$obj = new LoginRegister();
+if (isset($_POST['submit'])) {
+    $result = $obj->register($_POST['username'], $_POST['password'], $_POST['fname'], $_POST['lname'], $_POST['sex'], $_POST['address'], $_POST['email'], $_POST['tel']);
+    if ($result == true) {
+        alertGo("สมัครสมาชิกสำเร็จ", "login.php");
+    } else {
+        alertBack("สมัครสมาชิกล้มเหลว");
     }
+}
 ?>
+
 <body class="bgc-gray bgm-stoes">
     <?php include('navbar.php'); ?>
     <div class="container p-4 pb-5 bgc-white shadow-sm rounded min-height">
@@ -50,7 +51,7 @@
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input name="sex" value="หญิง" class="form-check-input" type="radio"  id="female" required>
+                                <input name="sex" value="หญิง" class="form-check-input" type="radio" id="female" required>
                                 <label class="form-check-label" for="female">
                                     หญิง
                                 </label>
@@ -62,7 +63,7 @@
                         </div>
                         <div class="col-md-6">
                             <label for="tel" class="form-label">เบอร์โทร</label>
-                            <input name="tel" type="text" class="form-control" id="tel" maxlength="10" required>
+                            <input name="tel" class="form-control" id="tel" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" maxlength="10" required>
                         </div>
 
                 </div>

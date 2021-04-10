@@ -23,7 +23,7 @@
 
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <div class="row mt-2">
-                    <h2>Home</h2>
+                    <h2>แก้ไขโปรไฟล์</h2>
                     <hr>
                     <div class="container">
                         <div class="card col-md-7">

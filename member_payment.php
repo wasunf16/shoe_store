@@ -134,7 +134,7 @@ if(isset($_POST['submit'])){
                                     <input name="date" type="text" class="form-control" value="<?= $datenow; ?>" readonly>
                                 </div>
                                 <div class="col-md-12">
-                                    <label for="address" class="form-label">ที่อยู่</label>
+                                    <label for="address" class="form-label">ที่อยู่ <span style="color:red">(ดึงมาจากข้อมูลส่วนตัว สามารถแก้ไขได้)</span></label>
                                     <textarea name="address" id="address" class="form-control" rows="3"><?=$rowUser[0]['u_address']?></textarea>
                                 </div>
                                 <div class="col-md-12">

@@ -5,7 +5,7 @@ checkSessionMember()
 
 </head>
 <?php
-
+date_default_timezone_set("Asia/Bangkok");
 $obj = new ConnectDB();
 $objModal = new ConnectDB();
 
@@ -38,7 +38,9 @@ if (isset($_GET['action'])) {
             $resultDelete = $objAction->cargoPaymentDeny($_GET['id'], $_GET['code']);
             break;
         case 'accept':
-            $resultAccept = '';
+            $objAction = new Shipment();
+            $date = date("Y-m-d H:i:s");
+            $resultAccept = $objAction->shipmentAccept($_GET['id'],$date);
             break;
     }
 }
@@ -67,6 +69,7 @@ if (isset($_GET['action'])) {
                         <th>บริษัทจัดส่ง</th>
                         <th>เลขพัสดุ</th>
                         <th>วันเวลาที่จัดส่ง</th>
+                        <th>วันเวลาที่ได้รับ</th>
                         <th>สถานะ</th>
                         <th></th>
                     </tr>
@@ -75,9 +78,10 @@ if (isset($_GET['action'])) {
                     <?php while ($row = $result->fetch_array()) { ?>
                         <tr>
                             <td><?= $row['sm_pm_code']; ?></td>
-                            <td><?= $row['sm_company']; ?></td>
-                            <td><?= $row['sm_code']; ?></td>
-                            <td><?= $row['sm_date']; ?></td>
+                            <td><?php if(empty($row['sm_company'])){echo'-';}else{echo $row['sm_company'];} ?></td>
+                            <td><?php if(empty($row['sm_code'])){echo'-';}else{echo $row['sm_code'];} ?></td>
+                            <td><?php if(empty($row['sm_date'])){echo'-';}else{echo ConvertDateToThai($row['sm_date']);} ?></td>
+                            <td><?php if(empty($row['sm_date_receive'])){echo'-';}else{echo ConvertDateToThai($row['sm_date_receive']);} ?></td>
                             <td><?= $row['sm_status']; ?></td>
                             <td width="20%">
                                 <?php if (isset($_GET['display']) && $_GET['display'] == 'success') { ?>
@@ -110,9 +114,14 @@ if (isset($_GET['action'])) {
                                                 <div class="col-md-12">
                                                     <h6><b>รหัสสั่งซื้อ : </b> <?= $row['pm_code']; ?></h6>
                                                     <h6><b>ราคารวม : </b> <?= number_format($row['pm_total']); ?></h6>
+                                                    <h6><b>วันที่สั่งซื้อ : </b> <?= ConvertDateToThai($row['pm_date']); ?></h6>
+                                                    <h6><b>สถานะการสั่งซื้อ : </b> <?= $row['pm_status']; ?></h6>
+                                                    <h6><b>ชื่อ : </b> <?= $row['u_fname'].' '.$row['u_lname']; ?></h6>
                                                     <h6><b>ที่อยู่ : </b> <?= $row['pm_address']; ?></h6>
-                                                    <h6><b>วันที่สั่งซื้อ : </b> <?= $row['pm_date']; ?></h6>
-                                                    <h6><b>สถานะ : </b> <?= $row['pm_status']; ?></h6>
+                                                    <h6><b>โทร : </b> <?= $row['u_tel']; ?></h6>
+                                                    <h6><b>สถานะการจัดส่ง : </b> <?= $row['sm_status']; ?></h6>
+                                                    <h6><b>บริษัทขนส่ง : </b> <?php if(empty($row['sm_company'])){echo"-";}else{echo$row['sm_company'];}  ?></h6>
+                                                    <h6><b>เลขพัสดุ : </b> <?php if(empty($row['sm_code'])){echo"-";}else{echo$row['sm_code'];}  ?></h6>
                                                 </div>
                                             </div>
                                             <div class="row">

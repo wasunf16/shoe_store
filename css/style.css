@@ -1,53 +1,76 @@
-@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap");
 
-*{
-    font-family: 'Chakra Petch', sans-serif;
+* {
+  font-family: "Chakra Petch", sans-serif;
 }
 
-nav.navbar{
-    background-color: #222831 !important;
+nav.navbar {
+  background-color: #222831 !important;
 }
 
-footer{
-    background-color: #192a56 !important;
+footer {
+  background-color: #222831 !important;
 }
 .relativeSize {
-    color: #fff;
-    background: #333333c7;
-    font-size: 12px;
-    padding: 3px 10px;
-    border-radius: 5px;
-    position: absolute;
-    top: 10px;
-    left: 10px;
+  color: #fff;
+  background: #333333c7;
+  font-size: 12px;
+  padding: 3px 10px;
+  border-radius: 5px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
 }
 
-.bgc-gray{
-    background-color: #eee;
-}
-.bgc-white{
-    background-color: #fff;
+.relativeSizeView {
+  color: #494949;
+  background: #e2e2e2c7;
+  font-size: 12px;
+  padding: 3px 10px;
+  border-radius: 5px;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
 }
 
-.min-height{
-    min-height: 700px;
-    height: auto;
+.bgc-gray {
+  background-color: #eee;
+}
+.bgc-white {
+  background-color: #fff;
 }
 
-.bgm-stoes{
-    background: url("../img/bg.jpg") no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+.min-height {
+  min-height: 700px;
+  height: auto;
 }
+
+.bgm-stoes {
+  background: url("../img/bg.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.a-clear {
+  text-decoration: none;
+  color: black;
+  display: inline;
+  width: 100%;
+}
+
+.banner {
+  height: 250px;
+  width: 1320px;
+}
+
+
 
 
 @media print {
-	.no-print  {
-		display: none;
-	}
-	.printme  {
-		display: block;
-	}
+  .no-print,
+  .no-print * {
+    display: none !important;
+  }
 }

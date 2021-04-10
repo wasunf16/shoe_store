@@ -67,7 +67,7 @@ if (isset($_GET['action'])) {
                             <!-- <td><img src="../img_payment/<?= $row['pm_img'] ?>" style="width:75px; height:75px;"></td> -->
                             <td><?= $row['pm_code']; ?></td>
                             <td><?= number_format($row['pm_total']); ?></td>
-                            <td><?= $row['pm_date']; ?></td>
+                            <td><?= ConvertDateToThai($row['pm_date']); ?></td>
                             <td><?= $row['pm_status']; ?></td>
                             <td width="20%">
                                 <?php if (isset($_GET['display']) && $_GET['display'] == 'success') { ?>
@@ -102,7 +102,7 @@ if (isset($_GET['action'])) {
                                                     <h6><b>รหัสสั่งซื้อ : </b> <?= $row['pm_code']; ?></h6>
                                                     <h6><b>ราคารวม : </b> <?= number_format($row['pm_total']); ?></h6>
                                                     <h6><b>ที่อยู่ : </b> <?= $row['pm_address']; ?></h6>
-                                                    <h6><b>วันที่สั่งซื้อ : </b> <?= $row['pm_date']; ?></h6>
+                                                    <h6><b>วันที่สั่งซื้อ : </b> <?= ConvertDateToThai($row['pm_date']); ?></h6>
                                                     <h6><b>สถานะ : </b> <?= $row['pm_status']; ?></h6>
                                                 </div>
                                             </div>

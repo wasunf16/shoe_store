@@ -14,6 +14,7 @@ class ConnectDB
         if ($con->connect_error) {
             echo "Fail to connect database: " . $con->connect_error;
         }
+        date_default_timezone_set("Asia/Bangkok");
         $this->db = $con;
     }
 
@@ -433,6 +434,18 @@ class Shipment extends ConnectDB
             alertBack("ผิดพลาด");
         }
     }
+    function shipmentAccept($id, $date)
+    {
+        $result = $this->db->query("UPDATE `tbl_shipment` 
+        SET `sm_status` = 'ได้รับสินค้าแล้ว',
+        `sm_date_receive` = '$date'
+        WHERE `tbl_shipment`.`sm_id` = '$id';");
+        if ($result == true) {
+            alertGo("เรียบร้อย", "member_shipment.php");
+        } else {
+            alertBack("ผิดพลาด");
+        }
+    }
 }
 
 class Member extends ConnectDB
@@ -508,6 +521,46 @@ class Member extends ConnectDB
         $result = $this->db->query("INSERT INTO `tbl_user` (`u_id`, `u_username`, `u_password`, `u_fname`, `u_lname`, `u_sex`, `u_address`, `u_email`, `u_tel`, `u_role`) 
                             VALUES (NULL, '$user', '$pass', '$fname', '$lname', '$sex', '$address', '$email', '$tel', 'member');");
         return $result;
+    }
+}
+
+class Report extends ConnectDB
+{
+    function reportSellCountTotal()
+    {
+        $result = $this->db->query("SELECT COUNT(pm_id) as sellCountTotal FROM `tbl_payment`");
+        $row = $result->fetch_array();
+        return $row['sellCountTotal'];
+    }
+    function reportSellTotal()
+    {
+        $result = $this->db->query("SELECT *,SUM(cg_price*pl_amount) as sellTotal FROM tbl_payment_list as pl INNER JOIN tbl_cargo as cg ON pl.pl_cg_id = cg.cg_id");
+        $row = $result->fetch_array();
+        return $row['sellTotal'];
+    }
+    function reportCargoTotal()
+    {
+        $result = $this->db->query("SELECT COUNT(cg_id) as cargoTotal FROM `tbl_cargo`");
+        $row = $result->fetch_array();
+        return $row['cargoTotal'];
+    }
+    function reportUserCountTotal()
+    {
+        $result = $this->db->query("SELECT COUNT(u_id) as userTotal FROM `tbl_user` WHERE u_role != 'member' ");
+        $row = $result->fetch_array();
+        return $row['userTotal'];
+    }
+    function reportMemberCountTotal()
+    {
+        $result = $this->db->query("SELECT COUNT(u_id) as memberTotal FROM `tbl_user` WHERE u_role = 'member' ");
+        $row = $result->fetch_array();
+        return $row['memberTotal'];
+    }
+    function reportShipmentCountTotal()
+    {
+        $result = $this->db->query("SELECT COUNT(sm_id) as shipmentCount FROM tbl_shipment");
+        $row = $result->fetch_array();
+        return $row['shipmentCount'];
     }
 }
 
@@ -633,3 +686,71 @@ function checkSessionMember()
     }
 }
 // **************************** End Check Login *******************************
+
+function NameMonth()
+{
+    $monthList = [
+        "01" => "มกราคม",
+        "02" => "กุมภาพันธ์",
+        "03" => "มีนาคม",
+        "04" => "เมษายน",
+        "05" => "พฤษภาคม",
+        "06" => "มิถุนายน",
+        "07" => "กรกฎาคม",
+        "08" => "สิงหาคม",
+        "09" => "กันยายน",
+        "10" => "ตุลาคม",
+        "11" => "พฤศจิกายน",
+        "12" => "ธันวาคม",
+    ];
+    return $monthList;
+}
+
+function displayNameMonth($month)
+{
+    $monthList = [
+        "1" => "มกราคม",
+        "2" => "กุมภาพันธ์",
+        "3" => "มีนาคม",
+        "4" => "เมษายน",
+        "5" => "พฤษภาคม",
+        "6" => "มิถุนายน",
+        "7" => "กรกฎาคม",
+        "8" => "สิงหาคม",
+        "9" => "กันยายน",
+        "10" => "ตุลาคม",
+        "11" => "พฤศจิกายน",
+        "12" => "ธันวาคม",
+    ];
+    return $monthList[$month];
+}
+
+function ConvertDateToThai($datetime)
+{
+    $XdateTime = explode(" ", $datetime);
+    $time = $XdateTime[1];
+    $date = explode("-", $XdateTime[0]);
+
+    $monthList = [
+        "01" => "มกราคม",
+        "02" => "กุมภาพันธ์",
+        "03" => "มีนาคม",
+        "04" => "เมษายน",
+        "05" => "พฤษภาคม",
+        "06" => "มิถุนายน",
+        "07" => "กรกฎาคม",
+        "08" => "สิงหาคม",
+        "09" => "กันยายน",
+        "10" => "ตุลาคม",
+        "11" => "พฤศจิกายน",
+        "12" => "ธันวาคม",
+    ];
+
+    return $date[2] . " " . $monthList[$date[1]] . " " . $date[0] + 543 . " เวลา " . $time;
+}
+
+function monthNow()
+{
+    $date = date("m");
+    return $date;
+}

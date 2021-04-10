@@ -79,7 +79,7 @@ if (isset($_GET['action'])) {
                                 <tr>
                                     <td><?= $row['pm_code']; ?></td>
                                     <td><?= number_format($row['pm_total']); ?></td>
-                                    <td><?= $row['pm_date']; ?></td>
+                                    <td><?= ConvertDateToThai($row['pm_date']); ?></td>
                                     <td><?= $row['pm_status']; ?></td>
                                     <td width="20%">
                                         <?php if (isset($_GET['display']) && $_GET['display'] == 'success') { ?>
@@ -93,7 +93,7 @@ if (isset($_GET['action'])) {
                                             <a href="?action=allow&id=<?= $row['pm_id']; ?>&code=<?= $row['pm_code']; ?>" class="btn btn-sm btn-success m-0" onclick="return confirm('ยืนยัน?');"><i class="fa fa-check" aria-hidden="true"></i> ยืนยัน</a>
                                             <a href="?action=delete&id=<?= $row['pm_id']; ?>&code=<?= $row['pm_code']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('ยืนยัน?');"><i class="fa fa-times" aria-hidden="true"></i> ไม่อนุมัติ</a>
                                         <?php } else { ?>
-
+                                            <button class="btn btn-sm btn-info m-0" type="button" data-bs-toggle="modal" data-bs-target="#Modal<?= $row['pm_id'] ?>"><i class="fa fa-eye" aria-hidden="true"></i> รายละเอียด</button>
                                         <?php } ?>
                                     </td>
                                 </tr>
@@ -118,7 +118,7 @@ if (isset($_GET['action'])) {
                                                             <h6><b>รหัสสั่งซื้อ : </b> <?= $row['pm_code']; ?></h6>
                                                             <h6><b>ราคารวม : </b> <?= number_format($row['pm_total']); ?></h6>
                                                             <h6><b>ที่อยู่จัดส่ง : </b> <?= $row['pm_address']; ?></h6>
-                                                            <h6><b>วันที่สั่งซื้อ : </b> <?= $row['pm_date']; ?></h6>
+                                                            <h6><b>วันที่สั่งซื้อ : </b> <?= ConvertDateToThai($row['pm_date']); ?></h6>
                                                             <h6><b>สถานะ : </b> <?= $row['pm_status']; ?></h6>
                                                         </div>
                                                     </div>

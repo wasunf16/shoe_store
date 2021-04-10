@@ -1,4 +1,4 @@
-<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse no-print">
+<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
     <div class="position-sticky pt-3">
         <ul class="nav flex-column" style="font-size:18px;">
             <li class="nav-item">
@@ -40,7 +40,19 @@
             <li class="nav-item">
                 <a class="nav-link <?php echo (activeNav() == 'user_show.php' ? ' active' : ''); ?>" href="user_show.php">
                     <i class="fa fa-user" aria-hidden="true"></i>
-                    ข้อมูลพนักงาน
+                    ข้อมูลผู้ใช้งาน
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <?php echo (activeNav() == 'report_sell.php' ? ' active' : ''); ?>" href="report_sell.php?action=day">
+                    <i class="fa fa-flag" aria-hidden="true"></i>
+                    รายงานยอดขาย
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <?php echo (activeNav() == 'report_bestsell.php' ? ' active' : ''); ?>" href="report_bestsell.php?month=<?= monthNow(); ?>">
+                    <i class="fa fa-flag" aria-hidden="true"></i>
+                    รายงานสินค้าขายดี
                 </a>
             </li>
         </ul>
