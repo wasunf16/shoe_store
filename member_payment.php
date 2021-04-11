@@ -37,29 +37,29 @@ if(isset($_POST['submit'])){
                                     <div class="form-check mb-1">
                                         <input name="channel" value="กสิกรไทย" class="form-check-input" type="radio" id="กสิกรไทย" required>
                                         <img src="img/bank/kplue.jpg" style="width:75px;">&nbsp;&nbsp;<label class="form-check-label" for="กสิกรไทย">
-                                            ธนาคารกสิกรไทย ชื่อบัญชี นายวสันต์ บุญยอด
-                                            <p style="color:red;">เลขที่บัญชี 162 577 2548</p>
+                                            ธนาคารกสิกรไทย ชื่อบัญชี Deena
+                                            <p style="color:red;">เลขที่บัญชี 636-2-22430-2</p>
                                         </label>
                                     </div>
                                     <div class="form-check mb-1">
                                         <input name="channel" value="กรุงไทย" class="form-check-input" type="radio" id="กรุงไทย" required>
                                         <img src="img/bank/ktb.png" style="width:75px;">&nbsp;&nbsp;<label class="form-check-label" for="กรุงไทย">
-                                            ธนาคารกรุงไทย ชื่อบัญชี นายวสันต์ บุญยอด
-                                            <p style="color:red;">เลขที่บัญชี 162 577 2548</p>
+                                            ธนาคารกรุงไทย ชื่อบัญชี Deena
+                                            <p style="color:red;">เลขที่บัญชี 636-2-22430-2</p>
                                         </label>
                                     </div>
                                     <div class="form-check mb-1">
                                         <input name="channel" value="ไทยพาณิชย์" class="form-check-input" type="radio" id="ไทยพาณิชย์" required>
                                         <img src="img/bank/scb.png" style="width:75px;">&nbsp;&nbsp;<label class="form-check-label" for="ไทยพาณิชย์">
-                                            ธนาคารไทยพาณิชย์ ชื่อบัญชี นายวสันต์ บุญยอด
-                                            <p style="color:red;">เลขที่บัญชี 162 577 2548</p>
+                                            ธนาคารไทยพาณิชย์ ชื่อบัญชี Deena
+                                            <p style="color:red;">เลขที่บัญชี 636-2-22430-2</p>
                                         </label>
                                     </div>
                                     <div class="form-check mb-1">
                                         <input name="channel" value="ทหารไทย" class="form-check-input" type="radio" id="ทหารไทย" required>
                                         <img src="img/bank/tmb.jpg" style="width:75px;">&nbsp;&nbsp;<label class="form-check-label" for="ทหารไทย">
-                                            ธนาคารทหารไทย ชื่อบัญชี นายวสันต์ บุญยอด
-                                            <p style="color:red;">เลขที่บัญชี 162 577 2548</p>
+                                            ธนาคารทหารไทย ชื่อบัญชี Deena
+                                            <p style="color:red;">เลขที่บัญชี 636-2-22430-2</p>
                                         </label>
                                     </div>
                                 </div>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 11, 2021 at 12:55 AM
+-- Generation Time: Apr 11, 2021 at 06:03 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.1
 
@@ -28,16 +28,16 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `tbl_cargo` (
-  `cg_id` int(20) NOT NULL,
-  `cg_code` varchar(255) NOT NULL,
-  `cg_name` varchar(255) NOT NULL,
-  `cg_detail` text NOT NULL,
-  `cg_img` varchar(255) NOT NULL,
-  `cg_type_id` varchar(50) NOT NULL,
-  `cg_unit` varchar(50) NOT NULL,
-  `cg_price` varchar(50) NOT NULL,
-  `cg_amount` varchar(50) NOT NULL,
-  `cg_view` varchar(50) NOT NULL DEFAULT '0'
+  `cg_id` int(20) NOT NULL COMMENT 'ID',
+  `cg_code` varchar(255) NOT NULL COMMENT 'รหัสสินค้า',
+  `cg_name` varchar(255) NOT NULL COMMENT 'ชื่อสินค้า',
+  `cg_detail` text NOT NULL COMMENT 'รายละเอียด',
+  `cg_img` varchar(255) NOT NULL COMMENT 'รูปภาพ',
+  `cg_type_id` varchar(50) NOT NULL COMMENT 'ID ประเภทสินค้า',
+  `cg_unit` varchar(50) NOT NULL COMMENT 'ไซต์',
+  `cg_price` varchar(50) NOT NULL COMMENT 'ราคา',
+  `cg_amount` varchar(50) NOT NULL COMMENT 'จำนวนในคลัง',
+  `cg_view` varchar(50) NOT NULL DEFAULT '0' COMMENT 'การดูสินค้า'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -45,15 +45,21 @@ CREATE TABLE `tbl_cargo` (
 --
 
 INSERT INTO `tbl_cargo` (`cg_id`, `cg_code`, `cg_name`, `cg_detail`, `cg_img`, `cg_type_id`, `cg_unit`, `cg_price`, `cg_amount`, `cg_view`) VALUES
-(52, 'CG-10001', 'NMD_R1', 'รองเท้า NMD ในสไตล์คลาสสิก\r\nมุ่งไปข้างหน้าพร้อมกับบทเรียนในอดีต เพื่อก้าวขึ้นมาเป็นผู้นำแห่งอนาคต รองเท้า NMD_R1 คู่นี้ออกแบบมาเพื่อเป็นยกย่องนวัตกรรมรองเท้าวิ่งที่เต็มไปด้วยเรื่องราวความเป็นมา โดยได้แรงบันดาลใจจากรองเท้า NMD รุ่นต้นฉบับที่ถูกใจสายสตรีทตั้งแต่เปิดตัวครั้งแรก\r\n\r\nมาในดีไซน์ปราดเปรียว สวมใส่ได้หลากหลาย พร้อมสัมผัสสุดล้ำ แต่ยังคงความคลาสสิกที่เรียบง่ายเอาไว้ด้วยอัปเปอร์ผ้าถักสัมผัสเรียบ และพื้นชั้นกลาง Boost ที่จะมอบความสบายอย่างต่อเนื่อง ไม่ว่าจะเช้า สาย บ่าย ค่ำ คุณก็พร้อมลุย ยกระดับความเท่ในแบบยุคอวกาศด้วยปลั๊กสีเมทัลลิกบริเวณพื้นชั้นกลาง', '20210408012250_9930.png', '4', '40', '2760', '49', '42'),
+(52, 'CG-10001', 'NMD_R1', 'รองเท้า NMD ในสไตล์คลาสสิก\r\nมุ่งไปข้างหน้าพร้อมกับบทเรียนในอดีต เพื่อก้าวขึ้นมาเป็นผู้นำแห่งอนาคต รองเท้า NMD_R1 คู่นี้ออกแบบมาเพื่อเป็นยกย่องนวัตกรรมรองเท้าวิ่งที่เต็มไปด้วยเรื่องราวความเป็นมา โดยได้แรงบันดาลใจจากรองเท้า NMD รุ่นต้นฉบับที่ถูกใจสายสตรีทตั้งแต่เปิดตัวครั้งแรก\r\n\r\nมาในดีไซน์ปราดเปรียว สวมใส่ได้หลากหลาย พร้อมสัมผัสสุดล้ำ แต่ยังคงความคลาสสิกที่เรียบง่ายเอาไว้ด้วยอัปเปอร์ผ้าถักสัมผัสเรียบ และพื้นชั้นกลาง Boost ที่จะมอบความสบายอย่างต่อเนื่อง ไม่ว่าจะเช้า สาย บ่าย ค่ำ คุณก็พร้อมลุย ยกระดับความเท่ในแบบยุคอวกาศด้วยปลั๊กสีเมทัลลิกบริเวณพื้นชั้นกลาง', '20210408012250_9930.png', '4', '40', '2760', '49', '43'),
 (53, 'CG-10002', 'NMD_R1 SPECTOO', 'รองเท้า NMD สำหรับโลกดิจิทัลในปัจจุบัน\r\nแฟรนไชส์ adidas NMD ให้ความสำคัญกับอนาคตเสมอมาตั้งแต่ยุคแรกเริ่ม เพราะเป็นเรื่องของวิวัฒนาการ เป็นเรื่องของความก้าวหน้า\r\n\r\nรองเท้าอาดิดาส NMD_R1 Spectoo คู่นี้หยิบเอาสไตล์คลาสสิกของ NMD มาปรับโฉมใหม่โดยได้แรงบันดาลใจจากโลกแห่งข้อมูลสตรีมมิงของเราที่เชื่อมต่อกันอยู่ตลอดเวลา อัปเปอร์ดีไซน์ปราดเปรียวทำจากผ้าถัก แต่งกราฟิกข้อความและมีลูกเล่นโปร่งแสงด้านข้าง สื่อออกมาอย่างเรียบง่ายให้เห็นถึงช่วงเปลี่ยนผ่านจากยุคของนักสำรวจในเมืองไปสู่ยุคของนักเดินทางในโลกดิจิทัล พื้นชั้นกลาง Boost จากอาดิดาสมีความยืดหยุ่นและตอบสนองได้ดี มอบความสบายเหลือเชื่อให้คุณตั้งแต่ก้าวแรกจนก้าวสุดท้าย', '20210408012645_2195.png', '4', '42', '3500', '49', '62'),
 (54, 'CG-10003', 'ADILETTE AQUA', 'รองเท้าแตะสำหรับใส่หลังว่ายน้ำ มาพร้อมความนุ่มที่มากขึ้น\r\nรองเท้าแตะที่จะให้คุณสัมผัสความแห้งสบายหลังว่ายน้ำ มาพร้อมความเรียบง่ายในสไตล์สลิปออน แต่งแถบ 3-Stripes ที่เป็นซิกเนเจอร์และดีเอ็นเอของอาดิดาส พื้นรองเท้าสุดนุ่ม สำหรับปรนนิบัติเท้าที่เมื่อยล้าของคุณ\r\n\r\n', '20210409021825_5148.png', '1', '39', '700', '35', '19'),
 (55, 'CG-10004', 'TERREX SUMRAs', 'รองเท้าแตะสำหรับใส่หลังว่ายน้ำ มาพร้อมความนุ่มที่มากขึ้น\r\nรองเท้าแตะที่จะให้คุณสัมผัสความแห้งสบายหลังว่ายน้ำ มาพร้อมความเรียบง่ายในสไตล์สลิปออน แต่งแถบ 3-Stripes ที่เป็นซิกเนเจอร์และดีเอ็นเอของอาดิดาส พื้นรองเท้าสุดนุ่ม สำหรับปรนนิบัติเท้าที่เมื่อยล้าของคุณs\r\n\r\n', '20210408013805_1805.png', '1', '45', '2250', '15', '20'),
 (56, 'CG-10005', 'ADILETTE', 'รองเท้าแตะนุ่มสบายในสไตล์ลำลองแบบอาดิดาส\r\nสไตล์ที่สวมใส่สลับทำกิจกรรมได้สะดวก รองเท้าแตะคู่นี้มาพร้อมแถบรัดที่ปรับความกระชับได้และพื้นรองเท้าด้านในที่นุ่มเป็นพิเศษ สวมใส่สบายไม่ว่าจะอยู่ในห้องแต่งตัวหรือบนท้องถนน ดูเรียบง่ายในดีไซน์ทันสมัยที่ได้แรงบันดาลใจจากความสปอร์ต\r\n\r\n', '20210409022120_5992.png', '1', '40', '1300', '60', '21'),
 (57, 'CG-10006', 'COMFORT', 'รองเท้าแตะสวมสบายที่รังสรรค์มาเพื่อความทนทาน\r\nรองเท้าแตะสำหรับช่วงหน้าร้อนที่สวมใส่ได้ตั้งแต่ริมสระไปจนถึงชายหาด รองเท้าแตะคู่นี้ผสานความแข็งแกร่งทนทานเข้ากับส่วนรับแรงกระแทกที่แห้งไวเพื่อให้คุณทำกิจกรรมต่าง ๆ ระหว่างวันได้อย่างสบาย อวดแรงบันดาลใจในอาดิดาสผ่านดีเทลจากอดีต\r\n\r\n', '20210409021915_3434.png', '1', '40', '2200', '36', '19'),
 (60, 'CG-10007', 'DURAMO SL', 'รองเท้า DURAMO SL\r\nรองเท้าวิ่งอาดิดาสพร้อมส่วนรับแรงกระแทกน้ำหนักเบา\r\nความหลากหลายจะคอยสร้างแรงกระตุ้นให้กับคุณ รองเท้าวิ่งคู่นี้คือความสบายมากประสิทธิภาพสำหรับการวิ่ง ยกเวท และเล่นกีฬาอย่างเพลิดเพลิน มีน้ำหนักเบา รับแรงกระแทกด้วยความนุ่มเป็นพิเศษ โอเวอร์เลย์แบบไร้รอยเย็บจะช่วยซัพพอร์ตเท้าของคุณระหว่างระเบิดความไวและเคลื่อนที่ในทิศทางด้านข้าง\r\n\r\n', '20210411052143_6120.png', '8', '42', '1200', '24', '9'),
-(61, 'CG-10008', 'ADIZERO RC 2.0', 'รองเท้า ADIZERO RC 2.0\r\nรองเท้าวิ่งน้ำหนักเบาเป็นพิเศษที่สวมใส่ได้ทุกวัน\r\nตบเท้าเข้าสู่เส้นปล่อยตัวไปกับความคลาสสิกสำหรับวันแข่งขัน รองเท้าวิ่งอาดิดาสคู่นี้มาพร้อมส่วนรับแรงกระแทกที่ตอบสนองได้ดีเพื่อความไวและความคล่องตัว เสริมความแข็งแรงด้านในรองเท้าเพื่อสัมผัสล็อคกระชับ ทำจากวัสดุที่มีน้ำหนักเบาเป็นพิเศษ ให้คุณเร่งฝีเท้าเข้าสู่เส้นชัยได้อย่างว่องไว', '20210411053517_5978.png', '8', '40', '1700', '35', '2'),
-(62, 'CG-10009', 'ADILETTE LITE', 'รองเท้าแตะ ADILETTE LITE\r\nรองเท้าแตะสวมง่ายสำหรับช่วงเวลาแห่งการพักผ่อน\r\nสัมผัสบรรยากาศแห่งวันพักผ่อนเต็มรูปแบบ รองเท้าแตะ Adilette Lite คู่นี้พร้อมปลดเปลื้องเท้าของคุณให้เป็นอิสระ สวมสบายได้ทันทีด้วยพื้นรองเท้าสุดนุ่ม สัมผัสความสปอร์ตได้แม้ในยามพักผ่อนผ่านโลโก้ Trefoil บนแถบสวม (เลือกสวมใส่คู่ถุงเท้าได้)', '20210411054325_1030.png', '1', '39', '720', '65', '2');
+(61, 'CG-10008', 'ADIZERO RC 2.0', 'รองเท้า ADIZERO RC 2.0\r\nรองเท้าวิ่งน้ำหนักเบาเป็นพิเศษที่สวมใส่ได้ทุกวัน\r\nตบเท้าเข้าสู่เส้นปล่อยตัวไปกับความคลาสสิกสำหรับวันแข่งขัน รองเท้าวิ่งอาดิดาสคู่นี้มาพร้อมส่วนรับแรงกระแทกที่ตอบสนองได้ดีเพื่อความไวและความคล่องตัว เสริมความแข็งแรงด้านในรองเท้าเพื่อสัมผัสล็อคกระชับ ทำจากวัสดุที่มีน้ำหนักเบาเป็นพิเศษ ให้คุณเร่งฝีเท้าเข้าสู่เส้นชัยได้อย่างว่องไว', '20210411053517_5978.png', '8', '40', '1700', '35', '7'),
+(62, 'CG-10009', 'ADILETTE LITE', 'รองเท้าแตะ ADILETTE LITE\r\nรองเท้าแตะสวมง่ายสำหรับช่วงเวลาแห่งการพักผ่อน\r\nสัมผัสบรรยากาศแห่งวันพักผ่อนเต็มรูปแบบ รองเท้าแตะ Adilette Lite คู่นี้พร้อมปลดเปลื้องเท้าของคุณให้เป็นอิสระ สวมสบายได้ทันทีด้วยพื้นรองเท้าสุดนุ่ม สัมผัสความสปอร์ตได้แม้ในยามพักผ่อนผ่านโลโก้ Trefoil บนแถบสวม (เลือกสวมใส่คู่ถุงเท้าได้)', '20210411054325_1030.png', '1', '39', '720', '65', '4'),
+(63, 'CG-10010', 'NEW BALANCE Fresh Foam Roav Haze', 'NEW BALANCE Fresh Foam Roav Haze รองเท้าวิ่งผู้ชาย\r\nอัปเปอร์ทำจากผ้าตาข่ายน้ำหนักเบาและระบายอากาศได้ดี\r\nเสริมอัปเปอร์ด้วยวัสดุสังเคราะห์เพิ่มความทนทาน\r\nส่วนข้อรูปขึ้นรูปเพิ่มความกระชับมั่นคง\r\nพื้นรองเท้าชั้นกลางทำจากโฟม Fresh Foam มอบความนุ่มสบายและการเคลื่อนไหวลงน้ำหนักได้อย่างเป็นธรรมชาติ', '20210411100546_7829.png', '8', '42', '1377', '35', '3'),
+(64, 'CG-10011', 'SKECHERS Chinatown Market Stamina 2.0', 'SKECHERS Chinatown Market Stamina 2.0 รองเท้าลำลองผู้ชาย\r\nอัปเปอร์เป็นวัสดุสังเคราะห์\r\nบุนุ่มรอบข้อเท้าและลิ้นรองเท้า\r\nพื้นรองเท้ามี Memory foam มอบความนุ่มสบาย\r\nพื้นรองเท้าด้านนอกน้ำหนักเบาและยึดเกาะ\r\nรองเท้า Skechers', '20210411101344_8424.png', '4', '39', '2443', '28', '1'),
+(65, 'CG-10012', 'CROCS Crocband Flip', 'CROCS Crocband Flip รองเท้าแตะผู้ใหญ่\r\nโฟม Croslite™ ที่พื้นรองเท้าช่วยรองรับแรงกระแทกมอบสัมผัสนุ่มเบาสบายตลอดวัน\r\nสายรัดผลิตจากวัสดุ TPU\r\nตกแต่งพื้นรองเท้าด้วยลายเส้นในลุคสปอร์ต\r\nน้ำหนักเบา สวมใส่สะดวกสบาย\r\nพื้นรองเท้ามีแท็กเจอร์แบบปุ่มช่วยเพิ่มความสบายในทุกสัมผัส\r\nทำความสะอาดง่ายและแห้งตัวเร็ว\r\nลอยน้ำได้ไม่จม\r\n', '20210411101815_6938.png', '1', '43', '790', '65', '1'),
+(66, 'CG-10013', 'CROCS Crocband III Slide', 'CROCS Crocband III Slide รองเท้าแตะผู้ใหญ่\r\nให้ลุค sport สวมใส่ง่าย\r\nนวัตกรรม Croslite สวมใส่สบายและซัพพอร์ทเท้าได้ดี\r\nมีน้ำหนักเบา ระบายอากาสได้ดีและไม่อุ้มน้ำ', '20210411101935_7804.png', '1', '42', '1032', '50', '1'),
+(67, 'CG-10014', 'NIKE React Miler', 'NIKE React Miler รองเท้าวิ่งผู้ชาย\r\nรองเท้าวิ่ง NIKE สำหรับวิ่งออกกำลังกายและแข่งขัน\r\nอัปเปอร์ตัดเย็บจากผ้าตาข่าย เนื้อผ้านุ่มยืดหยุ่นน้ำหนักเบาระบายอากาศได้ดีและกระชับไปตามรูปเท้า\r\nเทคโนโลยี NIKE React ให้ความรู้สึกนุ่มนวลและรองรับแรงกระแทกได้ดี\r\nลิ้นรองเท้าบุนุ่มด้วยโฟมระบายอากาศชั้นดี ลดแรงกดจากเชือกผูก ใส่แล้วไม่อึดอัด\r\nพื้นรองเท้าส่วนนอกทำจากยางมีความยืดหยุ่นและทนทานสูง ช่วยยึดเกาะพื้นผิวได้มั่นคง\r\nส้นรองเท้าออกแบบใหม่ให้นุ่มสบายเท้ายิ่งขึ้น\r\nทรงรองเท้ากว้างขึ้น ช่วยให้เท้ามีพื้นที่ได้ผ่อนคลายและวิ่งได้ยาวนานยิ่งขึ้น\r\nมีแถบดึงตรงส้นเท้าช่วยให้สวมใส่และถอดออกง่าย\r\nแต่งโลโก้ NIKE Swoosh ที่ด้านข้าง ดีไซน์โดดเด่น\r\nแต่งดีเทลสะท้อนแสงเพื่อการมองเห็นในที่มืดหรือในสภาวะแสงน้อย\r\nสไตล์ผูกเชือกปรับกระชับได้ช่วยให้สวมใส่พอดี', '20210411102102_2531.png', '8', '41', '5000', '15', '46'),
+(68, 'CG-10015', 'CROCS Literide', 'CROCS Literide รองเท้าแตะผู้ใหญ่\r\nเทคโนโลยี Matlite™ ให้ความรู้สึกนุ่มเบา สบายเท้าและระบายอากาศได้ดี\r\nโฟม Croslite ให้ความรู้สึกนุ่มสบายพร้อมทั้งมีความทนทาน รองรับแรงกระแทกได้ดี\r\nเทคโนโลยีโฟม LiteRide ที่พื้นรองเท้าให้สัมผัสที่นุ่มสบายและเบา', '20210411105346_4971.png', '1', '42', '1512', '59', '3');
 
 -- --------------------------------------------------------
 
@@ -62,15 +68,15 @@ INSERT INTO `tbl_cargo` (`cg_id`, `cg_code`, `cg_name`, `cg_detail`, `cg_img`, `
 --
 
 CREATE TABLE `tbl_payment` (
-  `pm_id` int(50) NOT NULL,
-  `pm_code` varchar(255) NOT NULL,
-  `pm_img` varchar(255) NOT NULL,
-  `pm_total` varchar(255) NOT NULL,
-  `pm_u_id` int(50) NOT NULL,
-  `pm_channel` varchar(255) NOT NULL,
-  `pm_date` varchar(255) NOT NULL,
-  `pm_address` text NOT NULL,
-  `pm_status` varchar(255) NOT NULL
+  `pm_id` int(50) NOT NULL COMMENT 'ID',
+  `pm_code` varchar(255) NOT NULL COMMENT 'รหัสการสั่งซื้อ',
+  `pm_img` varchar(255) NOT NULL COMMENT 'รูปภาพการโอน',
+  `pm_total` varchar(255) NOT NULL COMMENT 'ยอดรวม',
+  `pm_u_id` int(50) NOT NULL COMMENT 'ID ผู้ชื้อ',
+  `pm_channel` varchar(255) NOT NULL COMMENT 'ช่องทางการจัดส่ง',
+  `pm_date` varchar(255) NOT NULL COMMENT 'วันเวลาที่สั่งซื้อ',
+  `pm_address` text NOT NULL COMMENT 'ที่อยู่',
+  `pm_status` varchar(255) NOT NULL COMMENT 'สถานะ'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -92,10 +98,10 @@ INSERT INTO `tbl_payment` (`pm_id`, `pm_code`, `pm_img`, `pm_total`, `pm_u_id`, 
 --
 
 CREATE TABLE `tbl_payment_list` (
-  `pl_id` int(50) NOT NULL,
-  `pl_pm_code` varchar(255) NOT NULL,
-  `pl_cg_id` varchar(255) NOT NULL,
-  `pl_amount` varchar(255) NOT NULL
+  `pl_id` int(50) NOT NULL COMMENT 'ID',
+  `pl_pm_code` varchar(255) NOT NULL COMMENT 'รหัสการสั่งซื้อ',
+  `pl_cg_id` varchar(255) NOT NULL COMMENT 'ID สินค้า',
+  `pl_amount` varchar(255) NOT NULL COMMENT 'จำนวน'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -123,13 +129,13 @@ INSERT INTO `tbl_payment_list` (`pl_id`, `pl_pm_code`, `pl_cg_id`, `pl_amount`) 
 --
 
 CREATE TABLE `tbl_shipment` (
-  `sm_id` int(50) NOT NULL,
-  `sm_company` varchar(255) NOT NULL,
-  `sm_code` varchar(255) NOT NULL,
-  `sm_date` varchar(255) NOT NULL,
-  `sm_date_receive` varchar(255) NOT NULL,
-  `sm_pm_code` varchar(255) NOT NULL,
-  `sm_status` varchar(255) NOT NULL
+  `sm_id` int(50) NOT NULL COMMENT 'ID',
+  `sm_company` varchar(255) NOT NULL COMMENT 'บริษัทจัดส่ง',
+  `sm_code` varchar(255) NOT NULL COMMENT 'เลขพัสดุ',
+  `sm_date` varchar(255) NOT NULL COMMENT 'วันเวลาที่จัดส่ง',
+  `sm_date_receive` varchar(255) NOT NULL COMMENT 'วันเวลาที่ได้รับ',
+  `sm_pm_code` varchar(255) NOT NULL COMMENT 'รหัสการสั่งซื้อ',
+  `sm_status` varchar(255) NOT NULL COMMENT 'สถานะ'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -150,8 +156,8 @@ INSERT INTO `tbl_shipment` (`sm_id`, `sm_company`, `sm_code`, `sm_date`, `sm_dat
 --
 
 CREATE TABLE `tbl_type_product` (
-  `tp_id` int(11) NOT NULL,
-  `tp_name` varchar(255) NOT NULL
+  `tp_id` int(11) NOT NULL COMMENT 'ID',
+  `tp_name` varchar(255) NOT NULL COMMENT 'ชื่อประเภทสินค้า'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -241,31 +247,31 @@ ALTER TABLE `tbl_user`
 -- AUTO_INCREMENT for table `tbl_cargo`
 --
 ALTER TABLE `tbl_cargo`
-  MODIFY `cg_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `cg_id` int(20) NOT NULL AUTO_INCREMENT COMMENT 'ID', AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT for table `tbl_payment`
 --
 ALTER TABLE `tbl_payment`
-  MODIFY `pm_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `pm_id` int(50) NOT NULL AUTO_INCREMENT COMMENT 'ID', AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `tbl_payment_list`
 --
 ALTER TABLE `tbl_payment_list`
-  MODIFY `pl_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `pl_id` int(50) NOT NULL AUTO_INCREMENT COMMENT 'ID', AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT for table `tbl_shipment`
 --
 ALTER TABLE `tbl_shipment`
-  MODIFY `sm_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `sm_id` int(50) NOT NULL AUTO_INCREMENT COMMENT 'ID', AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `tbl_type_product`
 --
 ALTER TABLE `tbl_type_product`
-  MODIFY `tp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `tp_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID', AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tbl_user`
