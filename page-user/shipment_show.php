@@ -36,7 +36,7 @@ if (isset($_GET['action'])) {
             // $resultAllow = $objAction->cargoPaymentAllow($_GET['id'], $_GET['code']);
             break;
         case 'delete':
-            $resultDelete = $objAction->shipmentDelete($_GET['sm_id'],$_GET['pm_code']);
+            $resultDelete = $objAction->shipmentDelete($_GET['sm_id'], $_GET['pm_code']);
             break;
         case 'remove':
             // $resultRemove = $objAction->cargoPaymentRemove($_GET['id'],$_GET['code']);
@@ -98,78 +98,78 @@ if (isset($_GET['action'])) {
                                         <?php } ?>
                                     </td>
                                 </tr>
-
-                                <!-- Modal -->
-                                <div class="modal fade" id="Modal<?= $row['sm_id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">รายละเอียดการจัดส่ง</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="contaier">
-                                                    <div class="row mt-3">
-                                                        <div class="col-md-12">
-                                                            <h6><b>รหัสสั่งซื้อ : </b> <?= $row['pm_code']; ?></h6>
-                                                            <h6><b>ราคารวม : </b> <?= number_format($row['pm_total']); ?></h6>
-                                                            <h6><b>วันที่สั่งซื้อ : </b> <?= ConvertDateToThai($row['pm_date']); ?></h6>
-                                                            <h6><b>สถานะการสั่งซื้อ : </b> <?= $row['pm_status']; ?></h6>
-                                                            <h6><b>ชื่อ : </b> <?= $row['u_fname'] . ' ' . $row['u_lname']; ?></h6>
-                                                            <h6><b>ที่อยู่ : </b> <?= $row['pm_address']; ?></h6>
-                                                            <h6><b>โทร : </b> <?= $row['u_tel']; ?></h6>
-                                                            <h6><b>สถานะการจัดส่ง : </b> <?= $row['sm_status']; ?></h6>
-                                                            <h6><b>บริษัทขนส่ง : </b> <?php if (empty($row['sm_company'])) {
+                                <div id="printThis">
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="Modal<?= $row['sm_id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">รายละเอียดการจัดส่ง</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="contaier">
+                                                        <div class="row mt-3">
+                                                            <div class="col-md-12">
+                                                                <h6><b>รหัสสั่งซื้อ : </b> <?= $row['pm_code']; ?></h6>
+                                                                <h6><b>ราคารวม : </b> <?= number_format($row['pm_total']); ?></h6>
+                                                                <h6><b>วันที่สั่งซื้อ : </b> <?= ConvertDateToThai($row['pm_date']); ?></h6>
+                                                                <h6><b>สถานะการสั่งซื้อ : </b> <?= $row['pm_status']; ?></h6>
+                                                                <h6><b>ชื่อ : </b> <?= $row['u_fname'] . ' ' . $row['u_lname']; ?></h6>
+                                                                <h6><b>ที่อยู่ : </b> <?= $row['pm_address']; ?></h6>
+                                                                <h6><b>โทร : </b> <?= $row['u_tel']; ?></h6>
+                                                                <h6><b>สถานะการจัดส่ง : </b> <?= $row['sm_status']; ?></h6>
+                                                                <h6><b>บริษัทขนส่ง : </b> <?php if (empty($row['sm_company'])) {
+                                                                                                echo "-";
+                                                                                            } else {
+                                                                                                echo $row['sm_company'];
+                                                                                            }  ?></h6>
+                                                                <h6><b>เลขพัสดุ : </b> <?php if (empty($row['sm_code'])) {
                                                                                             echo "-";
                                                                                         } else {
-                                                                                            echo $row['sm_company'];
+                                                                                            echo $row['sm_code'];
                                                                                         }  ?></h6>
-                                                            <h6><b>เลขพัสดุ : </b> <?php if (empty($row['sm_code'])) {
-                                                                                        echo "-";
-                                                                                    } else {
-                                                                                        echo $row['sm_code'];
-                                                                                    }  ?></h6>
-                                                            <h6><b>วันเวลาที่ลูกค้าได้รับสินค้า : </b> <?php if (empty($row['sm_date_receive'])) {
-                                                                                                            echo "-";
-                                                                                                        } else {
-                                                                                                            echo ConvertDateToThai($row['sm_date_receive']);
-                                                                                                        }  ?></h6>
+                                                                <h6><b>วันเวลาที่ลูกค้าได้รับสินค้า : </b> <?php if (empty($row['sm_date_receive'])) {
+                                                                                                                echo "-";
+                                                                                                            } else {
+                                                                                                                echo ConvertDateToThai($row['sm_date_receive']);
+                                                                                                            }  ?></h6>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <hr>
-                                                            <h4>รายการสินค้า</h4>
-                                                            <?php
-                                                            $resultModal = $objModal->query("SELECT * FROM tbl_payment_list as pl INNER JOIN tbl_cargo as cg ON pl.pl_cg_id=cg.cg_id WHERE  pl.pl_pm_code = '" . $row['pm_code'] . "' ");
-                                                            while ($rowModal = $resultModal->fetch_array()) {
-                                                            ?>
-                                                                <h6><b>รหัสสินค้า: </b><?= $rowModal['cg_code']; ?> <b>ไซต์: </b><?= $rowModal['cg_unit']; ?><b> จำนวน:</b> <?= $rowModal['pl_amount']; ?> คู่</h6>
-                                                            <?php } ?>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <hr>
+                                                                <h4>รายการสินค้า</h4>
+                                                                <?php
+                                                                $resultModal = $objModal->query("SELECT * FROM tbl_payment_list as pl INNER JOIN tbl_cargo as cg ON pl.pl_cg_id=cg.cg_id WHERE  pl.pl_pm_code = '" . $row['pm_code'] . "' ");
+                                                                while ($rowModal = $resultModal->fetch_array()) {
+                                                                ?>
+                                                                    <h6><b>รหัสสินค้า: </b><?= $rowModal['cg_code']; ?> <b>ไซต์: </b><?= $rowModal['cg_unit']; ?><b> จำนวน:</b> <?= $rowModal['pl_amount']; ?> คู่</h6>
+                                                                <?php } ?>
 
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <hr>
-                                                            <h4>รายละเอียดผู้สั่งซื้อ</h4>
-                                                            <h6><b>ชื่อ-สกุล:</b> <?= $row['u_fname'] . ' ' . $row['u_lname']; ?></h6>
-                                                            <h6><b>เบอร์โทร:</b> <?= $row['u_tel']; ?></h6>
-                                                            <h6><b>E-mail:</b> <?= $row['u_email']; ?></h6>
-                                                            <h6><b>ที่อยู่:</b> <?= $row['u_address']; ?></h6>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <hr>
+                                                                <h4>รายละเอียดผู้สั่งซื้อ</h4>
+                                                                <h6><b>ชื่อ-สกุล:</b> <?= $row['u_fname'] . ' ' . $row['u_lname']; ?></h6>
+                                                                <h6><b>เบอร์โทร:</b> <?= $row['u_tel']; ?></h6>
+                                                                <h6><b>E-mail:</b> <?= $row['u_email']; ?></h6>
+                                                                <h6><b>ที่อยู่:</b> <?= $row['u_address']; ?></h6>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> ปิด</button>
-                                                <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> ปิด</button>
+                                                    <a href="../print/user/shipment_print.php?id=<?= $row['sm_id']; ?>" target="_blank" class="btn btn-success"><i class="fa fa-print" aria-hidden="true"></i></a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- Close modal -->
                                 </div>
-                                <!-- Close modal -->
-
                             <?php } ?>
                         </tbody>
                     </table>

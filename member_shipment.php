@@ -141,7 +141,7 @@ if (isset($_GET['action'])) {
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> ปิด</button>
-                                        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                                        <a href="print/member/shipment_print.php?id=<?= $row['sm_id']; ?>" target="_blank" class="btn btn-success"><i class="fa fa-print" aria-hidden="true"></i></a>
                                     </div>
                                 </div>
                             </div>

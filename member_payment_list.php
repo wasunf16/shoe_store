@@ -123,6 +123,7 @@ if (isset($_GET['action'])) {
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> ปิด</button>
+                                        <a href="print/member/order_print.php?id=<?= $row['pm_id']; ?>" target="_blank" class="btn btn-success"><i class="fa fa-print" aria-hidden="true"></i></a>
                                         <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
                                     </div>
                                 </div>

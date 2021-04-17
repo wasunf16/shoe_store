@@ -65,12 +65,22 @@ footer {
   width: 1320px;
 }
 
-
-
+@media screen {
+  #printSection {
+      display: none;
+  }
+}
 
 @media print {
-  .no-print,
-  .no-print * {
-    display: none !important;
+  body * {
+    visibility:hidden;
+  }
+  #printSection, #printSection * {
+    visibility:visible;
+  }
+  #printSection {
+    position:absolute;
+    left:0;
+    top:0;
   }
 }
