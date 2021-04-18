@@ -87,7 +87,7 @@ class LoginRegister extends ConnectDB
                     break;
                 case 'member':
                     if (isset($cg_id) && !empty($cg_id)) {
-                        header("Location: member_cart.php?cg_id=$cg_id&action=add");
+                        header("Location: view_product.php?cg_id=$cg_id");
                     } else {
                         header('Location: index.php');
                     }
@@ -150,7 +150,7 @@ class Cargo extends ConnectDB
             }
         }
     }
-    function cargoEdit($id, $img, $img_old, $name, $detail, $unit, $price, $amount, $type)
+    function cargoEdit($id, $img, $img_old, $name, $detail, $price, $amount, $type)
     {
         $resultIMG = uploadIMGEdit($img, $img_old, "../img_upload/");
 
@@ -159,7 +159,6 @@ class Cargo extends ConnectDB
         `cg_detail` = '$detail', 
         `cg_img` = '$resultIMG', 
         `cg_type_id` = '$type', 
-        `cg_unit` = '$unit', 
         `cg_price` = '$price', 
         `cg_amount` = '$amount' WHERE `tbl_cargo`.`cg_id` = '" . $id . "';");
         if ($result == true) {
@@ -204,11 +203,11 @@ class Cargo extends ConnectDB
                                                 VALUES (NULL, '$pm_code', '$nameUploadimg', '$total' , '$uid' , '$channel', '$date', '$address', 'รอตรวจสอบ');");
 
         foreach ($_SESSION['cart'][$_SESSION['user']['id']] as $key => $value) {
-            $resultPaymentList = $this->db->query("INSERT INTO `tbl_payment_list` (`pl_id`, `pl_pm_code`, `pl_cg_id` , `pl_amount`) 
-                                                VALUES (NULL, '$pm_code', '$key' , '$value');");
+            $resultPaymentList = $this->db->query("INSERT INTO `tbl_payment_list` (`pl_id`, `pl_pm_code`, `pl_cg_id` , `pl_amount` , `pl_size`) 
+                                                VALUES (NULL, '$pm_code', '$key' , '".$value['amount']."' , '".$value['size']."');");
             $QueryCargo = $this->db->query("SELECT * FROM tbl_cargo WHERE cg_id = '$key' ");
             $fetchCargo = $QueryCargo->fetch_array();
-            $amountUpdate = $fetchCargo['cg_amount'] - $value;
+            $amountUpdate = $fetchCargo['cg_amount'] - $value['amount'];
             $resultUpdateCargo = $this->db->query("UPDATE `tbl_cargo` SET `cg_amount` = '$amountUpdate' WHERE `tbl_cargo`.`cg_id` = '$key';");
         }
 

@@ -33,7 +33,7 @@
                             <form action="" method="GET">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <select class="form-select no-print" name="month">
+                                        <select class="form-select no-print" name="month" id="no-print">
                                             <option value="">-- เลือกเดือน --</option>
                                             <?php foreach (NameMonth() as $key => $value) { ?>
                                                 <option value="<?= $key; ?>" <?php if (isset($_GET['month']) && $_GET['month'] == $key) {
@@ -43,7 +43,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-4">
-                                        <button type="submit" name="submit" value="search" class="btn btn-success no-print"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                        <button type="submit" name="submit" value="search" class="btn btn-success" id="no-print"><i class="fa fa-search" aria-hidden="true"></i></button>
                                     </div>
                                 </div>
                             </form>

@@ -73,6 +73,7 @@ if(isset($_POST['submit'])){
                                                     <th scope="col">สินค้า</th>
                                                     <th scope="col">ราคา</th>
                                                     <th scope="col">จำนวน</th>
+                                                    <th scope="col">ไซส์</th>
                                                     <th scope="col">รวม</th>
                                                 </tr>
                                             </thead>
@@ -83,7 +84,7 @@ if(isset($_POST['submit'])){
                                                 foreach ($_SESSION['cart'][$_SESSION['user']['id']] as $cg_id => $amount) {
                                                     $result = $obj->query("SELECT * FROM tbl_cargo as cg INNER JOIN tbl_type_product as tp ON cg.cg_type_id = tp.tp_id WHERE cg.cg_id = '$cg_id' ");
                                                     $row = $result->fetch_array();
-                                                    $sum = $row['cg_price'] * $amount;
+                                                    $sum = $row['cg_price'] * $amount['amount'];
                                                     $total += $sum;
 
                                                 ?>
@@ -96,7 +97,7 @@ if(isset($_POST['submit'])){
                                                         <td><img src="img_upload/<?= $row['cg_img']; ?>" style="height:45px;width:45px;"></td>
                                                         <td>
                                                             <?php
-                                                            if ($amount > $row['cg_amount']) {
+                                                            if ($amount['amount'] > $row['cg_amount']) {
                                                                 echo $row['cg_name'] . "<p style='color:red'>(สินค้าไม่เพียงพอ)</p>";
                                                                 $canBuy = false;
                                                             } else {
@@ -105,11 +106,13 @@ if(isset($_POST['submit'])){
                                                             ?>
                                                         </td>
                                                         <td>฿<?= number_format($row['cg_price']); ?></td>
-                                                        <td><?= $amount ?></td>
-                                                        <td>฿<?= number_format($row['cg_price'] * $amount); ?></td>
+                                                        <td><?= $amount['amount'] ?></td>
+                                                        <td><?= $amount['size'] ?></td>
+                                                        <td>฿<?= number_format($row['cg_price'] * $amount['amount']); ?></td>
                                                     </tr>
                                                 <?php } ?>
                                                 <tr>
+                                                    <td></td>
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>

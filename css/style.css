@@ -71,16 +71,11 @@ footer {
   }
 }
 
-@media print {
-  body * {
-    visibility:hidden;
+@media print {     
+  .no-print {
+      display: none;
   }
-  #printSection, #printSection * {
-    visibility:visible;
-  }
-  #printSection {
-    position:absolute;
-    left:0;
-    top:0;
+  #no-print {
+      display: none;
   }
 }

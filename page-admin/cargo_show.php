@@ -52,7 +52,6 @@ if (isset($_GET['action'])) {
                                     <th>ประเภทสินค้า</th>
                                     <th>รหัสสินค้า</th>
                                     <th>ชื่อสินค้า</th>
-                                    <th>ไซต์</th>
                                     <th>จำนวนคงเหลือ</th>
                                     <th></th>
                                 </tr>
@@ -66,9 +65,9 @@ if (isset($_GET['action'])) {
                                         <td><?= $value['tp_name']; ?></td>
                                         <td><?= $value['cg_code']; ?></td>
                                         <td><?= $value['cg_name']; ?></td>
-                                        <td><?= $value['cg_unit']; ?></td>
                                         <td><?= $value['cg_amount']; ?></td>
-                                        <td width="10%">
+                                        <td width="20%">
+                                            <!-- <a href="cargo_size.php?id=<?= $value['cg_id']; ?>" class="btn btn-sm btn-info m-1"><i class="fa fa-arrows" aria-hidden="true"></i> ไซส์</a> -->
                                             <a href="cargo_edit.php?action=edit&id=<?= $value['cg_id']; ?>" class="btn btn-sm btn-warning m-1"><i class="fa fa-pencil" aria-hidden="true"></i> แก้ไข</a>
                                             <a href="?action=delete&id=<?= $value['cg_id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('ยืนยันการลบ?');"><i class="fa fa-trash-o" aria-hidden="true"></i> ลบ</a>
                                         </td>

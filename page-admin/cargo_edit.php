@@ -26,7 +26,6 @@ $result_show = $obj_show->cargofetchByID($_GET['id']);
             $_POST['img_old'],
             $_POST['name'],
             $_POST['detail'],
-            $_POST['unit'],
             $_POST['price'],
             $_POST['amount'],
             $_POST['type']
@@ -62,10 +61,10 @@ $result_show = $obj_show->cargofetchByID($_GET['id']);
                                 <label for="detail" class="form-label">รายละเอียด</label>
                                 <textarea name="detail" type="text" class="form-control" id="detail" rows="8"><?= $result_show[0]['cg_detail']; ?></textarea>
                             </div>
-                            <div class="col-md-4">
+                            <!-- <div class="col-md-4">
                                 <label for="unit" class="form-label">ขนาดไซส์รองเท้า</label>
                                 <input name="unit" type="text" class="form-control" id="unit" value="<?= $result_show[0]['cg_unit']; ?>">
-                            </div>
+                            </div> -->
                             <div class="col-md-4">
                                 <label for="price" class="form-label">ราคา</label>
                                 <input name="price" type="number" class="form-control" id="price" value="<?= $result_show[0]['cg_price']; ?>">

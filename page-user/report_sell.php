@@ -51,11 +51,11 @@
                             $i = 1;
                             ?>
                         </h2>
-                        <button onclick="window.print()" class="btn btn-success no-print"><i class="fa fa-print"></i> </button>
+                        <button onclick="window.print()" class="btn btn-success no-print" ><i class="fa fa-print"></i> </button>
                     </div>
                     <hr>
                     <div class="row mb-4">
-                        <div class="col-md-12">
+                        <div class="col-md-12" id="no-print">
                             <a href="?action=day" class="btn btn-dark no-print">แยกตามวัน</a>
                             <a href="?action=month" class="btn btn-success no-print">แยกตามเดือน</a>
                             <a href="?action=year" class="btn btn-primary no-print">แยกตามปี</a>
