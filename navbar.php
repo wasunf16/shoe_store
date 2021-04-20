@@ -25,7 +25,7 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php?popular">ยอดนิยม <sup><img src="img/hot.gif" style="width:25px;"></sup></a>
+                        <a class="nav-link" href="index.php?popular">ขายดี <sup><img src="img/hot.gif" style="width:25px;"></sup></a>
                     </li>
                 </ul>
                 <ul class="navbar-nav d-flex">

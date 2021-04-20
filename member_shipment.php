@@ -1,4 +1,4 @@
-<?php 
+<?php
 include('header.php');
 checkSessionMember()
 ?>
@@ -14,17 +14,17 @@ $objModal = new ConnectDB();
 if (isset($_GET['display'])) {
     switch ($_GET['display']) {
         case 'success':
-            $result = $obj->query("SELECT * FROM tbl_shipment as sm INNER JOIN tbl_payment AS pm ON sm.sm_pm_code = pm.pm_code INNER JOIN tbl_user as u ON pm.pm_u_id = u.u_id WHERE sm.sm_status = 'จัดส่งแล้ว' AND  pm.pm_u_id = '".$_SESSION['user']['id']."' ");
+            $result = $obj->query("SELECT * FROM tbl_shipment as sm INNER JOIN tbl_payment AS pm ON sm.sm_pm_code = pm.pm_code INNER JOIN tbl_user as u ON pm.pm_u_id = u.u_id WHERE sm.sm_status = 'จัดส่งแล้ว' AND  pm.pm_u_id = '" . $_SESSION['user']['id'] . "' ");
             break;
-        // case 'delete':
-        //     $result = $obj->query("SELECT * FROM tbl_shipment as sm INNER JOIN tbl_payment AS pm ON sm.sm_pm_code = pm.pm_code INNER JOIN tbl_user as u ON pm.pm_u_id = u.u_id WHERE sm.sm_status = 'ยังไม่ได้จัดส่ง' ");
-        //     break;
+            // case 'delete':
+            //     $result = $obj->query("SELECT * FROM tbl_shipment as sm INNER JOIN tbl_payment AS pm ON sm.sm_pm_code = pm.pm_code INNER JOIN tbl_user as u ON pm.pm_u_id = u.u_id WHERE sm.sm_status = 'ยังไม่ได้จัดส่ง' ");
+            //     break;
         case 'wait':
-            $result = $obj->query("SELECT * FROM tbl_shipment as sm INNER JOIN tbl_payment AS pm ON sm.sm_pm_code = pm.pm_code INNER JOIN tbl_user as u ON pm.pm_u_id = u.u_id WHERE sm.sm_status = 'รอดำเนินการ' AND  pm.pm_u_id = '".$_SESSION['user']['id']."'  ");
+            $result = $obj->query("SELECT * FROM tbl_shipment as sm INNER JOIN tbl_payment AS pm ON sm.sm_pm_code = pm.pm_code INNER JOIN tbl_user as u ON pm.pm_u_id = u.u_id WHERE sm.sm_status = 'รอดำเนินการ' AND  pm.pm_u_id = '" . $_SESSION['user']['id'] . "'  ");
             break;
     }
 } else {
-    $result = $obj->query("SELECT * FROM tbl_shipment as sm INNER JOIN tbl_payment AS pm ON sm.sm_pm_code = pm.pm_code INNER JOIN tbl_user as u ON pm.pm_u_id = u.u_id WHERE pm.pm_u_id = '".$_SESSION['user']['id']."' ");
+    $result = $obj->query("SELECT * FROM tbl_shipment as sm INNER JOIN tbl_payment AS pm ON sm.sm_pm_code = pm.pm_code INNER JOIN tbl_user as u ON pm.pm_u_id = u.u_id WHERE pm.pm_u_id = '" . $_SESSION['user']['id'] . "' ");
 }
 // END display
 
@@ -40,7 +40,7 @@ if (isset($_GET['action'])) {
         case 'accept':
             $objAction = new Shipment();
             $date = date("Y-m-d H:i:s");
-            $resultAccept = $objAction->shipmentAccept($_GET['id'],$date);
+            $resultAccept = $objAction->shipmentAccept($_GET['id'], $date);
             break;
     }
 }
@@ -78,10 +78,26 @@ if (isset($_GET['action'])) {
                     <?php while ($row = $result->fetch_array()) { ?>
                         <tr>
                             <td><?= $row['sm_pm_code']; ?></td>
-                            <td><?php if(empty($row['sm_company'])){echo'-';}else{echo $row['sm_company'];} ?></td>
-                            <td><?php if(empty($row['sm_code'])){echo'-';}else{echo $row['sm_code'];} ?></td>
-                            <td><?php if(empty($row['sm_date'])){echo'-';}else{echo ConvertDateToThai($row['sm_date']);} ?></td>
-                            <td><?php if(empty($row['sm_date_receive'])){echo'-';}else{echo ConvertDateToThai($row['sm_date_receive']);} ?></td>
+                            <td><?php if (empty($row['sm_company'])) {
+                                    echo '-';
+                                } else {
+                                    echo $row['sm_company'];
+                                } ?></td>
+                            <td><?php if (empty($row['sm_code'])) {
+                                    echo '-';
+                                } else {
+                                    echo $row['sm_code'];
+                                } ?></td>
+                            <td><?php if (empty($row['sm_date'])) {
+                                    echo '-';
+                                } else {
+                                    echo ConvertDateToThai($row['sm_date']);
+                                } ?></td>
+                            <td><?php if (empty($row['sm_date_receive'])) {
+                                    echo '-';
+                                } else {
+                                    echo ConvertDateToThai($row['sm_date_receive']);
+                                } ?></td>
                             <td><?= $row['sm_status']; ?></td>
                             <td width="20%">
                                 <?php if (isset($_GET['display']) && $_GET['display'] == 'success') { ?>
@@ -90,8 +106,8 @@ if (isset($_GET['action'])) {
                                     <button class="btn btn-sm btn-info m-0" type="button" data-bs-toggle="modal" data-bs-target="#Modal<?= $row['pm_id'] ?>"><i class="fa fa-eye" aria-hidden="true"></i> รายละเอียด</button>
                                 <?php } else { ?>
                                     <button class="btn btn-sm btn-info m-0" type="button" data-bs-toggle="modal" data-bs-target="#Modal<?= $row['pm_id'] ?>"><i class="fa fa-eye" aria-hidden="true"></i> รายละเอียด</button>
-                                    <?php if($row['sm_status'] == 'จัดส่งแล้ว'){ ?>
-                                        <a href="?action=accept&id=<?= $row['sm_id']; ?>" class="btn btn-success btn-sm" onclick="return confirm('ยืนยัน?');"><i class="fa fa-check" aria-hidden="true" ></i> ได้รับสินค้าแล้ว</a>
+                                    <?php if ($row['sm_status'] == 'จัดส่งแล้ว') { ?>
+                                        <a href="?action=accept&id=<?= $row['sm_id']; ?>" class="btn btn-success btn-sm" onclick="return confirm('ยืนยัน?');"><i class="fa fa-check" aria-hidden="true"></i> ได้รับสินค้าแล้ว</a>
                                     <?php } ?>
                                     <!-- <a href="?action=allow&id=<?= $row['pm_id']; ?>&code=<?= $row['pm_code']; ?>" class="btn btn-sm btn-success m-0"><i class="fa fa-check" aria-hidden="true"></i> ยืนยัน</a>
                                     <a href="?action=delete&id=<?= $row['pm_id']; ?>&code=<?= $row['pm_code']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('ยืนยัน?');"><i class="fa fa-times" aria-hidden="true"></i> ไม่อนุมัติ</a> -->
@@ -108,7 +124,7 @@ if (isset($_GET['action'])) {
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        
+
                                         <div class="contaier">
                                             <div class="row mt-3">
                                                 <div class="col-md-12">
@@ -116,12 +132,33 @@ if (isset($_GET['action'])) {
                                                     <h6><b>ราคารวม : </b> <?= number_format($row['pm_total']); ?></h6>
                                                     <h6><b>วันที่สั่งซื้อ : </b> <?= ConvertDateToThai($row['pm_date']); ?></h6>
                                                     <h6><b>สถานะการสั่งซื้อ : </b> <?= $row['pm_status']; ?></h6>
-                                                    <h6><b>ชื่อ : </b> <?= $row['u_fname'].' '.$row['u_lname']; ?></h6>
+                                                    <h6><b>ชื่อ : </b> <?= $row['u_fname'] . ' ' . $row['u_lname']; ?></h6>
                                                     <h6><b>ที่อยู่ : </b> <?= $row['pm_address']; ?></h6>
                                                     <h6><b>โทร : </b> <?= $row['u_tel']; ?></h6>
                                                     <h6><b>สถานะการจัดส่ง : </b> <?= $row['sm_status']; ?></h6>
-                                                    <h6><b>บริษัทขนส่ง : </b> <?php if(empty($row['sm_company'])){echo"-";}else{echo$row['sm_company'];}  ?></h6>
-                                                    <h6><b>เลขพัสดุ : </b> <?php if(empty($row['sm_code'])){echo"-";}else{echo$row['sm_code'];}  ?></h6>
+                                                    <h6><b>บริษัทขนส่ง : </b> <?php if (empty($row['sm_company'])) {
+                                                                                    echo "-";
+                                                                                } else {
+                                                                                    echo $row['sm_company'];
+                                                                                }  ?></h6>
+                                                    <h6><b>เลขพัสดุ : </b> <?php if (empty($row['sm_code'])) {
+                                                                                echo "-";
+                                                                            } else {
+                                                                                echo $row['sm_code'];
+                                                                            }  ?></h6>
+                                                    <h6><?php if (empty($row['sm_code'])) {
+                                                                    echo "-";
+                                                                } else {
+                                                                    if ($row['sm_company'] == 'ไปรษณีย์ไทย EMS') {
+                                                                        echo '<a target="_blank" href="https://emsbot.com/#/?s='.$row['sm_code'].'">https://emsbot.com/#/?s='.$row['sm_code'].'</a>';
+                                                                    } else if ($row['sm_company'] == 'Kerry Express') {
+                                                                        echo '<a target="_blank" href="https://th.kerryexpress.com/th/track/v2/?track='.$row['sm_code'].'">https://th.kerryexpress.com/th/track/v2/?track='.$row['sm_code'].'</a>';
+                                                                    } else if ($row['sm_company'] == 'DHL Express') {
+                                                                        echo '<a target="_blank" href="https://www.dhl.com/th-th/home/tracking.html?tracking-id='.$row['sm_code'].'&submit=1">https://www.dhl.com/th-th/home/tracking.html?tracking-id='.$row['sm_code'].'&submit=1</a>';
+                                                                    } else if ($row['sm_company'] == 'Ninja Van') {
+                                                                        echo '<a target="_blank" href="https://www.ninjavan.co/th-th/tracking?id='.$row['sm_code'].'">https://www.ninjavan.co/th-th/tracking?id='.$row['sm_code'].'</a>';
+                                                                    }
+                                                                } ?></h6>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -166,5 +203,5 @@ if (isset($_GET['action'])) {
             });
         });
     </script>
-    
+
     <?php include('footer.php'); ?>

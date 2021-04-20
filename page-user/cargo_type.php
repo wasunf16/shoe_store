@@ -45,7 +45,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete') {
                                         <td><?= $value['tp_id'];?></td>
                                         <td><?= $value['tp_name']; ?></td>
                                         <td width="10%">
-                                            <a href="cargo_type_edit .php?&id=<?= $value['tp_id']; ?>" class="btn btn-sm btn-warning m-1"><i class="fa fa-pencil" aria-hidden="true"></i> แก้ไข</a>
+                                            <a href="cargo_type_edit.php?&id=<?= $value['tp_id']; ?>" class="btn btn-sm btn-warning m-1"><i class="fa fa-pencil" aria-hidden="true"></i> แก้ไข</a>
                                             <a href="?action=delete&id=<?= $value['tp_id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('ยืนยันการลบ?');"><i class="fa fa-trash-o" aria-hidden="true"></i> ลบ</a>
                                         </td>
                                     </tr>

@@ -19,7 +19,6 @@ if (isset($_POST['submit'])) {
       $_FILES['img'],
       $_POST['name'],
       $_POST['detail'],
-      $_POST['unit'],
       $_POST['price'],
       $_POST['amount'],
       $_POST['type']
@@ -67,10 +66,6 @@ if (isset($_POST['submit'])) {
                             <div class="col-md-12">
                                 <label for="detail" class="form-label">รายละเอียด</label>
                                 <textarea name="detail" type="text" class="form-control" id="detail" rows="8" required></textarea>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="unit" class="form-label">ขนาดไซส์รองเท้า</label>
-                                <input name="unit" type="text" class="form-control" id="unit" required>
                             </div>
                             <div class="col-md-4">
                                 <label for="price" class="form-label">ราคา</label>

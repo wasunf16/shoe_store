@@ -46,7 +46,7 @@ if (isset($_GET['type']) && $_GET['type'] != null) {
 }
 
 if (isset($_GET['popular'])) {
-    $result = $obj->query("SELECT * FROM tbl_cargo ORDER BY cast(cg_view as int) DESC Limit {$start},{$row_page}");
+    $result = $obj->query("SELECT *,COUNT(pl.pl_cg_id) as sellTotal FROM tbl_cargo as c LEFT JOIN tbl_payment_list as pl ON pl.pl_cg_id = c.cg_id GROUP BY c.cg_id ORDER BY COUNT(pl.pl_cg_id) DESC Limit {$start},{$row_page}");
 }
 
 $row = $result->fetch_all(MYSQLI_ASSOC);
@@ -85,6 +85,7 @@ $row = $result->fetch_all(MYSQLI_ASSOC);
                     <div class="card h-100">
                         <div class="relative" style="position: relative;">
                             <a href="view_product.php?cg_id=<?= $value['cg_id'] ?>"><img src="img_upload/<?= $value['cg_img'] ?>" class="card-img-top" style="height:200px;"></a>
+                            <!-- <div class="relativeSize"><i class="fa fa-shopping-bag" aria-hidden="true"></i> <?= $value['sellTotal'] ?></div> -->
                             <div class="relativeSizeView"><i class="fa fa-eye" aria-hidden="true"></i> <?= $value['cg_view'] ?></div>
                         </div>
                         <div class="card-body">

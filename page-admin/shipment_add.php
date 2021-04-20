@@ -34,7 +34,7 @@
                                 <label for="name" class="form-label">
                                     <h5>บริษัทขนส่ง</h5>
                                 </label>
-                                <select name="name" id="name" class="form-control" required>
+                                <select name="name" id="name" class="form-select" required>
                                     <option value="">-- เลือก --</option>
                                     <option value="ไปรษณีย์ไทย EMS">ไปรษณีย์ไทย EMS</option>
                                     <option value="Kerry Express">Kerry Express</option>

@@ -15,7 +15,7 @@ $rowUser = $objUser->memberGetById($_SESSION['user']['id']);
 
 if(isset($_POST['submit'])){
     $objPayment = new Cargo();
-    $resultPayment = $objPayment->cargoPayment($_POST['channel'],$_POST['total'],$_POST['date'],$_POST['address'],$_FILES['img'],$_SESSION['user']['id']);
+    $resultPayment = $objPayment->cargoPayment($_POST['total'],$_POST['date'],$_POST['address'],$_FILES['img'],$_SESSION['user']['id']);
 }
 
 ?>
@@ -35,28 +35,28 @@ if(isset($_POST['submit'])){
                                 <div class="col-md-12">
                                     <label for="inputAddress" class="form-label"><b>ช่องทางชำระเงิน</b></label>
                                     <div class="form-check mb-1">
-                                        <input name="channel" value="กสิกรไทย" class="form-check-input" type="radio" id="กสิกรไทย" required>
+                                        <!-- <input name="channel" value="กสิกรไทย" class="form-check-input" type="radio" id="กสิกรไทย" required> -->
                                         <img src="img/bank/kplue.jpg" style="width:75px;">&nbsp;&nbsp;<label class="form-check-label" for="กสิกรไทย">
                                             ธนาคารกสิกรไทย ชื่อบัญชี Deena
                                             <p style="color:red;">เลขที่บัญชี 636-2-22430-2</p>
                                         </label>
                                     </div>
                                     <div class="form-check mb-1">
-                                        <input name="channel" value="กรุงไทย" class="form-check-input" type="radio" id="กรุงไทย" required>
+                                        <!-- <input name="channel" value="กรุงไทย" class="form-check-input" type="radio" id="กรุงไทย" required> -->
                                         <img src="img/bank/ktb.png" style="width:75px;">&nbsp;&nbsp;<label class="form-check-label" for="กรุงไทย">
                                             ธนาคารกรุงไทย ชื่อบัญชี Deena
                                             <p style="color:red;">เลขที่บัญชี 636-2-22430-2</p>
                                         </label>
                                     </div>
                                     <div class="form-check mb-1">
-                                        <input name="channel" value="ไทยพาณิชย์" class="form-check-input" type="radio" id="ไทยพาณิชย์" required>
+                                        <!-- <input name="channel" value="ไทยพาณิชย์" class="form-check-input" type="radio" id="ไทยพาณิชย์" required> -->
                                         <img src="img/bank/scb.png" style="width:75px;">&nbsp;&nbsp;<label class="form-check-label" for="ไทยพาณิชย์">
                                             ธนาคารไทยพาณิชย์ ชื่อบัญชี Deena
                                             <p style="color:red;">เลขที่บัญชี 636-2-22430-2</p>
                                         </label>
                                     </div>
                                     <div class="form-check mb-1">
-                                        <input name="channel" value="ทหารไทย" class="form-check-input" type="radio" id="ทหารไทย" required>
+                                        <!-- <input name="channel" value="ทหารไทย" class="form-check-input" type="radio" id="ทหารไทย" required> -->
                                         <img src="img/bank/tmb.jpg" style="width:75px;">&nbsp;&nbsp;<label class="form-check-label" for="ทหารไทย">
                                             ธนาคารทหารไทย ชื่อบัญชี Deena
                                             <p style="color:red;">เลขที่บัญชี 636-2-22430-2</p>

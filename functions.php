@@ -102,6 +102,7 @@ class Cargo extends ConnectDB
     function cargofetchByID($id)
     {
         $result = $this->db->query("SELECT * FROM tbl_cargo as cg INNER JOIN tbl_type_product as tp ON cg.cg_type_id = tp.tp_id WHERE cg.cg_id = '$id' ");
+        // $result = $this->db->query("SELECT *,COUNT(pl.pl_cg_id) as sellTotal FROM tbl_cargo as c LEFT JOIN tbl_payment_list as pl ON pl.pl_cg_id = c.cg_id WHERE pl.pl_cg_id = '$id' ");
         $row = $result->fetch_all(MYSQLI_ASSOC);
         return $row;
     }
@@ -110,7 +111,7 @@ class Cargo extends ConnectDB
         $result = $this->db->query("SELECT * FROM tbl_type_product");
         return $result;
     }
-    function cargoAdd($img, $name, $detail, $unit, $price, $amount, $type)
+    function cargoAdd($img, $name, $detail, $price, $amount, $type)
     {
 
         $resultCode = $this->db->query("SELECT cg_code FROM tbl_cargo ORDER BY cg_code DESC");
@@ -143,8 +144,8 @@ class Cargo extends ConnectDB
                 </script>";
             } else {
                 if (move_uploaded_file($IMG_tmp, $IMG_DIR . $IMG_NameFull)) {
-                    $result = $this->db->query("INSERT INTO `tbl_cargo` (`cg_id`, `cg_code`, `cg_name`, `cg_detail`, `cg_img`, `cg_type_id`, `cg_unit`, `cg_price`, `cg_amount`) 
-                    VALUES (NULL, '$cg_code', '$name', '$detail', '$IMG_NameFull', '$type', '$unit', '$price', '$amount');");
+                    $result = $this->db->query("INSERT INTO `tbl_cargo` (`cg_id`, `cg_code`, `cg_name`, `cg_detail`, `cg_img`, `cg_type_id`, `cg_price`, `cg_amount`) 
+                    VALUES (NULL, '$cg_code', '$name', '$detail', '$IMG_NameFull', '$type', '$price', '$amount');");
                     return $result;
                 }
             }
@@ -183,7 +184,7 @@ class Cargo extends ConnectDB
         $row = $result->fetch_all(MYSQLI_ASSOC);
         return $row;
     }
-    function cargoPayment($channel, $total, $date, $address, $img, $uid)
+    function cargoPayment($total, $date, $address, $img, $uid)
     {
         $resultCode = $this->db->query("SELECT * FROM tbl_payment ORDER BY pm_code DESC LIMIT 1");
         if ($resultCode->num_rows <= 0) {
@@ -199,8 +200,8 @@ class Cargo extends ConnectDB
             exit;
         }
 
-        $resultPayment = $this->db->query("INSERT INTO `tbl_payment` (`pm_id`, `pm_code`, `pm_img`, `pm_total`, `pm_u_id` , `pm_channel`, `pm_date`, `pm_address`, `pm_status`) 
-                                                VALUES (NULL, '$pm_code', '$nameUploadimg', '$total' , '$uid' , '$channel', '$date', '$address', 'รอตรวจสอบ');");
+        $resultPayment = $this->db->query("INSERT INTO `tbl_payment` (`pm_id`, `pm_code`, `pm_img`, `pm_total`, `pm_u_id` , `pm_date`, `pm_address`, `pm_status`) 
+                                                VALUES (NULL, '$pm_code', '$nameUploadimg', '$total' , '$uid' , '$date', '$address', 'รอตรวจสอบ');");
 
         foreach ($_SESSION['cart'][$_SESSION['user']['id']] as $key => $value) {
             $resultPaymentList = $this->db->query("INSERT INTO `tbl_payment_list` (`pl_id`, `pl_pm_code`, `pl_cg_id` , `pl_amount` , `pl_size`) 
