@@ -111,7 +111,7 @@ class Cargo extends ConnectDB
         $result = $this->db->query("SELECT * FROM tbl_type_product");
         return $result;
     }
-    function cargoAdd($img, $name, $detail, $price, $amount, $type)
+    function cargoAdd($img, $name, $detail, $price, $amount, $type, $unit)
     {
 
         $resultCode = $this->db->query("SELECT cg_code FROM tbl_cargo ORDER BY cg_code DESC");
@@ -144,14 +144,14 @@ class Cargo extends ConnectDB
                 </script>";
             } else {
                 if (move_uploaded_file($IMG_tmp, $IMG_DIR . $IMG_NameFull)) {
-                    $result = $this->db->query("INSERT INTO `tbl_cargo` (`cg_id`, `cg_code`, `cg_name`, `cg_detail`, `cg_img`, `cg_type_id`, `cg_price`, `cg_amount`) 
-                    VALUES (NULL, '$cg_code', '$name', '$detail', '$IMG_NameFull', '$type', '$price', '$amount');");
+                    $result = $this->db->query("INSERT INTO `tbl_cargo` (`cg_id`, `cg_code`, `cg_name`, `cg_detail`, `cg_img`, `cg_type_id` , `cg_unit` , `cg_price`, `cg_amount`) 
+                    VALUES (NULL, '$cg_code', '$name', '$detail', '$IMG_NameFull', '$type' , '$unit' , '$price', '$amount');");
                     return $result;
                 }
             }
         }
     }
-    function cargoEdit($id, $img, $img_old, $name, $detail, $price, $amount, $type)
+    function cargoEdit($id, $img, $img_old, $name, $detail, $price, $amount, $type, $unit)
     {
         $resultIMG = uploadIMGEdit($img, $img_old, "../img_upload/");
 
@@ -160,6 +160,7 @@ class Cargo extends ConnectDB
         `cg_detail` = '$detail', 
         `cg_img` = '$resultIMG', 
         `cg_type_id` = '$type', 
+        `cg_unit` = '$unit', 
         `cg_price` = '$price', 
         `cg_amount` = '$amount' WHERE `tbl_cargo`.`cg_id` = '" . $id . "';");
         if ($result == true) {
@@ -204,11 +205,11 @@ class Cargo extends ConnectDB
                                                 VALUES (NULL, '$pm_code', '$nameUploadimg', '$total' , '$uid' , '$date', '$address', 'รอตรวจสอบ');");
 
         foreach ($_SESSION['cart'][$_SESSION['user']['id']] as $key => $value) {
-            $resultPaymentList = $this->db->query("INSERT INTO `tbl_payment_list` (`pl_id`, `pl_pm_code`, `pl_cg_id` , `pl_amount` , `pl_size`) 
-                                                VALUES (NULL, '$pm_code', '$key' , '".$value['amount']."' , '".$value['size']."');");
+            $resultPaymentList = $this->db->query("INSERT INTO `tbl_payment_list` (`pl_id`, `pl_pm_code`, `pl_cg_id` , `pl_amount`) 
+                                                VALUES (NULL, '$pm_code', '$key' , '$value');");
             $QueryCargo = $this->db->query("SELECT * FROM tbl_cargo WHERE cg_id = '$key' ");
             $fetchCargo = $QueryCargo->fetch_array();
-            $amountUpdate = $fetchCargo['cg_amount'] - $value['amount'];
+            $amountUpdate = $fetchCargo['cg_amount'] - $value;
             $resultUpdateCargo = $this->db->query("UPDATE `tbl_cargo` SET `cg_amount` = '$amountUpdate' WHERE `tbl_cargo`.`cg_id` = '$key';");
         }
 

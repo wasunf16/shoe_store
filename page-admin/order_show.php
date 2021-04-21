@@ -130,7 +130,7 @@ if (isset($_GET['action'])) {
                                                             $resultModal = $objModal->query("SELECT * FROM tbl_payment_list as pl INNER JOIN tbl_cargo as cg ON pl.pl_cg_id=cg.cg_id WHERE  pl.pl_pm_code = '" . $row['pm_code'] . "' ");
                                                             while ($rowModal = $resultModal->fetch_array()) {
                                                             ?>
-                                                                <h6><b>รหัสสินค้า: </b><?= $rowModal['cg_code']; ?> <b>ไซต์: </b><?= $rowModal['pl_size']; ?><b> จำนวน:</b> <?= $rowModal['pl_amount']; ?> คู่</h6>
+                                                                <h6><b>รหัสสินค้า: </b><?= $rowModal['cg_code']; ?> <b>ไซต์: </b><?= $rowModal['cg_unit']; ?><b> จำนวน:</b> <?= $rowModal['pl_amount']; ?> คู่</h6>
                                                             <?php } ?>
 
                                                         </div>

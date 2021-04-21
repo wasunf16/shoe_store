@@ -85,7 +85,7 @@ $row = $result->fetch_all(MYSQLI_ASSOC);
                     <div class="card h-100">
                         <div class="relative" style="position: relative;">
                             <a href="view_product.php?cg_id=<?= $value['cg_id'] ?>"><img src="img_upload/<?= $value['cg_img'] ?>" class="card-img-top" style="height:200px;"></a>
-                            <!-- <div class="relativeSize"><i class="fa fa-shopping-bag" aria-hidden="true"></i> <?= $value['sellTotal'] ?></div> -->
+                            <div class="relativeSize">Size <?= $value['cg_unit'] ?></div>
                             <div class="relativeSizeView"><i class="fa fa-eye" aria-hidden="true"></i> <?= $value['cg_view'] ?></div>
                         </div>
                         <div class="card-body">

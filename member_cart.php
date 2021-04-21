@@ -1,23 +1,17 @@
-<?php
+<?php 
 include('header.php');
-checkSessionMember();
-// echo "<pre>";
-// print_r($_SESSION);
-// echo "</pre>";
-// exit;
+checkSessionMember()
 ?>
 </head>
 <?php
 $cg_id = isset($_GET['cg_id']) ? $_GET['cg_id'] : '';
-$size = isset($_GET['size']) ? $_GET['size'] : '';
 $action = isset($_GET['action']) ? $_GET['action'] : '';
 
 if ($action == 'add' && !empty($cg_id)) {
     if (isset($_SESSION['cart'][$_SESSION['user']['id']][$cg_id])) {
-        $_SESSION['cart'][$_SESSION['user']['id']][$cg_id]['amount']++;
+        $_SESSION['cart'][$_SESSION['user']['id']][$cg_id]++;
     } else {
-        $_SESSION['cart'][$_SESSION['user']['id']][$cg_id]['amount'] = 1;
-        $_SESSION['cart'][$_SESSION['user']['id']][$cg_id]['size'] = $size;
+        $_SESSION['cart'][$_SESSION['user']['id']][$cg_id] = 1;
     }
     header('Location: member_cart.php');
 }
@@ -30,12 +24,8 @@ if ($action == 'remove' && !empty($cg_id))  //ยกเลิกการสั�
 
 if ($action == 'update') {
     $amount_array = $_POST['amount'];
-    $size_array = $_POST['size'];
     foreach ($amount_array as $cg_id => $amount) {
-        $_SESSION['cart'][$_SESSION['user']['id']][$cg_id]['amount'] = $amount;
-    }
-    foreach ($size_array as $cg_id => $size) {
-        $_SESSION['cart'][$_SESSION['user']['id']][$cg_id]['size'] = $size;
+        $_SESSION['cart'][$_SESSION['user']['id']][$cg_id] = $amount;
     }
     header('Location: member_cart.php');
 }
@@ -68,7 +58,6 @@ $obj = new Cargo();
                                             <th scope="col">สินค้า</th>
                                             <th scope="col">ราคา</th>
                                             <th scope="col">จำนวน</th>
-                                            <th scope="col">ไซส์</th>
                                             <th scope="col">รวม</th>
                                             <th scope="col"></th>
                                         </tr>
@@ -79,7 +68,7 @@ $obj = new Cargo();
                                             foreach ($_SESSION['cart'][$_SESSION['user']['id']] as $cg_id => $amount) {
                                                 $result = $obj->query("SELECT * FROM tbl_cargo as cg INNER JOIN tbl_type_product as tp ON cg.cg_type_id = tp.tp_id WHERE cg.cg_id = '$cg_id' ");
                                                 $row = $result->fetch_array();
-                                                $sum = $row['cg_price'] * $amount['amount'];
+                                                $sum = $row['cg_price'] * $amount;
                                                 $total += $sum;
 
                                             ?>
@@ -92,8 +81,8 @@ $obj = new Cargo();
                                                     <td><img src="img_upload/<?= $row['cg_img']; ?>" style="height:45px;width:45px;"></td>
                                                     <td>
                                                         <?php
-                                                        if ($amount['amount'] > $row['cg_amount']) {
-                                                            echo $row['cg_name'] . "<p style='color:red'>(สินค้าไม่เพียงพอ)</pre>";
+                                                        if ($amount > $row['cg_amount']) {
+                                                            echo $row['cg_name'] . "<p style='color:red'>(สินค้าไม่เพียงพอ)</p>";
                                                             $canBuy = false;
                                                         } else {
                                                             echo $row['cg_name'];
@@ -101,14 +90,12 @@ $obj = new Cargo();
                                                         ?>
                                                     </td>
                                                     <td>฿<?= number_format($row['cg_price']); ?></td>
-                                                    <td><input type="number" value="<?= $amount['amount'] ?>" name="amount[<?= $cg_id ?>]" class="form-control" min="1" style="width:80px;"></td>
-                                                    <td><?= $amount['size'] ?></td>
-                                                    <td>฿<?= number_format($row['cg_price'] * $amount['amount']); ?></td>
+                                                    <td><input type="number" value="<?= $amount ?>" name="amount[<?= $cg_id ?>]" class="form-control" min="1" style="width:80px;"></td>
+                                                    <td>฿<?= number_format($row['cg_price'] * $amount); ?></td>
                                                     <td class="text-center"><a href="?action=remove&cg_id=<?= $cg_id; ?>"><i class="fa fa-times" aria-hidden="true"></i></a></td>
                                                 </tr>
                                             <?php } ?>
                                             <tr class="table-warning">
-                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -121,7 +108,7 @@ $obj = new Cargo();
                                 </table>
                             </div>
                             <div class="d-flex justify-content-end">
-                                <button class="btn btn-primary btn-sm" type="submit" name="update"><i class='fa fa-refresh'></i> อัพเดท</button>
+                                <button class="btn btn-primary btn-sm" type="submit" name="update"><i class='fa fa-refresh'></i> คำนวณ</button>
                             </div>
 
                             </form>
